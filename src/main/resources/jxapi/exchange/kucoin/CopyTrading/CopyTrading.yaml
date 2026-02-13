@@ -1,0 +1,7 @@
+id: Kucoin
+apis:
+  - name: CopyTrading
+    description: Kucoin Copy Trading API
+    defaultHttpClient: privateSpot
+    httpUrl: ${constants.futuresUrl}
+    defaultWebsocketClient: privateSpotWs

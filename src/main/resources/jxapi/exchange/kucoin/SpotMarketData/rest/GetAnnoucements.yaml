@@ -1,0 +1,102 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetAnnoucements
+        httpMethod: GET
+        url: v3/announcements
+        description: This interface can obtain the latest news announcements, and the default page search is for announcements within a month.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-announcements
+        requestWeight: 20
+        rateLimits:
+          - public
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest 
+          properties:
+            - name: currentPage
+              description: page number
+              sampleValue: 1
+              type: INT
+            - name: pageSize
+              description: page Size
+              sampleValue: 20
+              type: INT
+            - name: annType
+              description: Announcement types, including latest-announcements, activities (latest activities), new-listings (new currency online), product-updates (product updates), vip (institutions and VIPs), maintenance-updates (system maintenance), product -updates (product news), delistings (currency offline), others, api-campaigns (API user activities)
+            - name: lang
+              description: >
+                Language type, the default is en_US, see ${constants.spotMarketData.lang} for possible values enumeration.
+              sampleValue: fr_FR
+            - name: startTime
+              description: Announcement online start time (milliseconds)
+              type: LONG
+              sampleValue: 1028974572000
+            - name: endTime
+              description: Announcement online end time (milliseconds)
+              type: LONG
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              description: 
+              properties:
+                - name: totalNum
+                  description: Total number of announcements
+                  sampleValue: 8684
+                  type: INT
+                - name: currentPage
+                  description: Current page number
+                  sampleValue: 1
+                  type: INT
+                - name: pageSize
+                  description: Number of items per page
+                  sampleValue: 3
+                  type: INT
+                - name: totalPage
+                  description: Total number of pages
+                  sampleValue: 2895
+                  type: INT  
+                - name: items
+                  description: Announcement list
+                  type: OBJECT_LIST
+                  objectName: KucoinAnnouncement
+                  properties:
+                    - name: annId
+                      description: Announcement ID
+                      sampleValue: 127637
+                      type: INT
+                    - name: annTitle
+                      description: Announcement title
+                      sampleValue: "CHO GemSlot Campaign: Finish Easy Tasks to Win and Share a 1.3 Million CHO Prize Pool!"
+                      type: STRING
+                    - name: annType
+                      description: Announcement type
+                      sampleValue: latest-announcements
+                      type: STRING_LIST
+                    - name: annDesc
+                      description: Announcement description
+                      sampleValue: "To celebrate the launch of GemSlot, we are delighted to invite the CHO Protocol (CHO) project to participate in our product launch celebration."
+                      type: STRING
+                    - name: cTime
+                      description: Announcement release time, Unix millisecond timestamp format
+                      sampleValue: 1728974572000
+                      type: LONG
+                    - name: language
+                      description: Language type, see ${constants.spotMarketData.lang} for possible values enumeration.
+                      sampleValue: ${constants.spotMarketData.lang.en}
+                      type: STRING
+                    - name: annUrl
+                      description: Announcement link
+                      sampleValue: https://www.kucoin.com/announcement/en-cho-gemslot-campaign-finish-easy-tasks-to-win-and-share-a-1300000-cho-prize-pool-20241015?lang=en_US
+                      type: STRING  

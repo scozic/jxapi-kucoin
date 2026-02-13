@@ -1,0 +1,37 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    websocketEndpoints:
+      - name: CallAuctionOrderbookLevel50
+        topic: /callauction/level2Depth50:${request}
+        description: The system will return the call auction 50 best ask/bid orders data.
+        docUrl: https://www.kucoin.com/docs-new/3470137w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: BTC-USDT
+        message:
+          properties:
+            - name: topic
+              description: Topic
+              sampleValue: /callauction/level2Depth50:BTC-USDT
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: subject
+              description: Subject
+              sampleValue: level2
+            - name: data
+              properties:
+                - name: asks
+                  description: Ask order data, each entry containing price and size.
+                  type: BIGDECIMAL_LIST_LIST
+                - name: bids
+                  description: Bid order data, each entry containing price and size.
+                  type: BIGDECIMAL_LIST_LIST
+                - name: timestamp
+                  description: The exchange's order matching time
+                  type: LONG

@@ -1,0 +1,132 @@
+id: Kucoin
+apis:
+  - name: Funding
+    restEndpoints:
+      - name: GetWithdrawalsList
+        httpMethod: GET
+        url: v1/withdrawals
+        description: >
+          Request via this endpoint to get deposit list. Items are paginated
+          See the <a href="https://www.kucoin.com/docs/basic-info/connection-method/pager/introduction">Pagination</a> section for retrieving additional entries after the first page.
+        docUrl: https://www.kucoin.com/docs/rest/funding/withdrawals/get-withdrawals-list
+        requestWeight: 20
+        rateLimits:
+          - management
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest     
+          properties:
+            - name: currency
+              description: <a href="https://www.kucoin.com/docs/rest/spot-trading/market-data/get-currency-list">Currency</a>.
+              sampleValue: USDT
+              type: STRING
+            - name: startAt
+              description: "[Optional] Start time (millisecond)."
+              type: LONG
+            - name: endAt
+              description: "[Optional] End time (millisecond)."
+              type: LONG
+            - name: status
+              description: Status. Available value:PROCESSING, WALLET_PROCESSING, SUCCESS, FAILURE. See ${constants.funding.transferStatus} for enumeration.
+            - name: currentPage
+              description: >
+                Current page; default is 1
+              sampleValue: 1
+              type: INT
+            - name: pageSize
+              description: >
+                Page size; default is 50, max is 100
+              sampleValue: 50
+              type: INT
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: Response payload
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              objectName: KucoinGetWithdrawalsListResponseData
+              properties:
+                - name: currentPage
+                  description: Current page
+                  sampleValue: 1
+                  type: INT
+                - name: pageSize
+                  description: Number of results per request. Minimum is 10, maximum is 500.
+                  sampleValue: 50
+                  type: INT
+                - name: totalNum
+                  description: Total number of results
+                  sampleValue: 1
+                  type: INT
+                - name: totalPage
+                  description: Total number of pages
+                  sampleValue: 1
+                  type: INT
+                - name: items
+                  objectName: KucoinGetWithdrawalsListItem
+                  type: OBJECT_LIST
+                  properties:
+                    - name: id
+                      description: Unique identity
+                      sampleValue: 63564dbbd17bef00019371fb
+                      type: STRING
+                    - name: address
+                      description: Withdrawal address
+                      sampleValue: rNFugeoj3ZN8Wv6xhuLegUBBPXKCyWLRkB
+                      type: STRING
+                    - name: memo
+                      description: Address remark. If there’s no remark, it is empty. When you withdraw from other platforms to the KuCoin, you need to fill in memo(tag). If you do not fill memo (tag), your deposit may not be available, please be cautious.
+                      sampleValue: 1919537769
+                      type: STRING
+                    - name: currency
+                      description: Currency
+                      sampleValue: XRP
+                      type: STRING
+                    - name: chain
+                      description: The chain of currency
+                      sampleValue: xrp
+                      type: STRING
+                    - name: amount
+                      description: Withdrawal amount
+                      sampleValue: "20.50000000"
+                      type: BIGDECIMAL
+                    - name: fee
+                      description: Withdrawal fee
+                      sampleValue: "0.50000000"
+                      type: BIGDECIMAL
+                    - name: walletTxId
+                      description: Wallet Txid
+                      sampleValue: 2C24A6D5B3E7D5B6AA6534025B9B107AC910309A98825BF5581E25BEC94AD83B
+                      type: STRING
+                    - name: isInner
+                      description: Internal withdrawal or not
+                      sampleValue: false
+                      type: BOOLEAN
+                    - name: status
+                      description: status. See ${constants.funding.transferStatus} for enumeration.
+                      sampleValue: ${constants.funding.transferStatus.success}
+                    - name: remark
+                      description: remark
+                      sampleValue: test
+                      type: STRING
+                    - name: createdAt
+                      description: Creation time
+                      sampleValue: 1666600379000
+                      type: LONG
+                    - name: updatedAt
+                      description: Update time
+                      sampleValue: 1666600511000
+                      type: LONG                      
+            
+        

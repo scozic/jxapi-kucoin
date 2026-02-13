@@ -1,0 +1,27 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: BatchCancelOcoOrders
+        httpMethod: DELETE
+        url: v3/oco/orders
+        description: This interface can batch cancel OCO orders through orderIds.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/batch-cancel-oco-order
+        requestWeight: 3
+        rateLimits:
+          - spot
+        request:
+          objectName: KucoinSpotCancelAllOrdersRequest
+          description: >
+            Common request for cancelling multiple orders endpoints (Cancel All Orders, Cancel All Stop Orders, Cancel All OCO Orders).
+          properties:
+            - name: symbol
+              description: "[Optional] symbol, cancel the orders for the specified trade pair."
+            - name: tradeType
+              description: >
+                [Optional] the type of trading:<strong>TRADE</strong> (Spot Trading), <strong>MARGIN_TRADE</strong> (Cross Margin Trading), <strong>MARGIN_ISOLATED_TRADE</strong>(Isolated
+                Margin Trading), and the default is <strong>TRADE</strong> to cancel the spot trading orders. Valid only for regular and stop (not OCO) endpoints.
+            - name: orderIds
+              description: String containing comma seperated order IDs. Valid only for STOP and OCO endpoints.
+        response:
+          objectName: KucoinSpotCancelOrderByOrderIdResponse

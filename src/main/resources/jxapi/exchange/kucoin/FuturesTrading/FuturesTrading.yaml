@@ -1,0 +1,7 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    description: Kucoin Futures trading API
+    httpUrl: "${constants.futuresUrl}"
+    defaultHttpClient: privateFutures    
+    defaultWebsocketClient: privateFuturesWs

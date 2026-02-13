@@ -1,0 +1,85 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    websocketEndpoints:
+      - name: SymbolSnapshot
+        topic: /market/snapshot:${request}
+        description: Subscribe to get snapshot data for a single symbol.
+        docUrl: https://www.kucoin.com/docs-new/3470065w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: BTC-USDT
+        message:
+          properties:
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: topic
+              description: Topic
+              sampleValue: /market/snapshot:ETH-USDT
+            - name: subject
+              description: Symbol
+              sampleValue: trade.snapshot
+            - name: data
+              properties:
+                - description: Sequence
+                  name: sequence
+                  sampleValue: "1550467636704"
+                - name: data
+                  properties:
+                    - name: trading
+                      sampleValue: true
+                      type: BOOLEAN
+                    - name: symbol
+                      sampleValue: ETH-USDT
+                    - name: buy
+                      sampleValue: "0.00011"
+                      type: BIGDECIMAL
+                    - name: sell
+                      sampleValue: "0.00011"
+                      type: BIGDECIMAL
+                    - name: sort
+                      description: "Sorting number"
+                      sampleValue: "100"
+                      type: BIGDECIMAL
+                    - name: volValue
+                      sampleValue: "3.13851792584"
+                      type: BIGDECIMAL
+                    - name: baseCurrency
+                      sampleValue: BTC
+                    - name: market
+                      sampleValue: USDT
+                    - name: quoteCurrency
+                      sampleValue: USDT
+                    - name: symbolCode
+                      sampleValue: ETH-USDT
+                    - name: dateTime
+                      sampleValue: 1548388122031
+                      type: LONG
+                    - name: high
+                      sampleValue: "0.00013"
+                      type: BIGDECIMAL
+                    - name: low
+                      sampleValue: "0.0001"
+                      type: BIGDECIMAL
+                    - name: changePrice
+                      sampleValue: "-1.0e-5"
+                      type: BIGDECIMAL
+                    - name: changeRate
+                      sampleValue: "-0.0769"
+                      type: BIGDECIMAL
+                    - name: lastTradedPrice
+                      sampleValue: "0.00012"
+                      type: BIGDECIMAL
+                    - name: board
+                      description: Trading pair partition： 0.primary partition 1.KuCoin Plus", example = 1
+                      sampleValue: "0"
+                      type: BIGDECIMAL
+                    - name: mark
+                      description: Trading Pair Mark： 0.default 1.ST. 2.NEW", example = "1"
+                      sampleValue: "0"
+                      type: BIGDECIMAL

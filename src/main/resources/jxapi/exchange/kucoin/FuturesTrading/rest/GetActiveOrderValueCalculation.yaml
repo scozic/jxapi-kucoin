@@ -1,0 +1,54 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: GetOpenOrderValue
+        description: >
+          Query the total number and value of all your active orders for a symbol.
+        docUrl: https://www.kucoin.com/docs-new/est/futures-trading/orders/get-open-order-value
+        httpMethod: GET
+        url: v1/openOrderStatistics
+        requestWeight: 10
+        rateLimits:
+          - futures
+        request:
+          properties:
+            - name: symbol
+              description: Symbol of the contract
+              sampleValue: XBTUSDM
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not ''0'', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: Response payload
+              properties:
+                - name: openOrderBuySize
+                  description: Total number of unexecuted buy orders
+                  type: LONG
+                  sampleValue: 0
+                - name: openOrderSellSize
+                  description: Total number of unexecuted sell orders
+                  type: LONG
+                  sampleValue: 0
+                - name: openOrderBuyCost
+                  description: Value of all unexecuted buy orders
+                  type: BIGDECIMAL
+                  sampleValue: "0"
+                - name: openOrderSellCost
+                  description: Value of all unexecuted sell orders
+                  type: BIGDECIMAL
+                  sampleValue: "0"
+                - name: settleCurrency
+                  description: The settlement currency
+                  type: STRING
+                  sampleValue: "XBT"

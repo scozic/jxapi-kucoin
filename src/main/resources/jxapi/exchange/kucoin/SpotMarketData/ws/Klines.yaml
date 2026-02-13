@@ -1,0 +1,68 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    websocketEndpoints:
+      - name: Klines
+        topic: /market/candles:${request.symbol}_${request.type}
+        description: Subscribe to this topic to get K-Line data.
+        docUrl: https://www.kucoin.com/docs-new/3470071w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          description: >
+            Websocket K-Line subscription request for a specific market symbol and candlestick type.
+          properties:
+            - name: symbol
+              description: Market symbol
+              sampleValue: BTC-USDT
+            - name: type
+              description: >
+                Type of candlestick patterns: 1min, 3min, 5min, 15min, 30min, 1hour, 2hour, 4hour, 6hour, 8hour, 12hour, 1day, 1week, 1month<br>
+                <strong>TIP</strong>: Klines data may be incomplete. No data is published for intervals where there are no ticks.
+                See ${constants.granularity} for all supported intervals.
+              sampleValue: ${constants.granularity.fifteenMin}
+        message:
+          properties:
+            - name: topic
+              description: Topic
+              sampleValue: /market/candles:BTC-USDT_1hour
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: subject
+              description: Subject
+              sampleValue: trade.candles.update
+            - name: data
+              properties:
+                - name: symbol
+                  description: Symbol
+                - name: candles
+                  description: List of candlestick data
+                  type: OBJECT_LIST
+                  objectName: KucoinKlineEntry
+                  properties:
+                    - name: startTime
+                      description: Start time of the candle cycle
+                      type: LONG
+                    - name: openPrice
+                      description: Open price
+                      type: BIGDECIMAL
+                    - name: closePrice
+                      description: Close price
+                      type: BIGDECIMAL
+                    - name: highPrice
+                      description: High price
+                      type: BIGDECIMAL
+                    - name: lowPrice
+                      description: Low price
+                      type: BIGDECIMAL
+                    - name: transactionVolume
+                      description: Transaction volume
+                      type: BIGDECIMAL
+                    - name: transactionAmount
+                      description: Transaction amount
+                      type: BIGDECIMAL
+                - name: time
+                  description: Current time (microseconds)
+                  type: LONG

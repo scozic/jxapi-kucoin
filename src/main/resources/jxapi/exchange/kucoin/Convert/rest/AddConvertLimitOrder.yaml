@@ -1,0 +1,47 @@
+id: Kucoin
+apis:
+  - name: Convert
+    restEndpoints:
+      - name: AddConvertLimitOrder
+        httpMethod: POST
+        url: /api/v1/convert/limit/order
+        description: "Place Convert Limit Order"
+        docUrl: https://www.kucoin.com/docs-new/rest/convert/add-convert-limit-order
+        requestWeight: 20
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: clientOrderId
+              description: "A unique order identifier defined by the user; the use of UUID is recommended. Length Restriction: Maximum of 40 characters. Constraints: Can only contain letters, numbers, underscores (_), and hyphens (-)."
+              type: STRING
+            - name: fromCurrency
+              description: "The source currency for the trading pair"
+              type: STRING
+            - name: toCurrency
+              description: "The target currency for the trading pair"
+              type: STRING
+            - name: fromCurrencySize
+              description: "The amount of the source currency in the order"
+              type: BIGDECIMAL
+            - name: toCurrencySize
+              description: "The amount of the target currency in the order"
+              type: BIGDECIMAL
+            - name: accountType
+              description: "The account used for the transaction. See ${constants.convert.accountType} for possible values enumeration."
+              type: STRING
+        response:
+          properties:
+            - name: code
+              description: "System error code, see <a href=\"https.www.kucoin.com/docs-new/error-code/http\">API</a>"
+              sampleValue: "200000"
+            - name: msg
+              description: "System error code description, provided in error response when code is not '0', see <a href=\"https://www.kucoin.com/docs-new/error-code/http\">API</a>"
+            - name: data
+              properties:
+                - name: clientOrderId
+                  description: "A unique order identifier defined by the user"
+                  type: STRING
+                - name: orderId
+                  description: "Convert Order ID"
+                  type: STRING

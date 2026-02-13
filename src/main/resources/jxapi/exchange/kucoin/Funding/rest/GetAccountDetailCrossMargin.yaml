@@ -1,0 +1,84 @@
+id: Kucoin
+apis:
+  - name: Funding
+    restEndpoints:
+      - name: GetAccountDetailCrossMargin
+        httpMethod: GET
+        url: v3/margin/accounts
+        description: Information for a single account. Use this endpoint when you know the accountId.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/account-funding/get-account-cross-margin
+        requestWeight: 40
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: quoteCurrency
+              description: Quote currency, currently only supports USDT, KCS, BTC, USDT as default
+              sampleValue: USDT
+            - name: queryType
+              description: > 
+                Query account type (default MARGIN), 
+                MARGIN - only query low frequency cross margin account, 
+                MARGIN_V2-only query high frequency cross margin account, 
+                ALL - consistent aggregate query with the web side.
+                See ${constants.funding.queryType} for enumeration.
+              sampleValue: ALL
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              properties:
+                - name: totalLiabilityOfQuoteCurrency
+                  description: Total Liabilities in Quote Currency
+                  sampleValue: "0.976"
+                - name: totalAssetOfQuoteCurrency
+                  description: Total Assets in Quote Currency
+                  sampleValue: "1.00"
+                - name: debtRatio
+                  description: Debt ratio
+                  sampleValue: "0.976"
+                - name: status
+                  description: > 
+                    Position status; EFFECTIVE-effective, BANKRUPTCY-bankruptcy liquidation, LIQUIDATION-closing, REPAY-repayment, BORROW borrowing.
+                    <br>See ${constants.funding.positionStatus} for enumeration.
+                  sampleValue: ${constants.funding.positionStatus.liquidation}
+                - name: accounts
+                  description: Asset list
+                  type: OBJECT_LIST
+                  objectName: KucoinCrossMarginAccountBalance
+                  properties:
+                    - name: currency
+                      description: Currency
+                      sampleValue: BTC
+                    - name: liability
+                      description: Liabilities
+                      sampleValue: "0.976"
+                    - name: total
+                      description: Total Assets
+                      sampleValue: "1.00"
+                    - name: available
+                      description: Account available assets (total assets - frozen)
+                      sampleValue: "0.024"
+                    - name: hold
+                      description: Account frozen assets
+                      sampleValue: "0"
+                    - name: maxBorrowSize
+                      description: The user's remaining maximum loan amount
+                      sampleValue: "0"
+                    - name: borrowEnabled
+                      description: Support borrow or not
+                      sampleValue: true
+                    - name: repayEnabled
+                      description: Support repay or not
+                      sampleValue: true
+                    - name: transferEnabled
+                      description: Support transfer or not
+                      sampleValue: false

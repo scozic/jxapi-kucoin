@@ -1,0 +1,100 @@
+id: Kucoin
+apis:
+  - name: Affiliate
+    restEndpoints:
+      - name: GetInvited
+        description: >
+          To obtain affiliate user invited information.
+        docUrl: https://www.kucoin.com/docs-new/3474055e0
+        requestWeight: 30
+        rateLimits:
+          - spot
+        httpMethod: GET
+        url: v2/affiliate/queryInvitees
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequestV5
+          properties:
+            - name: userType
+              description: User Type.
+              type: STRING
+            - name: referralCode
+              description: Which referral code the user registered with.
+              type: STRING
+            - name: uid
+              description: UID(s) of the users, can pass multiple separated by commas.
+              type: STRING
+            - name: registrationStartAt
+              description: Registration start timestamp.
+              type: LONG
+            - name: registrationEndAt
+              description: Registration end timestamp.
+              type: LONG
+            - name: page
+              description: > 
+                Page number, default is 1
+              type: INT
+              sampleValue: 1
+            - name: pageSize
+              description: > 
+                Max number of records per page, default is 10, max is 500
+              type: INT
+              sampleValue: 10
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "success"  
+            - name: data
+              description: Response payload
+              type: OBJECT
+              objectName: KucoinInvitedPage
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              properties:
+                - name: currentPage
+                  type: INT
+                - name: pageSize
+                  type: INT
+                - name: totalNum
+                  type: INT
+                - name: totalPage
+                  type: INT
+                - name: items
+                  type: OBJECT_LIST
+                  objectName: KucoinInvitedUser
+                  properties:
+                    - name: uid
+                      type: STRING
+                    - name: nickName
+                      type: STRING
+                    - name: referralCode
+                      type: STRING
+                    - name: country
+                      type: STRING
+                    - name: registrationTime
+                      type: LONG
+                    - name: completedKyc
+                      type: BOOLEAN
+                    - name: completedFirstDeposit
+                      type: BOOLEAN
+                    - name: completedFirstTrade
+                      type: BOOLEAN
+                    - name: past7dFees
+                      type: BIGDECIMAL
+                    - name: past7dCommission
+                      type: BIGDECIMAL
+                    - name: totalCommission
+                      type: BIGDECIMAL
+                    - name: myCommissionRate
+                      type: BIGDECIMAL
+                    - name: cashbackRate
+                      type: BIGDECIMAL
+                    - name: currency
+                      type: STRING

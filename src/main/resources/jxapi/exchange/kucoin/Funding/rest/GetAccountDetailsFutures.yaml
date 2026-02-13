@@ -1,0 +1,72 @@
+id: Kucoin
+apis:
+  - name: Funding
+    restEndpoints:
+      - name: GetAccountDetailsFutures
+        httpMethod: GET
+        url: "${constants.futuresUrl}/v1/account-overview"
+        description: >
+          Get account overview.<br/>See <a href="https://docs.kucoin.com/futures/#get-account-overview">API</a>
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/account-funding/get-account-futures
+        requestWeight: 5
+        rateLimits:
+          - futures
+        request:
+          name: currency
+          description: "[Optional] Currency, including XBT, USDT. Default is XBT."
+          sampleValue: USDT
+          type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: List of market information for each market symbol
+              type: OBJECT
+              objectName: KucoinFuturesAccountBalance
+              properties:
+                - name: accountEquity
+                  description: Account equity = marginBalance + Unrealised PNL
+                  sampleValue: 99.8999305281
+                  type: BIGDECIMAL
+                - name: unrealisedPNL
+                  description: Unrealised profit and loss
+                  sampleValue: 0
+                  type: BIGDECIMAL
+                - name: marginBalance
+                  description: Margin balance = positionMargin + orderMargin + frozenFunds + availableBalance - unrealisedPNL
+                  sampleValue: 99.8999305281
+                  type: BIGDECIMAL
+                - name: positionMargin
+                  description: Position margin
+                  sampleValue: 0
+                  type: BIGDECIMAL
+                - name: orderMargin
+                  description: Order margin
+                  sampleValue: 0
+                  type: BIGDECIMAL
+                - name: frozenFunds
+                  description: Frozen funds for withdrawal and out-transfer
+                  sampleValue: 0
+                  type: BIGDECIMAL
+                - name: availableBalance
+                  description: Available balance
+                  sampleValue: 0
+                  type: BIGDECIMAL
+                - name: currency
+                  description: Currency code
+                  sampleValue: XBT
+                  type: STRING
+                - name: riskRatio
+                  description: Cross margin risk ratio. Risk ratio = (positionMargin + orderMargin) / marginBalance
+                  sampleValue: 0
+                  type: BIGDECIMAL  
+        

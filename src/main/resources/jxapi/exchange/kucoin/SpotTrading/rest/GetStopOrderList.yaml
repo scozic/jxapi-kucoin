@@ -1,0 +1,41 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: GetStopOrderList
+        httpMethod: GET
+        url: v1/stop-order
+        description: >
+          Request via this endpoint to get your current order list. Items are paginated and sorted to show the latest first. See the <a href="https://docs.kucoin.com/#pagination">Pagination</a>
+          section for retrieving additional entries after the first page.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/get-stop-orders-list
+        requestWeight: 2
+        rateLimits:
+          - spot
+        request:
+          objectName: KucoinSpotGetOrderListRequest
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code
+              sampleValue: "200000"
+            - name: data
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              description: Stop order list page
+              objectName: KucoinStopOrderPage
+              properties:
+                - name: currentPage
+                  type: INT
+                - name: pageSize
+                  type: INT
+                - name: totalNum
+                  type: INT
+                - name: totalPage
+                  type: INT
+                - name: items
+                  description: List of stop orders
+                  type: OBJECT_LIST
+                  objectName: KucoinSpotOrder

@@ -1,0 +1,31 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetOcoOrderByClientOid
+        httpMethod: GET
+        url: v3/hf/margin/oco-order/clientOid
+        description: >
+          This interface allows you to retrieve OCO order information using the client order ID.
+        docUrl: https://www.kucoin.com/docs-new/3473257e0
+        requestWeight: 3
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: clientOid
+              description: >
+                The unique client order ID.
+              type: STRING
+              sampleValue: "5c52e11203aa677f33e4234fc"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              objectName: KucoinOcoOrder

@@ -1,0 +1,56 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    restEndpoints:
+      - name: GetPrivateFundingHistory
+        httpMethod: GET
+        url: v1/funding-history
+        description: >
+          Query the funding rate at each settlement time point within a certain time range of the corresponding contract.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/funding-fees/get-private-funding-history
+        requestWeight: 5
+        rateLimits:
+          - futures
+        request:
+          properties:
+            - name: symbol
+              description: "Symbol of the contract"
+              type: STRING
+              sampleValue: "IDUSDTM"
+            - name: from
+              description: "Start time (millisecond)"
+              type: LONG
+              sampleValue: 1700310700000
+            - name: to
+              description: "End time (millisecond)"
+              type: LONG
+              sampleValue: 1702310700000
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinPublicFundingHistory
+              properties:
+                - name: symbol
+                  description: "Symbol of the contract"
+                  type: STRING
+                  sampleValue: "IDUSDTM"
+                - name: fundingRate
+                  description: "Funding rate"
+                  type: BIGDECIMAL
+                  sampleValue: 0.018750
+                - name: timepoint
+                  description: "Time point (millisecond)"
+                  type: LONG
+                  sampleValue: 1702310700000

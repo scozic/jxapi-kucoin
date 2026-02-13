@@ -1,0 +1,34 @@
+id: Kucoin
+apis:
+  - name: CopyTrading
+    restEndpoints:
+      - name: GetMaxWithdrawMargin
+        httpMethod: GET
+        url: v1/copy-trade/futures/position/margin/max-withdraw-margin
+        description: >
+          Query the maximum amount of margin that can be withdrawn from a current position.
+        docUrl: https://www.kucoin.com/docs-new/rest/copy-trading/get-max-withdraw-margin
+        requestWeight: 2
+        rateLimits:
+          - copyTrading
+        request:
+          properties:
+            - name: symbol
+              description: "Symbol of the contract"
+              type: STRING
+              sampleValue: "XBTUSDM"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: "The maximum amount of margin that can be withdrawn"
+              type: BIGDECIMAL

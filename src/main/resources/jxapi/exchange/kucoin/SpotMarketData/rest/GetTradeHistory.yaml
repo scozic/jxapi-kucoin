@@ -1,0 +1,54 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetTradeHistory
+        httpMethod: GET
+        url: v1/market/histories
+        description: >
+          Request via this endpoint to get the trade history of the specified symbol, the returned quantity is the last 100 transaction records.
+        docUrl: https://www.kucoin.com/docs-new/spot/rest/market-data/get-trade-histories
+        requestWeight: 3
+        rateLimits:
+          - public
+        request:
+          properties:
+            - name: symbol
+              description: <a href="https://docs.kucoin.com/#get-symbols-list">Symbol</a>
+              sampleValue: BTC-USDT
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Trade history detail
+              type: OBJECT_LIST
+              objectName: KucoinTradeHistory
+              properties:
+                - name: sequence
+                  description: Sequence number
+                  sampleValue: "1545896668571"
+                - name: time
+                  description: Transaction time
+                  sampleValue: 1545904567062140823
+                  type: LONG
+                - name: price
+                  description: Filled price
+                  sampleValue: "0.07"
+                  type: BIGDECIMAL
+                - name: size
+                  description: Filled amount
+                  sampleValue: "0.004"
+                  type: BIGDECIMAL
+                - name: side
+                  description: >
+                    Filled side. The filled side is set to the taker by default.
+                    The trade side indicates the taker order side. A taker order is the order that was matched with orders opened on the order book.
+                    See ${constants.orderSide} for possible values enumeration.
+                  sampleValue: ${constants.orderSide.buy}

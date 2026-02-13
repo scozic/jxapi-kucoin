@@ -1,0 +1,42 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: CancelOrderByClientOid
+        httpMethod: DELETE
+        url: v3/hf/margin/orders/client-order
+        description: >
+          This endpoint is used to cancel a margin order by clientOid.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/orders/cancel-order-by-clientoid
+        requestWeight: 4
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: clientOid
+              description: >
+                Client Order Id, a unique identifier created by the user.
+              type: STRING
+              sampleValue: "5c52e11203aa677f33e1493fb"
+              in: PATH
+            - name: symbol
+              description: >
+                The trading symbol.
+              type: STRING
+              sampleValue: "BTC-USDT"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          objectName: KucoinMarginCancelOrderByClientOidResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Payload for cancel margin order response.
+              type: OBJECT
+              properties:
+                - name: clientOid
+                  description: Client Order Id, a unique identifier created by the user.
+                  type: STRING
+                  sampleValue: "5c52e11203aa677f33e1493fb"

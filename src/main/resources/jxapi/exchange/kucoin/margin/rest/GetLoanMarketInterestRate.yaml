@@ -1,0 +1,40 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetLoanMarketInterestRate
+        httpMethod: GET
+        url: v3/project/marketInterestRate
+        description: >
+          This API endpoint is used to get the interest rates of the margin lending market over the past 7 days.
+        docUrl: https://www.kucoin.com/docs/rest/margin-trading/lending-market-v3-/get-interest-rates
+        requestWeight: 5
+        rateLimits:
+          - spot        
+        request:
+          name: currency
+          description: Currency, if empty query all currencies
+          sampleValue: BTC
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinMarginInterestRate
+              properties:
+                - name: time
+                  description: >
+                    Time: YYYYMMDDHH00
+                  sampleValue: 202303261200
+                - name: marketInterestRate
+                  description: Market interest rate
+                  type: BIGDECIMAL
+                  sampleValue: 0.003

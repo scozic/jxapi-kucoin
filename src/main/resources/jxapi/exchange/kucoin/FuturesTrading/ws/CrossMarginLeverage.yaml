@@ -1,0 +1,38 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    websocketEndpoints:
+      - name: CrossMarginLeverage
+        description: >
+          Subscribe this topic to get the realtime push of leverage change of Futures that are in cross margin mode.<br/>See <a href="https://www.kucoin.com/docs-new/3470096w0">API</a>
+        docUrl: https://www.kucoin.com/docs-new/3470096w0
+        topic: /contract/crossLeverage
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        message:
+          properties:
+            - name: topic
+              description: Topic of the message
+              sampleValue: /contract/crossLeverage
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: subject
+              description: Subject of the message
+              sampleValue: user.config
+            - name: userId
+              description: User ID
+              sampleValue: 633559791e1cbc0001f319bc
+            - name: channelType
+              description: Channel type
+              sampleValue: private
+            - name: data
+              description: Map of symbol to leverage information.
+              type: OBJECT_MAP
+              objectName: LeverageInfo  
+              properties:
+                - name: leverage
+                  description: Leverage value.
+                  sampleValue: "51"
+                  type: BIGDECIMAL

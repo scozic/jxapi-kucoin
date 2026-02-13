@@ -1,0 +1,48 @@
+id: Kucoin
+apis:
+  - name: Earn
+    restEndpoints:
+      - name: PurchaseStructuredProduct
+        description: >
+          Allows you to subscribe to Struct-Earn products.
+        docUrl: https://www.kucoin.com/docs-new/3474372e0
+        requestWeight: 5
+        rateLimits:
+          - earn
+        httpMethod: POST
+        url: v1/struct-earn/orders
+        request:
+          properties:
+            - name: productId
+              description: The ID of the product.
+              type: STRING
+              sampleValue: "1234"
+            - name: investCurrency
+              description: The currency to invest (e.g., "USDT").
+              type: STRING
+              sampleValue: "USDT"
+            - name: investAmount
+              description: The amount to subscribe.
+              type: STRING
+              sampleValue: "10"
+            - name: accountType
+              description: "The account type for investment. See ${constants.earn.accountType} for enumeration."
+              type: STRING
+              sampleValue: ${constants.earn.accountType.trade}
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "success"
+            - name: data
+              description: Response payload
+              properties:
+                - name: orderId
+                  description: The Holding ID.
+                  type: STRING
+                  sampleValue: "2767291"

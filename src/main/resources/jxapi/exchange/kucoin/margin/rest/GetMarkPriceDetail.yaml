@@ -1,0 +1,50 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetMarkPriceDetail
+        httpMethod: GET
+        url: v1/mark-price
+        description: >
+          Request via this endpoint to get the index price of the specified symbol.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/market-data/get-mark-price-detail
+        requestWeight: 2
+        rateLimits:
+          - public
+        request:
+          properties:
+            - name: symbol
+              description: Trading pair symbol
+              sampleValue: USDT-BTC
+              type: STRING
+              in: PATH
+            - name: current
+              description: "'current' url path parameter. Set to 'current' by default and shall not be modified."
+              defaultValue: current
+              in: PATH
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              objectName: KucoinMarginMarkPrice
+              properties:
+                - name: symbol
+                  description: Trading pair symbol
+                  sampleValue: BTC-USDT
+                - name: timePoint
+                  description: Timestamp (milliseconds)
+                  sampleValue: 1721027167000
+                  type: LONG
+                - name: value 
+                  description: Mark price value
+                  sampleValue: 2.96603125E-7
+                  type: BIGDECIMAL

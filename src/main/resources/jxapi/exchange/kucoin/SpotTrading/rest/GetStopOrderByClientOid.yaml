@@ -1,0 +1,34 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: GetStopOrderByClientOid
+        httpMethod: GET
+        url: v1/stop-order/queryOrderByClientOid
+        description: > 
+          Request via this interface to check the information of a single active order via clientOid. 
+          The system will prompt that the order does not exists if the order does not exist or has been settled.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/get-stop-order-by-clientoid
+        requestWeight: 3
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: clientOid
+              description: "The unique identifier created by the user when placing the order."
+              type: STRING
+            - name: symbol
+              description: "[Optional] The trading pair (e.g., BTC-USDT)."
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          objectName: KucoinSpotGetStopOrderResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinSpotOrder

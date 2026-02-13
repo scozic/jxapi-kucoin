@@ -1,0 +1,92 @@
+id: Kucoin
+apis:
+  - name: Convert
+    restEndpoints:
+      - name: GetConvertOrderHistory
+        httpMethod: GET
+        url: v1/convert/order/history
+        description: "Query convert market order history"
+        docUrl: https://www.kucoin.com/docs-new/rest/convert/get-convert-order-history
+        requestWeight: 5
+        rateLimits:
+          - spot
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest
+          properties:
+            - name: startAt
+              description: "Start time in milliseconds"
+              type: LONG
+            - name: endAt
+              description: "End time in milliseconds"
+              type: LONG
+            - name: status
+              description: "Order status. See ${constants.convert.orderStatus} for possible values enumeration."
+              type: STRING
+            - name: currentPage
+              description: "Page number"
+              type: INT
+            - name: pageSize
+              description: "Number of items per page"
+              type: INT
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: "System error code, see <a href=\"https.www.kucoin.com/docs-new/error-code/http\">API</a>"
+              sampleValue: "200000"
+            - name: msg
+              description: "System error code description, provided in error response when code is not '0', see <a href=\"https://www.kucoin.com/docs-new/error-code/http\">API</a>"
+            - name: data
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              properties:
+                - name: currentPage
+                  description: "Current page number"
+                  type: INT
+                - name: pageSize
+                  description: "Number of items per page"
+                  type: INT
+                - name: totalNum
+                  description: "Total number of items"
+                  type: INT
+                - name: totalPage
+                  description: "Total number of pages"
+                  type: INT
+                - name: items
+                  type: OBJECT_LIST
+                  objectName: KucoinConvertOrderHistory
+                  description: "List of convert order history"
+                  properties:
+                    - name: clientOrderId
+                      description: "A unique order identifier defined by the user."
+                      type: STRING
+                    - name: orderId
+                      description: "Convert Order ID"
+                      type: LONG
+                    - name: price
+                      description: "The price at which the order is executed, expressed in the target currency."
+                      type: BIGDECIMAL
+                    - name: fromCurrency
+                      description: "The source currency for the trading pair."
+                      type: STRING
+                    - name: toCurrency
+                      description: "The target currency for the trading pair."
+                      type: STRING
+                    - name: fromCurrencySize
+                      description: "The amount of the source currency in the order."
+                      type: BIGDECIMAL
+                    - name: toCurrencySize
+                      description: "The amount of the target currency in the order."
+                      type: BIGDECIMAL
+                    - name: accountType
+                      description: "The account used for the transaction. See ${constants.convert.accountType} for possible values enumeration."
+                      type: STRING
+                    - name: orderTime
+                      description: "The time the order was placed, in Unix milliseconds."
+                      type: LONG
+                    - name: status
+                      description: "Order status. See ${constants.convert.orderStatus} for possible values enumeration."
+                      type: STRING

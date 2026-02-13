@@ -1,0 +1,7 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    description: Kucoin spot trading API
+    httpUrl: "${constants.spotUrl}"
+    defaultHttpClient: privateSpot
+    defaultWebsocketClient: privateSpotWs

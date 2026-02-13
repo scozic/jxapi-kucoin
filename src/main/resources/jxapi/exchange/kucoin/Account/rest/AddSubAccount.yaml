@@ -1,0 +1,60 @@
+id: Kucoin
+apis:
+  - name: Account
+    restEndpoints:
+      - name: AddSubAccount
+        description: >
+          This endpoint can be used to create sub-accounts.
+          <p><i>This interface is only for cancellation requests. The cancellation result
+          needs to be obtained by querying the order status or subscribing to websocket. It is recommended that you DO NOT cancel the order until receiving the Open message,
+          otherwise the order cannot be cancelled successfully.</i></p>
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/sub-account/add-subaccount
+        requestWeight: 15
+        rateLimits:
+          - management
+        httpMethod: POST
+        url: v2/sub/user/created
+        request:
+          properties:
+            - name: password
+              description: >
+                Password(7-24 characters, must contain letters and numbers, cannot only contain numbers or include special characters)
+              sampleValue: 123456Aa
+            - name: remarks
+              description: >
+                Remarks(1~24 characters)
+              sampleValue: remark
+            - name: subName
+              description: >
+                Sub-account name (must contain 7-32 characters, at least one number and one letter. Cannot contain any spaces.)
+              sampleValue: MySubAccount2025
+            - name: access
+              description: >
+                Permission (types include Spot, Futures, Margin permissions, which can be used alone or in combination).
+              sampleValue: Spot
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              properties:
+                - name: uid
+                  description: Sub-account UID
+                  sampleValue: 9969082973
+                  type: LONG
+                - name: subName
+                  description: Sub-account name
+                  sampleValue: AAAAAAAAAA0007
+                - name: remarks
+                  description: Remarks
+                  sampleValue: remark
+                - name: access
+                  description: Permission (types include Spot, Futures, Margin permissions, which can be used alone or in combination). See ${constants.account.access} for enumeration.
+                  sampleValue: ${constants.account.access.spot}

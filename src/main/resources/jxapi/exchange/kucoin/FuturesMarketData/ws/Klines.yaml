@@ -1,0 +1,47 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    websocketEndpoints:
+      - name: Klines
+        topic: /contractMarket/limitCandle:${request.symbol}_${request.type}
+        description: >
+          Subscribe to this topic to get K-Line data. If there is no change in the market, data will not be pushed. The 'type' in the topic is to get the kline granuarity and can have following values: 1min, 3min, 5min, 15min, 30min, 1hour, 2hour, 4hour, 8hour, 12hour, 1day, 1week, 1month
+        docUrl: https://www.kucoin.com/docs-new/3470086w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          properties:
+            - name: symbol
+              description: Market symbol
+              sampleValue: XBTUSDTM
+            - name: type
+              description: >
+                Type of candlestick patterns: 1min, 3min, 5min, 15min, 30min, 1hour, 2hour, 4hour, 6hour, 8hour, 12hour, 1day, 1week, 1month<br>
+                <strong>TIP</strong>: Klines data may be incomplete. No data is published for intervals where there are no ticks.
+                See ${constants.granularity} for all supported intervals.
+              sampleValue: ${constants.granularity.fifteenMin} 
+        message:
+          properties:
+            - name: topic
+              description: Topic of the message
+              sampleValue: /contractMarket/limitCandle:XBTUSDTM_1min
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: subject
+              description: Subject of the message
+              sampleValue: candle.stick
+            - name: data
+              description: Data payload
+              properties:
+                - name: symbol
+                  description: Symbol of the contract
+                  sampleValue: XBTUSDTM
+                - name: candles
+                  description: Start time, open price, close price, high price, low price, Transaction volume, Transaction amount
+                  type: STRING_LIST
+                - name: time
+                  description: Timestamp (ms)
+                  sampleValue: 1731898208357
+                  type: LONG

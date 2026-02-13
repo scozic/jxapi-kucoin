@@ -1,0 +1,52 @@
+id: Kucoin
+apis:
+  - name: UAMarketData
+    restEndpoints:
+      - name: GetTrades
+        httpMethod: GET
+        url: ua/v1/market/trade
+        description: Request via this endpoint to get the latest 100 public trades of the specified symbol
+        docUrl: https://www.kucoin.com/docs-new/rest/ua/get-trades
+        requestWeight: 3
+        rateLimits:
+          - public
+        request:
+          properties:
+            - name: tradeType
+              description: Product type
+            - name: symbol
+              description: Trading pair symbol
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: Response code
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description
+              sampleValue: success
+            - name: data
+              objectName: KucoinUATradesResponseData
+              properties:
+                - name: tradeType
+                  description: Product type
+                - name: list
+                  description: List of trade data
+                  type: OBJECT_LIST
+                  objectName: KucoinUATrade
+                  properties:
+                    - name: sequence
+                      description: Sequence number
+                    - name: tradeId
+                      description: Trade ID
+                    - name: price
+                      description: Price
+                      type: BIGDECIMAL
+                    - name: size
+                      description: Size
+                      type: BIGDECIMAL
+                    - name: side
+                      description: Side
+                    - name: ts
+                      description: Timestamp (nanoseconds)

@@ -1,0 +1,49 @@
+id: Kucoin
+apis:
+  - name: Earn
+    restEndpoints:
+      - name: SubscribeToEarnFixedIncomeProducts
+        description: >
+          Subscribe to Earn (Fixed Income Products).
+          If the subscription fails, it returns the corresponding error code.
+        docUrl: https://www.kucoin.com/docs/rest/earn/general/subscribe-to-earn-fixed-income-products
+        requestWeight: 4
+        rateLimits:
+          - spot
+        httpMethod: POST
+        url: v1/earn/orders
+        request:
+          properties:
+            - name: productId
+              description: Product ID
+              type: STRING
+              sampleValue: "ETH-30"
+            - name: amount
+              description: Subscription amount
+              type: STRING
+              sampleValue: "100"
+            - name: accountType
+              description: MAIN (funding account), TRADE (trading account). See ${constants.earn.accountType} for enumeration.
+              type: STRING
+              sampleValue: ${constants.earn.accountType.main}
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"  
+            - name: data
+              description: Response payload
+              properties:
+                - name: orderId
+                  description: Holding ID
+                  type: STRING
+                  sampleValue: "30112"
+                - name: orderTxId
+                  description: Subscription order ID
+                  type: STRING
+                  sampleValue: "7543"

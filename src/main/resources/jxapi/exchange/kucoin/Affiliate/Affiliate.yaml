@@ -1,0 +1,8 @@
+id: Kucoin
+apis:
+  - name: Affiliate
+    description: >
+      The KuCoin Partner Program, where users can earn commissions by referring new users to KuCoin through a unique referral link.
+    defaultHttpClient: privateSpot
+    httpUrl: ${constants.spotUrl}
+    defaultWebsocketClient: privateSpotWs

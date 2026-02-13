@@ -1,0 +1,41 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: ModifyLeverage
+        httpMethod: POST
+        url: v3/position/update-user-leverage
+        description: >
+          This endpoint allows modifying the leverage multiplier for cross margin or isolated margin.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/debit/modify-leverage
+        requestWeight: 5
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: symbol
+              description: >
+                Trading pair. Leave empty for cross margin, or specify for isolated margin
+              sampleValue: KCS-USDT
+            - name: leverage
+              description: >
+                New leverage multiplier. Must be greater than 1 and up to two decimal places, and cannot be less than the user's current debt leverage or greater than the system's maximum leverage
+              sampleValue: 2.00
+              type: BIGDECIMAL
+            - name: isIsolated
+              description: >
+                Whether it is isolated margin. true: yes, false: cross margin. Default: false
+              sampleValue: true
+              type: BOOLEAN
+        response:
+          description: > 
+            Response to the Modify Leverage Multiplier request with no data payload. 
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"

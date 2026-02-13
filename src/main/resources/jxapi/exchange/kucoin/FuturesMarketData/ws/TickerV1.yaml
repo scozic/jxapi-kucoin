@@ -1,0 +1,75 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    websocketEndpoints:
+      - name: TickerV1
+        topic: /contractMarket/ticker:${request}
+        description: >
+          Subscribe this topic to get the realtime push of BBO changes. The ticker channel provides real-time price updates whenever a match happens. If multiple orders are matched at the same time, only the last matching event will be pushed. It is not recommended to use this topic any more. For real-time ticker information, please subscribe /contractMarket/tickerV2:{symbol}.
+        docUrl: https://www.kucoin.com/docs-new/3470081w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: XBTUSDTM
+        message:
+          properties:
+            - name: topic
+              description: Topic of the message
+              sampleValue: /contractMarket/ticker:XBTUSDTM
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: subject
+              description: Subject of the message
+              sampleValue: ticker
+            - name: sn
+              description: Sequence number
+              sampleValue: 1828964168748
+              type: LONG
+            - name: data
+              description: Data payload
+              properties:
+                - name: symbol
+                  description: Symbol of the contract
+                  sampleValue: XBTUSDTM
+                - name: sequence
+                  description: Sequence number
+                  sampleValue: 1828964168748
+                  type: LONG
+                - name: side
+                  description: Side of the trade (buy or sell)
+                  sampleValue: buy
+                - name: size
+                  description: Size of the trade
+                  sampleValue: 2
+                  type: BIGDECIMAL
+                - name: price
+                  description: Price of the last trade
+                  sampleValue: "86429.7"
+                  type: BIGDECIMAL
+                - name: bestBidSize
+                  description: Best bid size
+                  sampleValue: 112
+                  type: BIGDECIMAL
+                - name: bestBidPrice
+                  description: Best bid price
+                  sampleValue: "86429.6"
+                  type: BIGDECIMAL
+                - name: bestAskPrice
+                  description: Best ask price
+                  sampleValue: "86429.7"
+                  type: BIGDECIMAL
+                - name: tradeId
+                  description: Trade ID
+                  sampleValue: "1828964168748"
+                - name: bestAskSize
+                  description: Best ask size
+                  sampleValue: 1578
+                  type: BIGDECIMAL
+                - name: ts
+                  description: Timestamp
+                  sampleValue: 1740642161735000000
+                  type: LONG

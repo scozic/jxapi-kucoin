@@ -1,0 +1,107 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: GetTradeHistory
+        httpMethod: GET
+        url: v1/hf/fills
+        description: >
+          Request via this endpoint to get the trade history of the specified symbol.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/get-trade-history
+        requestWeight: 2
+        rateLimits:
+          - spot
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequestV7
+          properties:
+            - name: symbol
+              description: "Trading pair, e.g., BTC-USDT."
+              type: STRING
+              sampleValue: "BTC-USDT"
+            - name: orderId
+              description: "[Optional] Unique order ID. If specified, other query parameters are ignored."
+              type: STRING
+            - name: side
+              description: "[Optional] buy or sell."
+              type: STRING
+            - name: type
+              description: "[Optional] limit or market."
+              type: STRING
+            - name: lastId
+              description: "[Optional] Used for pagination; returns data after this ID."
+              type: LONG
+            - name: limit
+              description: "[Optional] Number of items per page. Default 20, Max 100."
+              type: INT
+            - name: startAt
+              description: "[Optional] Start time in milliseconds."
+              type: LONG
+            - name: endAt
+              description: "[Optional] End time in milliseconds."
+              type: LONG
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseV7
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              objectName: KucoinSpotTradeHistoryPage
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseV7Page
+              properties:
+                - name: lastId
+                  description: The ID of the last item in the current batch, useful for subsequent pagination.
+                  type: LONG
+                - name: items
+                  description: A list of trade history entries.
+                  type: OBJECT_LIST
+                  objectName: KucoinSpotTradeHistory
+                  implementedInterfaces:
+                  - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseV7Item
+                  properties:
+                    - name: id
+                      description: "Trade ID"
+                      type: LONG
+                    - name: orderId
+                      description: "Order ID"
+                      type: STRING
+                    - name: tradeId
+                      description: "Trade ID"
+                      type: STRING
+                    - name: symbol
+                      description: "Trading pair"
+                      type: STRING
+                    - name: side
+                      description: "buy or sell"
+                      type: STRING
+                    - name: liquidity
+                      description: "taker or maker"
+                      type: STRING
+                    - name: type
+                      description: "limit or market"
+                      type: STRING
+                    - name: price
+                      description: "Filled price"
+                      type: BIGDECIMAL
+                    - name: size
+                      description: "Filled amount"
+                      type: BIGDECIMAL
+                    - name: funds
+                      description: "Order funds"
+                      type: BIGDECIMAL
+                    - name: fee
+                      description: "Fee"
+                      type: BIGDECIMAL
+                    - name: feeRate
+                      description: "Fee rate"
+                      type: BIGDECIMAL
+                    - name: feeCurrency
+                      description: "Charged fee currency"
+                      type: STRING
+                    - name: createdAt
+                      description: "Create time"
+                      type: LONG

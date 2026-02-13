@@ -1,0 +1,186 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: GetPositionList
+        httpMethod: GET
+        url: v1/positions
+        description: Get the position details of a specified position.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/positions/get-position-list
+        requestWeight: 2
+        rateLimits:
+          - futures
+        request:
+          name: currency
+          description: "[Optional] Currency code, such as XBT, USDT."
+          sampleValue: USDT
+          type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: Response payload
+              objectName: KucoinFuturesPositionData
+              type: OBJECT_LIST
+              properties:
+                - name: id
+                  description: Position ID
+                  sampleValue: 5e81a7827911f40008e80715
+                  type: STRING
+                - name: symbol
+                  description: Symbol
+                  sampleValue: XBTUSDM
+                  type: STRING
+                - name: autoDeposit
+                  description: Auto deposit margin or not
+                  sampleValue: false
+                  type: BOOLEAN
+                - name: maintMarginReq
+                  description: Maintenance margin requirement
+                  sampleValue: 0.005
+                  type: BIGDECIMAL
+                - name: riskLimit
+                  description: Risk limit
+                  sampleValue: 20000000
+                  type: BIGDECIMAL
+                - name: realLeverage
+                  description: Leverage of the order
+                  sampleValue: 5.0
+                  type: BIGDECIMAL
+                - name: crossMode
+                  description: Cross mode or not
+                  sampleValue: false
+                  type: BOOLEAN
+                - name: delevPercentage
+                  description: ADL ranking percentile
+                  sampleValue: false
+                  type: BIGDECIMAL
+                - name: openingTimestamp
+                  description: Open time
+                  sampleValue: 1623832410892
+                  type: LONG
+                - name: currentTimestamp
+                  description: Current timestamp
+                  sampleValue: 1623832410892
+                  type: LONG
+                - name: currentQty
+                  description: Current position quantity
+                  sampleValue: 1
+                  type: INT
+                - name: currentCost
+                  description: Current position value
+                  sampleValue: 40.008
+                  type: BIGDECIMAL
+                - name: currentComm
+                  description: Current commission
+                  sampleValue: 0.0240048
+                  type: BIGDECIMAL
+                - name: unrealisedCost
+                  description: Unrealised cost
+                  sampleValue: 40.008
+                  type: BIGDECIMAL
+                - name: realisedGrossCost
+                  description: Accumulated realised gross profit value
+                  sampleValue: 0.0
+                  type: BIGDECIMAL
+                - name: realisedCost
+                  description: Current realised position value
+                  sampleValue: 0.0240048
+                  type: BIGDECIMAL
+                - name: isOpen
+                  description: Opened position or not
+                  sampleValue: true
+                  type: BOOLEAN
+                - name: markPrice
+                  description: Mark price
+                  sampleValue: 40014.93
+                  type: BIGDECIMAL
+                - name: markValue
+                  description: Mark value
+                  sampleValue: 40.01493
+                  type: BIGDECIMAL
+                - name: posCross
+                  description: Added margin
+                  sampleValue: 0.0
+                  type: BIGDECIMAL
+                - name: posInit
+                  description: Leverage margin
+                  sampleValue: 8.0016
+                  type: BIGDECIMAL
+                - name: posComm
+                  description: Bankruptcy cost
+                  sampleValue: 0.02880576
+                  type: BIGDECIMAL
+                - name: posLoss
+                  description: Funding fees paid out
+                  sampleValue: 0.0
+                  type: BIGDECIMAL
+                - name: posMargin
+                  description: Bankruptcy cost
+                  sampleValue: 8.03040576
+                  type: BIGDECIMAL
+                - name: posMaint
+                  description: Maintenance margin
+                  sampleValue: 0.23284656
+                  type: BIGDECIMAL
+                - name: maintMargin
+                  description: Position margin
+                  sampleValue: 8.03733576
+                  type: BIGDECIMAL
+                - name: realisedGrossPnl
+                  description: Accumulated realised gross profit value
+                  sampleValue: 0.0
+                  type: BIGDECIMAL
+                - name: realisedPnl
+                  description: Realised profit and loss
+                  sampleValue: -0.0240048
+                  type: BIGDECIMAL
+                - name: unrealisedPnl
+                  description: Unrealised profit and loss
+                  sampleValue: 0.00693
+                  type: BIGDECIMAL
+                - name: unrealisedPnlPcnt
+                  description: Profit-loss ratio of the position
+                  sampleValue: 2.0E-4
+                  type: BIGDECIMAL
+                - name: unrealisedRoePcnt
+                  description: Rate of return on investment
+                  sampleValue: 9.0E-4
+                  type: BIGDECIMAL
+                - name: avgEntryPrice
+                  description: Average entry price
+                  sampleValue: 40008.0
+                  type: BIGDECIMAL
+                - name: liquidationPrice
+                  description: Liquidation price
+                  sampleValue: 32211.0
+                  type: BIGDECIMAL
+                - name: bankruptPrice
+                  description: Bankruptcy price
+                  sampleValue: 32006.0
+                  type: BIGDECIMAL
+                - name: settleCurrency
+                  description: Currency used to clear and settle the trades
+                  sampleValue: USDT
+                  type: STRING
+                - name: maintainMargin
+                  description: Maintenance margin rate
+                  sampleValue: 0.25
+                  type: BIGDECIMAL
+                - name: userId
+                  description: User ID
+                  sampleValue: 1234321123
+                  type: LONG
+                - name: riskLimitLevel
+                  description: Risk Limit Level
+                  sampleValue: 1
+                  type: INT

@@ -1,0 +1,51 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    websocketEndpoints:
+      - name: OrderbookLevel50
+        topic: /contractMarket/level2Depth50:${request}
+        description: The system will return the 50 best ask/bid orders data. If there is no change in the market, data will not be pushed.
+        docUrl: https://www.kucoin.com/docs-new/3470097w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: XBTUSDTM
+        message:
+          properties:
+            - name: topic
+              description: Topic of the message
+              sampleValue: /contractMarket/level2Depth50:XBTUSDTM
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: subject
+              description: Subject of the message
+              sampleValue: level2
+            - name: sn
+              description: Sequence number
+              sampleValue: 1731680249700
+              type: LONG
+            - name: data
+              description: Data payload
+              properties:
+                - name: bids
+                  description: Best 50 bid orders
+                  type: BIGDECIMAL_LIST_LIST
+                - name: sequence
+                  description: Sequence number
+                  sampleValue: 1709294490099
+                  type: LONG
+                - name: timestamp
+                  description: Timestamp
+                  sampleValue: 1731680249700
+                  type: LONG
+                - name: ts
+                  description: Timestamp
+                  sampleValue: 1731680249700
+                  type: LONG
+                - name: asks
+                  description: Best 50 ask orders
+                  type: BIGDECIMAL_LIST_LIST

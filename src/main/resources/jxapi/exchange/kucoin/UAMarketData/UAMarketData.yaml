@@ -1,0 +1,7 @@
+id: Kucoin
+apis:
+- name: UAMarketData
+  description: Kucoin Unified API  Market Data endpoints
+  httpUrl: ${constants.spotUrl}
+  defaultHttpClient: public
+  defaultWebsocketClient: publicSpotWs

@@ -1,0 +1,39 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: ModifyPurchase
+        httpMethod: POST
+        url: v3/lend/purchase/update
+        description: >
+          This API endpoint is used to update the interest rates of subscription orders, 
+          which will take effect at the beginning of the next hour.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/credit/modify-purchase
+        requestWeight: 10
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: currency
+              description: >
+                Currency
+              sampleValue: BTC
+            - name: purchaseOrderNo
+              description: >
+                Subscription order number
+              sampleValue: 5da6dba0f943c0c81f5d5db5
+            - name: interestRate
+              description: >
+                Modified subscription interest rate
+              sampleValue: 0.005
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+                  

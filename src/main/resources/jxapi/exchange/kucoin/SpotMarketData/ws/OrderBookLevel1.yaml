@@ -1,0 +1,37 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    websocketEndpoints:
+      - name: OrderBookLevel1
+        topic: /spotMarket/level1:${request}
+        description: The system will return the 1 best ask/bid orders data.
+        docUrl: https://www.kucoin.com/docs-new/3470067w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: BTC-USDT
+        message:
+          properties:
+            - name: topic
+              description: Topic
+              sampleValue: /spotMarket/level1:BTC-USDT
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: subject
+              description: Subject
+              sampleValue: level1
+            - name: data
+              properties:
+                - name: asks
+                  description: Ask order data, containing price and size.
+                  type: BIGDECIMAL_LIST
+                - name: bids
+                  description: Bid order data, containing price and size.
+                  type: BIGDECIMAL_LIST
+                - name: timestamp
+                  description: The exchange's data pushing time
+                  type: LONG

@@ -1,0 +1,52 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    websocketEndpoints:
+      - name: Trade
+        topic: /market/match:${request}
+        description: Subscribe to this topic to get the matching event data flow of Level 3.
+        docUrl: https://www.kucoin.com/docs-new/3470072w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: BTC-USDT
+        message:
+          properties:
+            - name: topic
+              description: Topic
+              sampleValue: /market/match:BTC-USDT
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: subject
+              description: Subject
+              sampleValue: trade.l3match
+            - name: data
+              properties:
+                - name: makerOrderId
+                  description: Maker order ID
+                - name: price
+                  description: Price
+                  type: BIGDECIMAL
+                - name: sequence
+                  description: Sequence number
+                  type: LONG
+                - name: side
+                  description: Trade side
+                - name: size
+                  description: Size
+                  type: BIGDECIMAL
+                - name: symbol
+                  description: Trading pair symbol
+                - name: takerOrderId
+                  description: Taker order ID
+                - name: time
+                  description: The matching time of the latest transaction (nanoseconds)
+                  type: LONG
+                - name: tradeId
+                  description: Trade ID
+                - name: type
+                  description: Type of trade

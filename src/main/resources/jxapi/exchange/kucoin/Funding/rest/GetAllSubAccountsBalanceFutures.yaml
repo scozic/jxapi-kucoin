@@ -1,0 +1,114 @@
+id: Kucoin
+apis:
+  - name: Funding
+    restEndpoints:
+      - name: GetAllSubAccountBalanceFutures
+        httpMethod: GET
+        url: "${constants.futuresUrl}/v1/account-overview-all"
+        description: >
+          Get account overview.<br/>See <a href="https://docs.kucoin.com/futures/#get-account-overview">API</a>
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/sub-account/get-subaccount-list-futures-balance-v2
+        requestWeight: 6
+        rateLimits:
+          - futures
+        request:
+          name: currency
+          description: "[Optional] Currency, including XBT, USDT. Default is XBT."
+          sampleValue: USDT
+          type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: List of market information for each market symbol
+              type: OBJECT
+              objectName: KucoinFuturesSubAccountBalanceData
+              properties:
+                - name: summary
+                  description: Summary of all sub-accounts
+                  type: OBJECT
+                  objectName: KucoinFuturesAccountBalanceSummary
+                  properties:
+                    - name: accountEquityTotal
+                      description: Total Account Equity
+                      sampleValue: 9.99
+                      type: BIGDECIMAL
+                    - name: unrealisedPNLTotal
+                      description: Total unrealised PNL
+                      sampleValue: 0
+                      type: BIGDECIMAL
+                    - name: marginBalanceTotal
+                      description: Total Margin Balance
+                      sampleValue: 9.99
+                      type: BIGDECIMAL
+                    - name: positionMarginTotal
+                      description: Total Position margin
+                      sampleValue: 0
+                      type: BIGDECIMAL
+                    - name: orderMarginTotal
+                      description: Total Order Margin
+                      sampleValue: 0
+                      type: BIGDECIMAL
+                    - name: frozenFundsTotal
+                      description: Total frozen funds for withdrawal and out-transfer
+                      sampleValue: 0
+                      type: BIGDECIMAL
+                    - name: availableBalanceTotal
+                      description: Total available balance
+                      sampleValue: 9.99
+                      type: BIGDECIMAL
+                    - name: currency
+                      description: Currency code
+                      sampleValue: USDT
+                      type: STRING
+                - name: accounts
+                  description: List of sub-accounts
+                  type: OBJECT_LIST
+                  objectName: KucoinFuturesSubAccountBalance
+                  properties:
+                    - name: accountName
+                      description: Account name, main account is main
+                      sampleValue: main
+                      type: STRING
+                    - name: accountEquity
+                      description: Account Equity = marginBalance + unrealisedPNL
+                      sampleValue: 9.99
+                      type: BIGDECIMAL
+                    - name: unrealisedPNL
+                      description: Unrealised PNL
+                      sampleValue: 0
+                      type: BIGDECIMAL
+                    - name: marginBalance
+                      description: Margin Balance = positionMargin + orderMargin + frozenFunds + availableBalance - unrealisedPNL
+                      sampleValue: 9.99
+                      type: BIGDECIMAL
+                    - name: positionMargin
+                      description: Position margin
+                      sampleValue: 0
+                      type: BIGDECIMAL
+                    - name: orderMargin
+                      description: Order Margin
+                      sampleValue: 0
+                      type: BIGDECIMAL
+                    - name: frozenFunds
+                      description: Frozen funds for withdrawal and out-transfer
+                      sampleValue: 0
+                      type: BIGDECIMAL
+                    - name: availableBalance
+                      description: Available balance
+                      sampleValue: 9.99
+                      type: BIGDECIMAL
+                    - name: currency
+                      description: Currency code
+                      sampleValue: USDT
+                      type: STRING
+        

@@ -1,0 +1,9 @@
+id: Kucoin
+apis:
+  - name: VipLending
+    description: >
+      KuCoin's VIP Lending offers institutional and VIP users the ability to obtain loans with flexible borrowing leverage and larger borrowing amounts. 
+      Both margin and loaned assets can be utilized for trading, providing enhanced flexibility. 
+      Margin trading allows users to amplify their initial investment by collateralizing a small amount of assets to borrow crypto, enabling them to execute long or short positions to optimize capital use.
+    defaultHttpClient: privateSpot
+    httpUrl: ${constants.spotUrl}

@@ -1,0 +1,55 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetETFInfo
+        httpMethod: GET
+        url: v3/etf/info
+        description: >
+          This interface returns leveraged token information
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/market-data/get-etf-info
+        requestWeight: 25
+        rateLimits:
+          - spot        
+        request:
+          name: currency
+          description: Currency, if empty query all currencies
+          sampleValue: BTCUP
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinLeveragedTokenInfo
+              properties:
+                - name: currency
+                  description: currency
+                  sampleValue: BTCUP
+                - name: netAsset
+                  description: Net worth
+                  type: BIGDECIMAL
+                  sampleValue: 0.001
+                - name: targetLeverage
+                  description: Target leverage
+                  sampleValue: 2-4
+                - name: actualLeverage
+                  description: Actual leverage
+                  type: BIGDECIMAL
+                  sampleValue: 2.33
+                - name: assetsUnderManagement
+                  description: The amount of currency issued
+                  sampleValue: 766834.764756714775 USDT
+                - name: basket
+                  description: basket information
+                  sampleValue: -78.671762 XBTUSDTM
+                - name: issuedSize
+                  description: The amount of currency issued
+                  sampleValue: 0.001

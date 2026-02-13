@@ -1,0 +1,77 @@
+id: Kucoin
+apis:
+  - name: UAMarketData
+    restEndpoints:
+      - name: GetTicker
+        httpMethod: GET
+        url: ua/v1/market/ticker
+        description: Request market tickers for the trading pairs in the market (including 24h volume); takes a snapshot every 2 seconds.
+        docUrl: https://www.kucoin.com/docs-new/rest/ua/get-ticker
+        requestWeight: 15
+        rateLimits:
+          - public
+        request:
+          properties:
+            - name: tradeType
+              description: Product type
+            - name: symbol
+              description: When the parameter is not provided, all symbols will be returned
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: Response code
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description
+              sampleValue: success
+            - name: data
+              objectName: KucoinUATickerResponseData
+              properties:
+                - name: tradeType
+                  description: Product type
+                - name: ts
+                  description: Timestamp (milliseconds)
+                - name: list
+                  description: List of trading pair data
+                  type: OBJECT_LIST
+                  objectName: KucoinUATicker
+                  properties:
+                    - name: symbol
+                      description: Symbol
+                    - name: name
+                      description: Name of trading pairs
+                    - name: bestBidPrice
+                      description: Best bid price
+                      type: BIGDECIMAL
+                    - name: bestBidSize
+                      description: Best bid size
+                      type: BIGDECIMAL
+                    - name: bestAskPrice
+                      description: Best ask price
+                      type: BIGDECIMAL
+                    - name: bestAskSize
+                      description: Best ask size
+                      type: BIGDECIMAL
+                    - name: lastPrice
+                      description: Last traded price
+                      type: BIGDECIMAL
+                    - name: size
+                      description: Last traded size
+                      type: BIGDECIMAL
+                    - name: open
+                      description: Opening price in 24h
+                      type: BIGDECIMAL
+                    - name: high
+                      description: Highest price in 24h
+                      type: BIGDECIMAL
+                    - name: low
+                      description: Lowest price in 24h
+                      type: BIGDECIMAL
+                    - name: baseVolume
+                      description: 24h Two-way transaction amount
+                      type: BIGDECIMAL
+                    - name: quoteVolume
+                      description: 24h Two-way transaction volume
+                      type: BIGDECIMAL

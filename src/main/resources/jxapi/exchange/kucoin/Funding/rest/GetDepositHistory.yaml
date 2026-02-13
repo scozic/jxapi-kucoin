@@ -1,0 +1,130 @@
+id: Kucoin
+apis:
+  - name: Funding
+    restEndpoints:
+      - name: GetDepositHistory
+        httpMethod: GET
+        url: v1/deposits
+        description: >
+          Request via this endpoint to get deposit list Items are paginated and sorted to show the latest first. 
+          See the <a href="https://www.kucoin.com/docs/basic-info/connection-method/pager/introduction">Pagination</a> section for retrieving additional entries after the first page.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/deposit/get-deposit-history
+        requestWeight: 5
+        rateLimits:
+          - management
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest        
+          properties:
+            - name: currency
+              description: <a href="https://www.kucoin.com/docs/rest/spot-trading/market-data/get-currency-list">Currency</a>.
+              sampleValue: USDT
+              type: STRING
+            - name: startAt
+              description: "[Optional] Start time (millisecond)."
+              type: LONG
+            - name: endAt
+              description: "[Optional] End time (millisecond)."
+              type: LONG
+            - name: status
+              description: "[Optional] <strong>active</strong> or <strong>done</strong>(<strong>done</strong> as default), Only list orders with a specific status."
+              sampleValue: null
+            - name: currentPage
+              description: >
+                Current page; default is 1
+              sampleValue: 1
+              type: INT
+            - name: pageSize
+              description: >
+                Page size; default is 50, max is 100
+              sampleValue: 50
+              type: INT
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              description: List of market information for each market symbol
+              objectName: KucoinGetDepositListResponseData
+              properties:
+                - name: currentPage
+                  description: Current page
+                  sampleValue: 1
+                  type: INT
+                - name: pageSize
+                  description: Number of results per request. Minimum is 10, maximum is 500.
+                  sampleValue: 50
+                  type: INT
+                - name: totalNum
+                  description: Total number of results
+                  sampleValue: 1
+                  type: INT
+                - name: totalPage
+                  description: Total number of pages
+                  sampleValue: 1
+                  type: INT
+                - name: items
+                  objectName: KucoinGetDepositListItem
+                  type: OBJECT_LIST
+                  properties:
+                    - name: address
+                      description: <a href="https://www.kucoin.com/docs/rest/account/basic-info/get-account-list-spot-margin-trade_hf">Deposit address</a>
+                      sampleValue: 0x0a2586d5a901c8e7e68f6b0dc83bfd8bd8600ff5
+                      type: STRING
+                    - name: memo
+                      description: Address remark. If there’s no remark, it is empty. When you <a href="https://www.kucoin.com/docs/rest/funding/withdrawals/apply-withdraw">withdraw</a> from other platforms to the KuCoin, you need to fill in memo(tag). If you do not fill memo (tag), your deposit may not be available, please be cautious.
+                      sampleValue: null
+                      type: STRING
+                    - name: amount
+                      description: Deposit amount
+                      sampleValue: 0.00000000
+                      type: STRING
+                    - name: fee
+                      description: Fees charged for deposit
+                      sampleValue: 0.00000000
+                      type: STRING
+                    - name: currency
+                      description: Currency
+                      sampleValue: USDT
+                      type: STRING
+                    - name: chain
+                      description: The chain of currency
+                      sampleValue: ERC20
+                      type: STRING
+                    - name: isInner
+                      description: Internal deposit or not
+                      sampleValue: false
+                      type: BOOLEAN
+                    - name: walletTxId
+                      description: Wallet Txid
+                      sampleValue: 0x0a2586d5a901c8e7e68f6b0dc83bfd8bd8600ff5
+                      type: STRING
+                    - name: status
+                      description: Status
+                      sampleValue: SUCCESS
+                      type: STRING
+                    - name: remark
+                      description: remark
+                      sampleValue: Deposit
+                      type: STRING
+                    - name: createdAt
+                      description: Creation time of the database record
+                      sampleValue: 1666600519000
+                      type: LONG
+                    - name: updatedAt
+                      description: Update time of the database record
+                      sampleValue: 1666600549000
+                      type: LONG
+            
+        

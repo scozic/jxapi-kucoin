@@ -1,0 +1,64 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    restEndpoints:
+      - name: GetKLines
+        url: v1/kline/query
+        description: >
+          <strong>Explanation</strong><br>
+          <ul>
+          <li>The granularity (granularity parameter of K-line) represents the number of minutes, the available granularity scope is: 
+          1,5,15,30,60,120,240,480,720,1440,10080. Requests beyond the above range will be rejected.
+          <li>The maximum size per request is 500. If the specified start/end time and the time granularity exceeds the maximum size 
+          allowed for a single request, the system will only return 500 pieces of data for your request. 
+          If you want to get fine-grained data in a larger time range, you will need to specify the time ranges and make multiple requests for multiple times.
+          <li>If you’ve specified only the start time in your request, the system will return 500 pieces of data from the specified start time to the current time of the system; 
+          If only the end time is specified, the system will return 500 pieces of data closest to the end time; If neither the start time nor the end time is specified, 
+          the system will return the 500 pieces of data closest to the current time of the system.
+          </ul>
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/market-data/get-klines
+        httpMethod: GET
+        requestWeight: 3
+        rateLimits:
+          - public
+        request:
+          properties:
+            - name: symbol
+              description: <a href="https://docs.kucoin.com/#get-symbols-list">Symbol</a>
+              sampleValue: .KXBT
+            - name: granularity
+              type: INT
+              description: Granularity (minute). See ${constants.futuresMarketData.granularity} for all supported intervals.
+              sampleValue: ${constants.futuresMarketData.granularity.fifteenMin}
+            - name: from
+              description: Start time (millisecond), default is 0
+              type: LONG
+            - name: to
+              description: End time (millisecond), default is 0
+              type: LONG
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: > 
+                K-line data. Provides a list of lists, where each inner list contains the following elements:
+                <ul>
+                <li>Time (in milliseconds)
+                <li>Entry price
+                <li>Highest price
+                <li>Lowest price
+                <li>Close price
+                <li>Transaction volume (lots)
+                <li>Transaction volume
+                </ul>
+                <br>
+                For convenience in mapping this data to a Java object, you can use the <code>KucoinKlineUtil.createKlineListFromFuturesMsgData()</code> method.
+              type: STRING_LIST_LIST
+              

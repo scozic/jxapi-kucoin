@@ -1,0 +1,77 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: GetStopOrderList
+        httpMethod: GET
+        url: v1/stopOrders
+        description: Get the un-triggered stop orders list.
+        docUrl: https://www.kucoin.com/docs/rest/futures-trading/orders/get-untriggered-stop-order-list
+        requestWeight: 6
+        rateLimits:
+          - futures
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest  
+          properties:
+            - name: currentPage
+              description: "[Optional] Current request page."
+              sampleValue: 1
+              type: INT
+            - name: pageSize
+              description: "[Optional] pageSize, The default pageSize is 50, The maximum cannot exceed 1000"
+              sampleValue: 50
+              type: INT
+            - name: symbol
+              description: "[Optional] Symbol of the contract"
+              type: STRING
+            - name: side
+              description: "[Optional] ${constants.orderSide.buy} or ${constants.orderSide.sell}."
+              type: STRING
+            - name: type
+              description: "[Optional] <strong>limit</strong>, <strong>market</strong>, <strong>limit_stop</strong> or <strong>market_stop</strong>. See ${constants.futuresTrading.orderType} for enumeration."
+              type: STRING
+            - name: startAt
+              description: "[Optional] Start time (millisecond)."
+              type: LONG
+            - name: endAt
+              description: "[Optional] End time (millisecond)."
+              type: LONG
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              description: Untriggered stop order list page
+              properties:
+                - name: currentPage
+                  description: Current page
+                  sampleValue: 1
+                  type: INT
+                - name: pageSize
+                  description: Request max number of items
+                  sampleValue: 500
+                  type: INT
+                - name: totalPage
+                  description: Page count
+                  sampleValue: 1
+                  type: INT
+                - name: totalNum
+                  description: Request max number of items
+                  sampleValue: 153408
+                  type: INT
+                - name: items
+                  description: Order list
+                  objectName: KucoinFuturesOrderData
+                  type: OBJECT_LIST          

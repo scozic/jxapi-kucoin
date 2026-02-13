@@ -1,0 +1,92 @@
+id: Kucoin
+apis:
+  - name: UAMarketData
+    restEndpoints:
+      - name: GetCurrency
+        httpMethod: GET
+        url: ua/v1/market/currency
+        description: Get the details of a currency.
+        docUrl: https://www.kucoin.com/docs-new/rest/ua/get-currency
+        requestWeight: 3
+        rateLimits:
+          - public
+        request:
+          properties:
+            - name: currency
+              description: Currency
+            - name: chain
+              description: Chain
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description
+              sampleValue: success
+            - name: data
+              objectName: KucoinUACurrency
+              properties:
+                - name: currency
+                  description: Currency
+                - name: name
+                  description: Name of the currency
+                - name: fullName
+                  description: Full name of the currency
+                - name: precision
+                  description: Precision of the currency
+                  type: INT
+                - name: confirms
+                  description: Number of confirmations
+                  type: INT
+                - name: contractAddress
+                  description: Contract address
+                - name: isMarginEnabled
+                  description: Is margin enabled
+                  type: BOOLEAN
+                - name: isDebitEnabled
+                  description: Is debit enabled
+                  type: BOOLEAN
+                - name: list
+                  description: List of chains
+                  type: OBJECT_LIST
+                  objectName: KucoinUAChain
+                  properties:
+                    - name: chainName
+                      description: Chain name
+                    - name: minWithdrawSize
+                      description: Minimum withdrawal size
+                    - name: minDepositSize
+                      description: Minimum deposit size
+                    - name: withdrawFeeRate
+                      description: Withdrawal fee rate
+                    - name: minWithdrawFee
+                      description: Minimum withdrawal fee
+                    - name: isWithdrawEnabled
+                      description: Is withdraw enabled
+                      type: BOOLEAN
+                    - name: isDepositEnabled
+                      description: Is deposit enabled
+                      type: BOOLEAN
+                    - name: confirms
+                      description: Number of confirmations
+                      type: INT
+                    - name: preConfirms
+                      description: Number of pre-confirmations
+                      type: INT
+                    - name: contractAddress
+                      description: Contract address
+                    - name: withdrawPrecision
+                      description: Withdrawal precision
+                      type: INT
+                    - name: maxWithdrawSize
+                      description: Maximum withdrawal size
+                    - name: maxDepositSize
+                      description: Maximum deposit size
+                    - name: needTag
+                      description: Need tag
+                      type: BOOLEAN
+                    - name: chainId
+                      description: Chain ID

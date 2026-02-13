@@ -1,0 +1,64 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    websocketEndpoints:
+      - name: Ticker
+        description:
+          24hr rolling window ticker statistics for a single symbol. These are NOT the statistics of the UTC day, but a 24hr rolling window for the previous
+          24hrs.
+        docUrl: https://www.kucoin.com/docs-new/3470063w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: BTC-USDT
+        topic: /market/ticker:${request}
+        message:
+          properties:
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: topic
+              description: Topic
+              sampleValue: /market/ticker:BTC-USDT
+            - name: subject
+              description: Symbol
+              sampleValue: BTC-USDT
+            - name: data
+              properties:
+                - name: sequence
+                  description: Sequence
+                  sampleValue: "1550467636704"
+                  type: LONG
+                - name: bestAsk
+                  description: Best ask price
+                  sampleValue: "0.03715004"
+                  type: BIGDECIMAL
+                - name: size
+                  description: Last traded size
+                  sampleValue: "0.17"
+                  type: BIGDECIMAL
+                - name: price
+                  description: Last traded price
+                  sampleValue: "0.09715005"
+                  type: BIGDECIMAL
+                - name: bestBidSize
+                  description: Best bid size
+                  sampleValue: "3.803"
+                  type: BIGDECIMAL
+                - name: bestBid
+                  description: Best bid price
+                  sampleValue: "0.03710768"
+                  type: BIGDECIMAL
+                - name: bestAskSize
+                  description: Best ask size
+                  sampleValue: "1.788"
+                  type: BIGDECIMAL
+                - name: time
+                  description: The matching time of the latest transaction
+                  sampleValue: 1704873323416
+                  type: LONG
+                  
+        

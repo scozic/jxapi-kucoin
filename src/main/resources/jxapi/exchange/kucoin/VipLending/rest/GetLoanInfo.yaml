@@ -1,0 +1,73 @@
+id: Kucoin
+apis:
+  - name: VipLending
+    restEndpoints:
+      - name: GetLoanInfo
+        description: >
+          Retrieve information about off-exchange funding and loans.
+        docUrl: https://www.kucoin.com/docs-new/rest/vip-lending/get-account-detail
+        requestWeight: 4
+        rateLimits:
+          - spot
+        httpMethod: GET
+        url: v1/otc-loan/loan
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              objectName: KucoinLoanInfo
+              properties:
+                - name: parentUid
+                  description: The Master UID.
+                  type: STRING
+                - name: orders
+                  description: An array of loan orders.
+                  type: OBJECT_LIST
+                  objectName: KucoinLoanOrder
+                  properties:
+                    - name: orderId
+                      type: STRING
+                    - name: principal
+                      type: STRING
+                    - name: interest
+                      type: STRING
+                    - name: currency
+                      type: STRING
+                - name: ltv
+                  description: Loan-to-Value Ratios.
+                  type: OBJECT
+                  objectName: KucoinLtv
+                  properties:
+                    - name: transferLtv
+                      type: STRING
+                    - name: onlyClosePosLtv
+                      type: STRING
+                    - name: delayedLiquidationLtv
+                      type: STRING
+                    - name: instantLiquidationLtv
+                      type: STRING
+                    - name: currentLtv
+                      type: STRING
+                - name: totalMarginAmount
+                  description: The total margin amount in USDT.
+                  type: STRING
+                - name: transferMarginAmount
+                  description: The total maintenance margin for restricted transfers in USDT.
+                  type: STRING
+                - name: margins
+                  description: An array of margin details.
+                  type: OBJECT_LIST
+                  objectName: KucoinMarginDetail
+                  properties:
+                    - name: marginCcy
+                      type: STRING
+                    - name: marginQty
+                      type: STRING
+                    - name: marginFactor
+                      type: STRING

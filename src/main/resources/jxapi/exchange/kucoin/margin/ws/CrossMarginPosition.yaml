@@ -1,0 +1,63 @@
+id: Kucoin
+apis:
+  - name: Margin
+    websocketEndpoints:
+      - name: CrossMarginPosition
+        topic: /margin/position
+        description: The system will push the change event when the position status changes, Or push the current debt message periodically when there is a liability.
+        docUrl: https://www.kucoin.com/docs-new/3470078w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        message:
+          properties:
+            - name: topic
+              sampleValue: /margin/position
+            - name: subject
+              sampleValue: debt.ratio
+            - name: type
+              sampleValue: message
+            - name: userId
+              sampleValue: "633559791e1cbc0001f319bc"
+            - name: channelType
+              sampleValue: private
+            - name: data
+              description: Data payload. Nested fields are applicable to 'debt.ratio' subject except 'type' which is applicable to 'position.status' subject.
+              properties:
+                - name: debtRatio
+                  description: Debt ratio
+                  sampleValue: 0
+                  type: BIGDECIMAL
+                - name: totalAsset
+                  description: Total assets in BTC (interest included)
+                  sampleValue: 0.00052431772284080000000
+                  type: BIGDECIMAL
+                - name: marginCoefficientTotalAsset
+                  sampleValue: "0.0005243177228408"
+                  type: BIGDECIMAL
+                - name: totalDebt
+                  description: Total debt in BTC (interest included)
+                  sampleValue: "0"
+                  type: BIGDECIMAL
+                - name: assetList
+                  description: Asset list (interest included)
+                  type: OBJECT_MAP
+                  properties:
+                    - name: total
+                      sampleValue: "0.00002"
+                      type: BIGDECIMAL
+                    - name: available
+                      sampleValue: "0"
+                      type: BIGDECIMAL
+                    - name: hold
+                      sampleValue: "0.00002"
+                      type: BIGDECIMAL
+                - name: debtList
+                  description: Debt list (interest included)
+                  type: BIGDECIMAL_MAP
+                - name: timestamp
+                  sampleValue: 1729912435657
+                  type: LONG
+                - name: type  
+                  description: Event type, Only applicable to "position.status" subject
+                  sampleValue: FROZEN_FL

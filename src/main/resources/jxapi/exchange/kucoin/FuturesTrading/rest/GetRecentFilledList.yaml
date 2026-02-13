@@ -1,0 +1,34 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: GetRecentTradeHistory
+        httpMethod: GET
+        url: v1/recentFills
+        description: >
+          Get a list of recent 1000 fills in the last 24 hours.
+        docUrl: https://www.kucoin.com/docs-new/est/futures-trading/orders/get-recent-trade-history
+        requestWeight: 3
+        rateLimits:
+          - futures
+        request:
+          properties:
+            - name: symbol
+              description: "[Optional] Symbol of the contract"
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: Fill list
+              objectName: KucoinFuturesFill
+              type: OBJECT_LIST

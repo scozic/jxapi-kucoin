@@ -1,0 +1,55 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: ApplyConnectTokenPrivate
+        httpMethod: POST
+        url: v1/bullet-private
+        description: >
+          For private channels and messages (e.g. account balance notice), please make a request as follows after authorization to obtain the server list and
+          authorized token.
+        docUrl: https://www.kucoin.com/docs/websocket/basic-info/apply-connect-token/private-channels-authentication-request-required-
+        requestWeight: 10
+        rateLimits:
+          - futures
+        requestHasBody: false  
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              properties:
+                - name: token
+                  description: Token
+                  sampleValue: 2neAiuYvAU61ZDXANAGAsiL4-iAExhsBXZxftpOeh_55i3Ysy2q2LEsEWU64mdzUOPusi34M_wGoSf7iNyEWJ4aBZXpWhrmY9jKtqkdWoFa75w3istPvPtiYB9J6i9GjsxUuhPw3BlrzazF6ghq4L_u0MhKxG3x8TeN4aVbNiYo=.mvnekBb8DJegZIgYLs2FBQ==
+                  type: STRING
+                - name: instanceServers
+                  description: List of websocket servers.
+                  type: OBJECT_LIST
+                  properties:
+                    - name: endpoint
+                      description: Websocket server address for establishing connection
+                      sampleValue: wss://ws-api-spot.kucoin.com/
+                    - name: protocol
+                      description: Protocol supported
+                      sampleValue: websocket
+                    - name: encrypt
+                      description: Indicate whether SSL encryption is used
+                      sampleValue: true
+                      type: BOOLEAN
+                    - name: pingInterval
+                      description: Recommended to send ping interval in milliseconds
+                      sampleValue: 18000
+                      type: LONG
+                    - name: pingTimeout
+                      description: Recommended to send ping timeout in milliseconds
+                      sampleValue: 10000
+                      type: LONG

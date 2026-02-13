@@ -1,0 +1,60 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    restEndpoints:
+      - name: GetTransactionHistory
+        url: v1/trade/history
+        description: >
+          List the last 100 trades for a symbol.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/market-data/get-trade-history
+        httpMethod: GET
+        requestWeight: 5
+        rateLimits:
+          - public
+        request:
+          name: symbol
+          description: Symbol of the contract
+          sampleValue: XBTUSDM
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Ticker information
+              type: OBJECT_LIST
+              objectName: KucoinFuturesTransaction
+              properties:
+                - name: sequence
+                  description: Sequence number
+                  sampleValue: 1001
+                  type: LONG
+                - name: tradeId
+                  description: Transaction ID
+                  sampleValue: 5cbd7377a6ffab0c7ba98b26
+                - name: takerOrderId
+                  description: Taker order ID
+                  sampleValue: 5cbd7377a6ffab0c7ba98b27
+                - name: makerOrderId
+                  description: Maker order ID
+                  sampleValue: 5cbd7377a6ffab0c7ba98b28    
+                - name: price
+                  description: Filled price
+                  sampleValue: 7000.0
+                  type: BIGDECIMAL
+                - name: size
+                  description: Filled quantity
+                  sampleValue: 1
+                  type: BIGDECIMAL
+                - name: side
+                  description: Side-taker. The trade side indicates the taker order side. A taker order is the order that was matched with orders opened on the order book.
+                  sampleValue: buy
+                - name: ts
+                  description: Filled time - nanosecond
+                  sampleValue: 1545904567062140823
+                  type: LONG

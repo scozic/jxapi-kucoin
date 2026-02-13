@@ -1,0 +1,121 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetMarginRiskLimit
+        httpMethod: GET
+        url: v3/margin/currencies
+        description: >
+          This interface can obtain the risk limit and currency configuration of cross margin/isolated margin.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/risk-limit/get-margin-risk-limit
+        requestWeight: 20
+        rateLimits:
+          - public
+        request:
+          properties:
+            - name: isIsolated
+              description: >
+                true - isolated, false - cross ; default false
+              sampleValue: true
+              type: BOOLEAN
+            - name: symbol
+              description: >
+                symbol, required for isolated margin accounts
+            - name: currency
+              description: >
+                currency，for isolating margin, this param don't need to be filled in
+              sampleValue: BTC
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinMarginRiskLimitCurrencyConfig
+              properties:
+                - name: currency
+                  description: "[CROSS MARGIN] currency"
+                  sampleValue: BTC
+                - name: holdMaxAmount
+                  description: "[CROSS MARGIN] Maximum holding amount"
+                  sampleValue: 999999999999999999
+                - name: borrowMaxAmount
+                  description: "[CROSS MARGIN] Maximum personal borrow amount. If the platform has no borrowing amount, this value will still be displayed."
+                  sampleValue: 999999999999999999
+                - name: borrowMinAmount
+                  description: "[CROSS MARGIN] Minimum personal borrow amount"
+                  sampleValue: 0.001
+                - name: precision
+                  description: "[CROSS MARGIN] Currency precision. the minimum repayment amount of a single transaction should be >= currency precision, for example, the precision of ETH is 8, and the minimum repayment amount is 0.00000001"
+                  sampleValue: 8
+                - name: buyMaxAmount
+                  description: "[CROSS MARGIN] Maximum buy amount"
+                  sampleValue: 999999999999999999
+                - name: borrowCoefficient
+                  description: "[CROSS MARGIN] Borrow coefficient"
+                  sampleValue: 0.5
+                - name: marginCoefficient
+                  description: "[CROSS MARGIN] Margin coefficient"
+                  sampleValue: 1
+                - name: borrowMinUnit
+                  description: "[CROSS MARGIN] Minimum unit for borrowing, the borrowed amount must be an integer multiple of this value"
+                  sampleValue: 0.001
+                - name: borrowEnabled
+                  description: "[CROSS MARGIN] Whether to support borrowing"
+                  sampleValue: true
+                - name: symbol
+                  description: "[ISOLATED MARGIN] currency"
+                  sampleValue: BTC-USDT
+                - name: baseMaxBorrowAmount
+                  description: "[ISOLATED MARGIN] base maximum personal borrow amount. If the platform has no borrowing amount, this value will still be displayed."
+                  sampleValue: 999999999999999999
+                - name: quoteMaxBorrowAmount
+                  description: "[ISOLATED MARGIN] quote maximum personal borrow amount. If the platform has no borrowing amount, this value will still be displayed."
+                  sampleValue: 999999999999999999
+                - name: baseMaxBuyAmount
+                  description: "[ISOLATED MARGIN] base maximum buy amount"
+                  sampleValue: 999999999999999999
+                - name: quoteMaxBuyAmount
+                  description: "[ISOLATED MARGIN] quote maximum buy amount"
+                  sampleValue: 999999999999999999
+                - name: baseMaxHoldAmount
+                  description: "[ISOLATED MARGIN] base maximum holding amount"
+                  sampleValue: 999999999999999999
+                - name: quoteMaxHoldAmount
+                  description: "[ISOLATED MARGIN] quote maximum holding amount"
+                  sampleValue: 999999999999999999
+                - name: basePrecision
+                  description: "[ISOLATED MARGIN] base currency precision. the minimum repayment amount of a single transaction should be >= currency precision, for example, the precision of ETH is 8, and the minimum repayment amount is 0.00000001"
+                  sampleValue: 8
+                - name: quotePrecision
+                  description: "[ISOLATED MARGIN] quote currency precision. the minimum repayment amount of a single transaction should be >= currency precision, for example, the precision of ETH is 8, and the minimum repayment amount is 0.00000001"
+                  sampleValue: 8
+                - name: baseBorrowMinAmount
+                  description: "[ISOLATED MARGIN] base minimum personal borrow amount"
+                  sampleValue: 0.001
+                - name: quoteBorrowMinAmount
+                  description: "[ISOLATED MARGIN] quote minimum personal borrow amount"
+                  sampleValue: 0.001
+                - name: baseBorrowMinUnit
+                  description: "[ISOLATED MARGIN] base minimum unit for borrowing, the borrowed amount must be an integer multiple of this value"
+                  sampleValue: 0.001
+                - name: quoteBorrowMinUnit
+                  description: "[ISOLATED MARGIN] quote minimum unit for borrowing, the borrowed amount must be an integer multiple of this value"
+                  sampleValue: 0.001
+                - name: baseBorrowEnabled
+                  description: "[ISOLATED MARGIN] base whether to support borrowing"
+                  sampleValue: true
+                - name: quoteBorrowEnabled
+                  description: "[ISOLATED MARGIN] quote whether to support borrowing"
+                  sampleValue: true
+                - name: timestamp
+                  description: >
+                    The time when the data was obtained, in milliseconds.
+                  sampleValue: 1697783812257

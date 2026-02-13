@@ -1,0 +1,90 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: GetOcoOrderList
+        httpMethod: GET
+        url: v1/orders
+        description: >
+          Request via this endpoint to get your current OCO order list. Items are paginated and sorted to show the latest first. 
+          See the <a href="https://docs.kucoin.com/#pagination">Pagination</a> section for retrieving additional entries after the first page.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/get-oco-order-list
+        requestWeight: 2
+        rateLimits:
+          - spot
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest 
+          objectName: KucoinSpotGetOrderListRequest
+          properties:
+            - name: currentPage
+              description: "[Optional] Current request page."
+              sampleValue: 1
+              type: INT
+            - name: pageSize
+              description: "[Optional] Number of results per request. Minimum is 10, maximum is 500."
+              sampleValue: 50
+              type: INT
+            - name: status
+              description: > 
+                [Optional] <strong>active</strong> or <strong>done</strong>(<strong>done</strong> as default), Only list orders with a specific status.<br>
+                Valid only for 'Get Order List' e.g. not for STOP/OCO  (Get Stop Order list) and OCO (Get OCO Order list) endpoints.
+              sampleValue: active
+            - name: symbol
+              description: "[Optional] Only list orders for a specific symbol."
+            - name: side
+              description: "[Optional] <strong>buy</strong> or <strong>sell</strong>. Not valid for OCO (Get OCO Order list) endpoint."
+            - name: type
+              description: "[Optional] <strong>limit</strong>, <strong>market</strong>, <strong>limit_stop</strong> or <strong>market_stop</strong>"
+            - name: tradeType
+              description: >
+                [Optional] the type of trading:<strong>TRADE</strong> (Spot Trading), <strong>MARGIN_TRADE</strong> (Cross Margin Trading), <strong>MARGIN_ISOLATED_TRADE</strong>(Isolated
+                Margin Trading), and the default is <strong>TRADE</strong> to cancel the spot trading orders.
+              sampleValue: TRADE
+            - name: startAt
+              description: "[Optional] Start time (millisecond)."
+              type: LONG
+            - name: endAt
+              description: "[Optional] End time (millisecond)."
+              type: LONG
+            - name: orderIds
+              description: > 
+                String containing comma seperated order IDs. Parameter not required but valid only for STOP (Get stop order list) and OCO (Get OCO order list) endpoints.
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              description: OCO order list page
+              objectName: KucoinOCOOrderPage
+              properties:
+                - name: currentPage
+                  description: Current page
+                  sampleValue: 1
+                  type: INT
+                - name: pageSize
+                  description: Request max number of items
+                  sampleValue: 500
+                  type: INT
+                - name: totalPage
+                  description: Page count
+                  sampleValue: 1
+                  type: INT
+                - name: totalNum
+                  description: Request max number of items
+                  sampleValue: 153408
+                  type: INT
+                - name: items
+                  description: Data common to regular and stop orders (non OCO orders).
+                  objectName: KucoinSpotOCOOrderInfo
+                  type: OBJECT_LIST
+                  

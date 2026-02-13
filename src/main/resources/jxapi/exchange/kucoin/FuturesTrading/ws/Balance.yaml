@@ -1,0 +1,100 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    websocketEndpoints:
+      - name: AccountBalanceEvents
+        description: >
+          Account Balance Events websocket stream.<br/>You will receive this message when an account balance changes. The message contains the details of the change.<br/>See <a href="https://www.kucoin.com/docs-new/3470092w0">API</a>
+        docUrl: https://www.kucoin.com/docs-new/3470092w0
+        topic: /contractAccount/wallet
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        message:
+          properties:
+            - name: topic
+              description: Topic of the message
+              sampleValue: /contractAccount/wallet
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: subject
+              description: >
+                Subject of the message. After the user first time switches the margin mode (switching from isolated margin to cross margin), the subjects 'orderMargin.change', 'availableBalance.change', 'withdrawHold.change' will stop pushing. Use 'walletBalance.change' to replace.
+              sampleValue: walletBalance.change
+            - name: id
+              description: Message ID
+              sampleValue: 67c811885b87be0001a4880e
+            - name: userId
+              description: User ID
+              sampleValue: 633559791e1cbc0001f319bc
+            - name: channelType
+              description: Channel type
+              sampleValue: private
+            - name: data
+              description: Data payload
+              type: OBJECT
+              properties:
+                - name: currency
+                  description: Currency Symbol
+                  sampleValue: USDT
+                - name: equity
+                  description: Equity
+                  sampleValue: 387.224858816
+                  type: BIGDECIMAL
+                - name: walletBalance
+                  description: Wallet Balance
+                  sampleValue: 371.394298816
+                  type: BIGDECIMAL
+                - name: availableBalance
+                  description: Available Balance
+                  sampleValue: 285.652001096
+                  type: BIGDECIMAL
+                - name: holdBalance
+                  description: Frozen Balance
+                  sampleValue: "0"
+                  type: BIGDECIMAL
+                - name: totalCrossMargin
+                  description: Total margin under cross margin mode
+                  sampleValue: 310.370835226
+                  type: BIGDECIMAL
+                - name: crossPosMargin
+                  description: Margin of the cross margin position
+                  sampleValue: 17.551016
+                  type: BIGDECIMAL
+                - name: crossOrderMargin
+                  description: Margin of the cross margin order
+                  sampleValue: 10.06002012
+                  type: BIGDECIMAL
+                - name: crossUnPnl
+                  description: Unrealized PNL in cross margin mode
+                  sampleValue: 2.95996
+                  type: BIGDECIMAL
+                - name: isolatedPosMargin
+                  description: Margin of the isolated margin position, including isolated margin funding fees
+                  sampleValue: 63.98342359
+                  type: BIGDECIMAL
+                - name: isolatedOrderMargin
+                  description: Margin of the isolated margin order
+                  sampleValue: "0"
+                  type: BIGDECIMAL
+                - name: isolatedFundingFeeMargin
+                  description: Isolated margin funding fee
+                  sampleValue: 2.89220199
+                  type: BIGDECIMAL
+                - name: isolatedUnPnl
+                  description: Unrealized PNL in isolated margin mode
+                  sampleValue: 12.8706
+                  type: BIGDECIMAL
+                - name: version
+                  description: Version. When holding a cross margin position, the available balance may change with fluctuations in the mark price, leading to discrepancies in the available balance for the same version number.
+                  sampleValue: "2118"
+                  type: LONG
+                - name: timestamp
+                  description: Last modified time
+                  sampleValue: "1741164936624"
+                  type: LONG
+                - name: maxWithdrawAmount
+                  description: Max withdraw amount
+                  sampleValue: 285.645841096
+                  type: BIGDECIMAL

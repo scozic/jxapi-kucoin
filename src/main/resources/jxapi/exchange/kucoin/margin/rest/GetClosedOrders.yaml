@@ -1,0 +1,61 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetClosedOrders
+        httpMethod: GET
+        url: v3/hf/margin/orders/done
+        description: >
+          This interface retrieves all closed margin trading order lists.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/orders/get-closed-orders
+        requestWeight: 4
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: symbol
+              description: >
+                The trading pair, e.g., BTC-USDT.
+              type: STRING
+              sampleValue: "BTC-USDT"
+            - name: tradeType
+              description: >
+                The order type, either MARGIN_TRADE (cross margin) or MARGIN_ISOLATED_TRADE (isolated margin). See ${constants.margin.tradeType} for enum values.
+              type: STRING
+              sampleValue: ${constants.margin.tradeType.marginTrade}
+            - name: side
+              description: >
+                buy or sell. See ${constants.orderSide} for enum values.
+              type: STRING
+            - name: type
+              description: >
+                limit or market. See ${constants.margin.orderType} for enum values.
+              type: STRING
+            - name: lastId
+              description: >
+                Used for pagination to get the next batch of data.
+              type: LONG
+            - name: limit
+              description: >
+                Number of results per page (default 20, max 100).
+              type: INT
+              sampleValue: 20
+            - name: startAt
+              description: >
+                Start time in milliseconds.
+              type: LONG
+            - name: endAt
+              description: >
+                End time in milliseconds.
+              type: LONG
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: A list of order objects.
+              type: OBJECT_LIST
+              objectName: KucoinOpenMarginOrder

@@ -1,0 +1,100 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetAllTickers
+        httpMethod: GET
+        url: v1/market/allTickers
+        description:
+          Request market tickers for all the trading pairs in the market (including 24h volume). On the rare occasion that we will change the currency name,
+          if you still want the changed symbol name, you can use the symbolName field instead of the symbol field via 'Get all tickers' endpoint.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-all-tickers
+        requestWeight: 15
+        rateLimits:
+          - public
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: List of market information for each market symbol
+              properties:
+                - name: time
+                  description: Timestamp
+                  sampleValue: 1550653727731
+                  type: LONG
+                - name: ticker
+                  type: OBJECT_LIST
+                  description: Statistics for a ticker in the last 24 hours
+                  objectName: Kucoin24hrStats
+                  properties:
+                    - name: symbol
+                      description: <a href="https://docs.kucoin.com/#get-symbols-list">symbol</a>
+                      sampleValue: BTC-USDT
+                      type: STRING
+                    - name: symbolName
+                      description: Name of trading pairs, it would change after renaming
+                      sampleValue: GALA-USDT
+                      type: STRING
+                    - name: buy
+                      description: Best bid price
+                      sampleValue: "11328.9"
+                      type: BIGDECIMAL
+                    - name: sell
+                      description: Best ask price
+                      sampleValue: "11329"
+                      type: BIGDECIMAL
+                    - name: changeRate
+                      description: 24h change rate
+                      sampleValue: "-0.0055"
+                      type: BIGDECIMAL
+                    - name: changePrice
+                      description: 24h change price
+                      sampleValue: "-63.6"
+                      type: BIGDECIMAL
+                    - name: high
+                      description: 24h highest price
+                      sampleValue: "11610"
+                      type: BIGDECIMAL
+                    - name: low
+                      description: 24h lowest price
+                      sampleValue: "11200"
+                      type: BIGDECIMAL
+                    - name: vol
+                      description: 24h volume, executed based on base currency
+                      sampleValue: "2282.70993217"
+                      type: BIGDECIMAL
+                    - name: volValue
+                      description: 24h traded amount in quote currency
+                      sampleValue: "25984946.157790431"
+                      type: BIGDECIMAL
+                    - name: last
+                      description: Last price
+                      sampleValue: "25984946.157790431"
+                      type: BIGDECIMAL
+                    - name: averagePrice
+                      description: Average trading price in the last 24 hours
+                      sampleValue: "11360.66065903"
+                      type: BIGDECIMAL
+                    - name: takerFeeRate
+                      description: Basic Taker Fee
+                      sampleValue: "0.001"
+                      type: BIGDECIMAL
+                    - name: makerFeeRate
+                      description: Basic Maker Fee
+                      sampleValue: "0.001"
+                      type: BIGDECIMAL
+                    - name: takerCoefficient
+                      description: Taker fee coefficient
+                      sampleValue: "1"
+                      type: BIGDECIMAL
+                    - name: makerCoefficient
+                      description: Maker fee coefficient
+                      sampleValue: "1"
+                      type: BIGDECIMAL

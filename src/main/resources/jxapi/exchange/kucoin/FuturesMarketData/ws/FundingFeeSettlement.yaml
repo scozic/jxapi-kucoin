@@ -1,0 +1,44 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    websocketEndpoints:
+      - name: FundingFeeSettlement
+        topic: /contract/announcement:${request}
+        description: Subscribe this topic to get Funding Fee Settlement.
+        docUrl: https://www.kucoin.com/docs-new/3470084w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: XBTUSDTM
+        message:
+          properties:
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: topic
+              description: Topic of the message
+              sampleValue: /contract/announcement
+            - name: subject
+              description: Subject of the message
+              sampleValue: funding.begin
+            - name: data
+              description: Data payload
+              properties:
+                - name: symbol
+                  description: Symbol
+                  sampleValue: XBTUSDTM
+                - name: fundingTime
+                  description: Funding time
+                  sampleValue: 1551770400000
+                  type: LONG
+                - name: fundingRate
+                  description: Funding rate
+                  sampleValue: -0.002966
+                  type: BIGDECIMAL
+                - name: timestamp
+                  description: Timestamp
+                  sampleValue: 1551770400000
+                  type: LONG

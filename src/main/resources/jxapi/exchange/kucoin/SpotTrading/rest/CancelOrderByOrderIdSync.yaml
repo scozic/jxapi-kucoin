@@ -1,0 +1,53 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: CancelOrderByOrderIdSync
+        httpMethod: DELETE
+        url: v1/hf/orders/sync
+        description: >
+          Request via this interface to cancel an order via the orderId synchronously.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/cancel-order-by-orderld-sync
+        requestWeight: 1
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: orderId
+              description: Unique order ID created by users to identify their orders.
+              sampleValue: 681ba768851ccd00072175ed
+              type: STRING
+              in: PATH
+            - name: symbol
+              description: The trading pair symbol (e.g., BTC-USDT).
+              sampleValue: BTC-USDT
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              objectName: KucoinSpotCancelOrderByOrderIdSyncResponseData
+              properties:
+                - name: orderId
+                  description: The ID of the canceled order.
+                  type: STRING
+                - name: originSize
+                  description: The original size of the order.
+                  type: BIGDECIMAL
+                - name: dealSize
+                  description: The size that was filled.
+                  type: BIGDECIMAL
+                - name: remainSize
+                  description: The remaining size of the order.
+                  type: BIGDECIMAL
+                - name: canceledSize
+                  description: The cumulative size that was canceled.
+                  type: BIGDECIMAL
+                - name: status
+                  description: The final status of the order, which can be open or done.
+                  type: STRING

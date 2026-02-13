@@ -1,0 +1,8 @@
+id: Kucoin
+apis:
+- name: SpotMarketData
+  description: Kucoin spot market data API
+  httpUrl: "${constants.spotUrl}"
+  defaultHttpClient: public
+  defaultWebsocketClient: publicSpotWs
+  

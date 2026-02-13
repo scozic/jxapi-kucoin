@@ -1,0 +1,94 @@
+id: Kucoin
+apis:
+  - name: Earn
+    restEndpoints:
+      - name: GetStructuredProductOrders
+        description: >
+          This endpoint allows you to query your structured product orders.
+        docUrl: https://www.kucoin.com/docs-new/3474371e0
+        requestWeight: 4
+        rateLimits:
+          - spot
+        httpMethod: GET
+        url: v1/struct-earn/orders
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest
+          properties:
+            - name: categories
+              description: "Product categories. Multiple categories are supported. See ${constants.earn.dualProductCategory} for enumeration."
+              type: STRING
+              sampleValue: ${constants.earn.dualProductCategory.dual_classic}
+            - name: orderId
+              description: The specific order ID.
+              type: STRING
+            - name: investCurrency
+              description: The investment currency.
+              type: STRING
+              sampleValue: "BTC"
+            - name: currentPage
+              description: The current page number.
+              type: INT
+              sampleValue: 1
+            - name: pageSize
+              description: The number of records per page.
+              type: INT
+              sampleValue: 15
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              objectName: KucoinStructuredProductOrderPage
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              properties:
+                - name: totalNum
+                  type: INT
+                - name: totalPage
+                  type: INT
+                - name: currentPage
+                  type: INT
+                - name: pageSize
+                  type: INT
+                - name: items
+                  type: OBJECT_LIST
+                  objectName: KucoinStructuredProductOrder
+                  properties:
+                    - name: category
+                      description: "See ${constants.earn.dualProductCategory} for enumeration."
+                      type: STRING
+                    - name: side
+                      description: "See ${constants.earn.dualProductSide} for enumeration."
+                      type: STRING
+                    - name: duration
+                      type: STRING
+                    - name: apr
+                      type: STRING
+                    - name: investCurrency
+                      type: STRING
+                    - name: strikeCurrency
+                      type: STRING
+                    - name: investAmount
+                      type: STRING
+                    - name: settleAmount
+                      type: STRING
+                    - name: settleCurrency
+                      type: STRING
+                    - name: targetPrice
+                      type: STRING
+                    - name: settlePrice
+                      type: STRING
+                    - name: expirationTime
+                      type: LONG
+                    - name: orderId
+                      type: STRING
+                    - name: status
+                      description: "See ${constants.earn.savingProductStatus} for enumeration."
+                      type: STRING

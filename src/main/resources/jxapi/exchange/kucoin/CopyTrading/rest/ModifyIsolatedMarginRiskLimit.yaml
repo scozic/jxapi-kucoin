@@ -1,0 +1,35 @@
+id: Kucoin
+apis:
+  - name: CopyTrading
+    restEndpoints:
+      - name: ModifyIsolatedMarginRiskLimit
+        httpMethod: POST
+        url: v1/copy-trade/futures/position/risk-limit-level/change
+        description: >
+          Modify the risk limit for an isolated margin position.
+        docUrl: https://www.kucoin.com/docs-new/rest/copy-trading/modify-isolated-margin-risk-limit
+        requestWeight: 2
+        rateLimits:
+          - copyTrading
+        request:
+          properties:
+            - name: symbol
+              description: "Ticker symbol of the contract"
+              type: STRING
+              sampleValue: "XBTUSDM"
+            - name: level
+              description: "New risk limit level"
+              type: INT
+              sampleValue: "1"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+              type: STRING
+            - name: data
+              description: "Indicates if the operation was successful"
+              type: BOOLEAN
+              sampleValue: "true"

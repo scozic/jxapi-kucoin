@@ -1,0 +1,7 @@
+id: Kucoin
+apis:
+  - name: Convert
+    description: Kucoin convert (currency swapi) API, see <a href="https://www.kucoin.com/docs-new/rest/convert/introduction">Convert API Documentation</a>
+    defaultHttpClient: privateSpot
+    httpUrl: ${constants.spotUrl}
+    defaultWebsocketClient: privateSpotWs

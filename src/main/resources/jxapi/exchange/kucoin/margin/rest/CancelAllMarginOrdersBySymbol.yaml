@@ -1,0 +1,36 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: CancelAllMarginOrdersBySymbol
+        httpMethod: DELETE
+        url: v3/hf/margin/orders
+        description: >
+          This interface can cancel all open Margin orders by symbol.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/orders/cancel-all-orders-by-symbol
+        requestWeight: 4
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: symbol
+              description: >
+                The trading symbol.
+              type: STRING
+              sampleValue: "BTC-USDT"
+            - name: tradeType
+              description: >
+                The transaction type. MARGIN_TRADE (cross margin trade), MARGIN_ISOLATED_TRADE (isolated margin trade). See ${constants.margin.tradeType} for enum values.
+              type: STRING
+              sampleValue: ${constants.margin.tradeType.marginTrade}
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: success
+              type: STRING
+              sampleValue: "success"

@@ -1,0 +1,35 @@
+id: Kucoin
+apis:
+  - name: CopyTrading
+    restEndpoints:
+      - name: RemoveIsolatedMargin
+        httpMethod: POST
+        url: v1/copy-trade/futures/position/margin/withdraw-margin
+        description: >
+          Remove Isolated Margin Manually.
+        docUrl: https://www.kucoin.com/docs-new/rest/copy-trading/remove-isolated-margin
+        requestWeight: 4
+        rateLimits:
+          - copyTrading
+        request:
+          properties:
+            - name: symbol
+              description: "Symbol of the contract"
+              type: STRING
+              sampleValue: "XBTUSDTM"
+            - name: withdrawAmount
+              description: "The size of the position that can be deposited. If it is USDT-margin, it represents the amount of USDT. If it is coin-margin, this value represents the number of coins."
+              type: BIGDECIMAL
+              sampleValue: "0.0000001"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+              type: STRING
+            - name: data
+              description: "The size of the position deposited. If it is USDT-margin, it represents the amount of USDT. If it is coin-margin, this value represents the number of coins."
+              type: BIGDECIMAL
+              sampleValue: "0.1"

@@ -1,0 +1,33 @@
+id: Kucoin
+apis:
+  - name: Funding
+    restEndpoints:
+      - name: GetActualFeeFutures
+        httpMethod: GET
+        url: "${constants.futuresUrl}/trade-fees"
+        description: >
+          This interface is for the actual fee rate of the futures trading pair. 
+          The fee rate of your sub-account is the same as that of the master account.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/trade-fee/get-actual-fee-futures
+        requestWeight: 3
+        rateLimits:
+          - futures
+        request:
+            name: symbol
+            description: Trading pair
+            sampleValue: XBTUSDTM
+            type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              type: OBJECT
+              objectName: KucoinTradingPairActualFee
+        

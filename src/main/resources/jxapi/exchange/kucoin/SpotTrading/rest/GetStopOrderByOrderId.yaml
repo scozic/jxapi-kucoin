@@ -1,0 +1,20 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: GetStopOrderByOrderId
+        httpMethod: GET
+        url: v1/stop-order
+        description: Request via this endpoint to get a single order info by order ID.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/get-stop-order-by-orderld
+        requestWeight: 2
+        rateLimits:
+          - spot
+        request:
+          name: orderId
+          description: <a href="https://docs.kucoin.com/#list-orders">Order ID</a>, unique ID of the order.
+          sampleValue: 681bb4cb1d47db00079ff051
+          in: PATH
+        response:
+          objectName: KucoinSpotOrder
+        

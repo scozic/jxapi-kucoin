@@ -1,0 +1,51 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetBorrowInterestRate
+        httpMethod: GET
+        url: v3/margin/borrowRate
+        description: >
+          Query borrowing interest rates.
+        docUrl: https://www.kucoin.com/docs-new/3474772e0
+        requestWeight: 1
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: vipLevel
+              description: >
+                VIP level
+              type: STRING
+            - name: currency
+              description: >
+                Comma-separated list of currencies
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              properties:
+                - name: vipLevel
+                  description: VIP level
+                  type: STRING
+                - name: currencies
+                  description: List of currencies with their borrow rates
+                  type: OBJECT_LIST
+                  objectName: KucoinBorrowInterestRate
+                  properties:
+                    - name: currency
+                      description: Currency
+                      type: STRING
+                    - name: hourly
+                      description: Hourly borrow rate
+                      type: BIGDECIMAL
+                    - name: annualized
+                      description: Annualized borrow rate
+                      type: BIGDECIMAL

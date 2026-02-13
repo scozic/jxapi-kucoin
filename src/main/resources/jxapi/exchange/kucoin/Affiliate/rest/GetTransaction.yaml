@@ -1,0 +1,80 @@
+id: Kucoin
+apis:
+  - name: Affiliate
+    restEndpoints:
+      - name: GetTransaction
+        description: >
+          This endpoint allows users to retrieve transaction information by time.
+        docUrl: https://www.kucoin.com/docs-new/3474738e0
+        requestWeight: 30
+        rateLimits:
+          - spot
+        httpMethod: GET
+        url: v2/affiliate/queryTransactionByTime
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequestV2
+          properties:
+            - name: uid
+              description: The UID of the invitee.
+              type: STRING
+            - name: tradeType
+              description: "Trade type. See ${constants.affiliate.affiliateTradeType} for enumeration."
+              type: STRING
+              sampleValue: ${constants.affiliate.affiliateTradeType.spot}
+            - name: tradeStartAt
+              description: Transaction start time (13-digit timestamp).
+              type: LONG
+            - name: tradeEndAt
+              description: Transaction end time (13-digit timestamp).
+              type: LONG
+            - name: lastId
+              description: Offset ID for pagination.
+              type: STRING
+            - name: direction
+              description: "Page direction. See ${constants.affiliate.paginationDirection} for enumeration."
+              type: STRING
+              sampleValue: ${constants.affiliate.paginationDirection.next}
+            - name: pageSize
+              description: Number of entries per page (1-500, default 10).
+              type: INT
+              sampleValue: 10
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseV5
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "success"
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinAffiliateTransaction
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseV5Item
+              properties:
+                - name: uid
+                  type: STRING
+                - name: tradeTime
+                  type: LONG
+                - name: tradeType
+                  description: "See ${constants.affiliate.affiliateTradeType} for enumeration."
+                  type: STRING
+                - name: tradeCurrency
+                  type: STRING
+                - name: tradeAmount
+                  type: BIGDECIMAL
+                - name: tradeAmountU
+                  type: BIGDECIMAL
+                - name: feeU
+                  type: BIGDECIMAL
+                - name: commission
+                  type: BIGDECIMAL
+                - name: currency
+                  type: STRING
+                - name: lastId
+                  type: STRING

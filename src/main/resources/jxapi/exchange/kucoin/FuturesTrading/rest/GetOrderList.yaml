@@ -1,0 +1,219 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: GetOrderList
+        httpMethod: GET
+        url: v1/orders
+        description: List your current orders.
+        docUrl: https://www.kucoin.com/docs/rest/futures-trading/orders/get-order-list
+        requestWeight: 2
+        rateLimits:
+          - futures
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest   
+          properties:
+            - name: currentPage
+              description: "[Optional] Current request page."
+              sampleValue: 1
+              type: INT
+            - name: pageSize
+              description: "[Optional] pageSize, The default pageSize is 50, The maximum cannot exceed 1000"
+              sampleValue: 50
+              type: INT
+            - name: status
+              description: "[Optional] <strong>active</strong> or <strong>done</strong>(<strong>done</strong> as default), Only list orders with a specific status."
+              sampleValue: active
+              type: STRING
+            - name: symbol
+              description: "[Optional] Symbol of the contract"
+              type: STRING
+            - name: side
+              description: "[Optional] <strong>buy</strong> or <strong>sell</strong>.<br>See ${constants.orderSide} for enum values."
+              type: STRING
+            - name: type
+              description: "[Optional] <strong>limit</strong>, <strong>market</strong>, <strong>limit_stop</strong> or <strong>market_stop</strong>.<br>See ${constants.futuresOrderType} for enum values."
+              type: STRING
+            - name: startAt
+              description: "[Optional] Start time (millisecond)."
+              type: LONG
+            - name: endAt
+              description: "[Optional] End time (millisecond)."
+              type: LONG
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              description: Futures order list page
+              properties:
+                - name: currentPage
+                  description: Current page
+                  sampleValue: 1
+                  type: INT
+                - name: pageSize
+                  description: Request max number of items
+                  sampleValue: 500
+                  type: INT
+                - name: totalPage
+                  description: Page count
+                  sampleValue: 1
+                  type: INT
+                - name: totalNum
+                  description: Request max number of items
+                  sampleValue: 153408
+                  type: INT
+                - name: items
+                  description: Order list
+                  objectName: KucoinFuturesOrderData
+                  type: OBJECT_LIST
+                  properties:
+                    - name: id
+                      description: Order ID, the ID of an order.
+                      sampleValue: 5c35c02703aa673ceec2a168
+                      type: STRING
+                    - name: symbol
+                      description: Symbol of the contract
+                      sampleValue: ETH-USDT
+                      type: STRING
+                    - name: type
+                      description: Order type, ${constants.futuresTrading.orderType.market} order or ${constants.futuresTrading.orderType.limit}.
+                      sampleValue: limit
+                      type: STRING
+                    - name: side
+                      description: Transaction side. See ${constants.orderSide} for enum values.
+                      sampleValue: buy
+                      type: STRING
+                    - name: price
+                      description: Order price
+                      sampleValue: "10"
+                      type: BIGDECIMAL
+                    - name: size
+                      description: Order quantity
+                      sampleValue: "2"
+                      type: BIGDECIMAL
+                    - name: value
+                      description: Order value (price * size)
+                      sampleValue: "138.3442"
+                      type: BIGDECIMAL
+                    - name: stp
+                      description: Self trade prevention, include <strong>CN</strong>, <strong>CO</strong>, <strong>DC</strong>, <strong>CB</strong>. See ${constants.futuresTrading.selfTradePrevention} for enum values.
+                      type: STRING
+                    - name: stop
+                      description: Stop order type, either ${constants.futuresTrading.stop.down} or ${constants.futuresTrading.stop.up}.
+                      type: STRING
+                    - name: stopTriggered
+                      description: Stop order is triggered or not
+                      sampleValue: false
+                      type: BOOLEAN
+                    - name: stopPrice
+                      description: Stop price
+                      sampleValue: "10"
+                      type: BIGDECIMAL
+                    - name: timeInForce
+                      description: Time In Force, include ${constants.futuresTrading.timeInForce.gtc}, ${constants.futuresTrading.timeInForce.ioc}. See ${constants.futuresTrading.timeInForce} for enum values.
+                      type: STRING
+                    - name: postOnly
+                      description: Post only
+                      sampleValue: false
+                      type: BOOLEAN
+                    - name: hidden
+                      description: Hidden order
+                      sampleValue: false
+                      type: BOOLEAN
+                    - name: iceberg
+                      description: Iceberg order
+                      sampleValue: false
+                      type: BOOLEAN
+                    - name: leverage
+                      description: Leverage of the order
+                      sampleValue: "20"
+                      type: BIGDECIMAL
+                    - name: forceHold
+                      description: A mark to forcibly hold the funds for an order
+                      sampleValue: false
+                      type: BOOLEAN
+                    - name: closeOrder
+                      description: A mark to close the position
+                      sampleValue: false
+                      type: BOOLEAN
+                    - name: visibleSize
+                      description: Visible size of the iceberg order
+                      sampleValue: "0"
+                      type: BIGDECIMAL
+                    - name: clientOid
+                      description: User-entered order unique mark
+                      sampleValue: myClientID
+                      type: STRING
+                    - name: remark
+                      description: Remark
+                      sampleValue: myClientID
+                      type: STRING
+                    - name: tags
+                      description: Tag order source
+                      type: STRING
+                    - name: isActive
+                      description: >
+                        Order status, <strong>true</strong> and <strong>false</strong>. If <strong>true</strong>, the order is active, if <strong>false</strong>,
+                        the order is filled or cancelled
+                      sampleValue: false
+                      type: BOOLEAN
+                    - name: cancelExist
+                      description: Order cancellation transaction record
+                      sampleValue: false
+                      type: BOOLEAN
+                    - name: createdAt
+                      description: Time the order was created
+                      sampleValue: 1547026471000
+                      type: LONG
+                    - name: updatedAt
+                      description: Time the order was last updated
+                      sampleValue: 1547026471000
+                      type: LONG
+                    - name: endAt
+                      description: End time
+                      sampleValue: 1547026471000
+                      type: LONG
+                    - name: orderTime
+                      description: Order create time in nanoseconds
+                      sampleValue: 1547026471000
+                      type: LONG
+                    - name: settleCurrency
+                      description: Settlement currency
+                      sampleValue: XBT
+                      type: STRING
+                    - name: status
+                      description: "Order status: <strong>open</strong> or <strong>done</strong>. See ${constants.futuresTrading.orderStatus} for enum values."
+                      sampleValue: open
+                      type: STRING
+                    - name: tradeType
+                      description: The type of trading
+                      sampleValue: TRADE
+                      type: STRING
+                    - name: filledValue
+                      description: Value of the executed orders
+                      sampleValue: "0"
+                      type: BIGDECIMAL
+                    - name: filledSize
+                      description: Executed order quantity
+                      sampleValue: "0"
+                      type: BIGDECIMAL
+                    - name: reduceOnly
+                      description: A mark to reduce the position size only
+                      sampleValue: false
+                      type: BOOLEAN
+                    - name: marginMode
+                      description: Margin mode, include ISOLATED (isolated), CROSS (cross margin). See ${constants.futuresTrading.marginMode} for enum values.
+                      type: STRING  

@@ -1,0 +1,61 @@
+id: Kucoin
+apis:
+  - name: Margin
+    websocketEndpoints:
+      - name: IsolatedMarginPosition
+        topic: /margin/isolatedPosition:${request}
+        description: The system will push the change event when the position status changes, Or push the current debt message periodically when there is a liability.
+        docUrl: https://www.kucoin.com/docs-new/3470079w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: BTC-USDT
+        message:
+          properties:
+            - name: topic
+              sampleValue: /margin/isolatedPosition:BTC-USDT
+            - name: subject
+              sampleValue: positionChange
+            - name: type
+              sampleValue: message
+            - name: userId
+              sampleValue: "633559791e1cbc0001f319bc"
+            - name: channelType
+              sampleValue: private
+            - name: data
+              properties:
+                - name: tag
+                  description: Isolated margin symbol
+                  sampleValue: BTC-USDT
+                - name: status
+                  description: Position status
+                  sampleValue: DEBT
+                - name: statusBizType
+                  description: Status type
+                  sampleValue: DEFAULT_DEBT
+                - name: accumulatedPrincipal
+                  description: Accumulated principal
+                  sampleValue: "5.01"
+                  type: BIGDECIMAL
+                - name: changeAssets
+                  description: Change assets
+                  type: OBJECT_MAP
+                  properties:
+                    - name: total
+                      sampleValue: "0.00043478"
+                      type: BIGDECIMAL
+                    - name: hold
+                      sampleValue: "0"
+                      type: BIGDECIMAL
+                    - name: liabilityPrincipal
+                      sampleValue: "0"
+                      type: BIGDECIMAL
+                    - name: liabilityInterest
+                      sampleValue: "0"
+                      type: BIGDECIMAL
+                - name: timestamp
+                  sampleValue: 1730121097742
+                  type: LONG

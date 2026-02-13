@@ -1,0 +1,90 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetIsolatedMarginAccountListV1
+        httpMethod: GET
+        url: v1/isolated/accounts
+        description: >
+          This API endpoint returns all isolated margin accounts of the current user.
+        docUrl: https://www.kucoin.com/docs/rest/margin-trading/isolated-margin/get-isolated-margin-account-info
+        requestWeight: 50
+        rateLimits:
+          - spot
+        request:
+          name: balanceCurrency
+          description: >
+            The pricing coin, currently only supports USDT, KCS, and BTC. Defaults to BTC if no value is passed.
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              objectName: KucoinIsolatedMarginAccountInfo
+              properties:
+                - name: totalConversionBalance
+                  description: The total balance of the isolated margin account (in the specified coin)
+                  sampleValue: 3.4939947
+                  type: STRING
+                - name: liabilityConversionBalance
+                  description: Total liabilities of the isolated margin account (in the specified coin)
+                  sampleValue: 0.00239066
+                  type: STRING
+                - name: assets
+                  description: Account list
+                  type: OBJECT_LIST
+                  objectName: KucoinSingleIsolatedMarginAccountInfo
+                  properties:
+                    - name: symbol
+                      description: Trading pairs, with each trading pair indicating a position
+                      sampleValue: "MANA-USDT"
+                    - name: status
+                      description: >
+                        The position status: Existing liabilities-DEBT, No liabilities-CLEAR, Bankrupcy (after position enters a negative balance)-BANKRUPTCY, Existing borrowings-IN_BORROW, Existing repayments-IN_REPAY, Under liquidation-IN_LIQUIDATION, Under auto-renewal assets-IN_AUTO_RENEW .
+                      sampleValue: CLEAR
+                    - name: debtRatio
+                      description: Debt ratio
+                      sampleValue: 0
+                      type: STRING
+                    - name: baseAsset
+                      description: base coin type asset info
+                      objectName: KucoinIsolatedMarginAccountAssetInfo
+                      properties:
+                        - name: currency
+                          description: Coin type Code
+                          sampleValue: MANA
+                        - name: totalBalance
+                          description: Current coin type asset amount
+                          sampleValue: 0
+                          type: BIGDECIMAL
+                        - name: holdBalance
+                          description: Current coin type frozen
+                          sampleValue: 0
+                          type: BIGDECIMAL
+                        - name: availableBalance
+                          description: The available balance (available assets - frozen assets)
+                          sampleValue: 0
+                          type: BIGDECIMAL
+                        - name: liability
+                          description: Current coin type liability
+                          sampleValue: 0
+                          type: BIGDECIMAL
+                        - name: interest
+                          description: Current coin type interest
+                          sampleValue: 0
+                          type: BIGDECIMAL
+                        - name: borrowableAmount
+                          description: The maximum amount that can be borrowed
+                          sampleValue: 0
+                          type: BIGDECIMAL
+                    - name: quoteAsset
+                      description: quote coin type asset info
+                      objectName: KucoinIsolatedMarginAccountAssetInfo

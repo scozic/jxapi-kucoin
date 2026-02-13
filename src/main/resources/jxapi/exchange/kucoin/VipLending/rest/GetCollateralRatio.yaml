@@ -1,0 +1,43 @@
+id: Kucoin
+apis:
+  - name: VipLending
+    restEndpoints:
+      - name: GetCollateralRatio
+        description: >
+          Retrieve the gradient collateral rate for each currency.
+        docUrl: https://www.kucoin.com/docs-new/rest/vip-lending/get-collateral-ratio
+        requestWeight: 4
+        rateLimits:
+          - spot
+        httpMethod: GET
+        url: v1/otc-loan/discount-rate-configs
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinCollateralRatio
+              properties:
+                - name: currency
+                  description: The currency symbol.
+                  type: STRING
+                  sampleValue: "BTC"
+                - name: usdtLevels
+                  description: A list of gradient configuration objects, where the amount is converted into USDT.
+                  type: OBJECT_LIST
+                  objectName: KucoinUsdtLevel
+                  properties:
+                    - name: left
+                      description: The lower bound of the USDT amount.
+                      type: STRING
+                    - name: right
+                      description: The upper bound of the USDT amount.
+                      type: STRING
+                    - name: discountRate
+                      description: The corresponding discount rate for that range.
+                      type: STRING

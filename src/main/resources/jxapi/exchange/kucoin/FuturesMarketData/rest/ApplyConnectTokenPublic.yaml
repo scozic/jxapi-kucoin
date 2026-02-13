@@ -1,0 +1,52 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    restEndpoints:
+      - name: ApplyConnectTokenPublic
+        httpMethod: POST
+        url: v1/bullet-public
+        description: You need to apply for one of the two tokens below to create a websocket connection.
+        docUrl: https://www.kucoin.com/docs-new/websocket-api/base-info/get-public-token-futures
+        requestWeight: 10
+        rateLimits:
+          - public
+        requestHasBody: false
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              properties:
+                - name: token
+                  description: Token
+                  sampleValue: 2neAiuYvAU61ZDXANAGAsiL4-iAExhsBXZxftpOeh_55i3Ysy2q2LEsEWU64mdzUOPusi34M_wGoSf7iNyEWJ4aBZXpWhrmY9jKtqkdWoFa75w3istPvPtiYB9J6i9GjsxUuhPw3BlrzazF6ghq4L_u0MhKxG3x8TeN4aVbNiYo=.mvnekBb8DJegZIgYLs2FBQ==
+                - name: instanceServers
+                  description: List of market information for each market symbol
+                  type: OBJECT_LIST
+                  properties:
+                    - name: endpoint
+                      description: Websocket server address for establishing connection
+                      sampleValue: wss://ws-api-futures.kucoin.com/
+                    - name: protocol
+                      description: Protocol supported
+                      sampleValue: websocket
+                    - name: encrypt
+                      description: Indicate whether SSL encryption is used
+                      sampleValue: true
+                      type: BOOLEAN
+                    - name: pingInterval
+                      description: Recommended to send ping interval in millisecond
+                      sampleValue: 18000
+                      type: LONG
+                    - name: pingTimeout
+                      description: Recommended to send ping timeout in millisecond
+                      sampleValue: 10000
+                      type: LONG
+        

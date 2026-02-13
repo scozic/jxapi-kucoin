@@ -1,0 +1,76 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetOrderByOrderId
+        httpMethod: GET
+        url: v3/hf/margin/orders
+        description: >
+          This interface retrieves a single margin order by orderId.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/orders/get-order-by-orderld
+        requestWeight: 4
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: orderId
+              description: >
+                The unique order ID.
+              type: STRING
+              in: PATH
+            - name: symbol
+              description: >
+                The trading pair, e.g., BTC-USDT.
+              type: STRING
+              sampleValue: "BTC-USDT"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: An order object.
+              type: OBJECT
+              objectName: KucoinMarginOrder
+              properties:
+                - name: id
+                  description: Order ID
+                  type: STRING
+                - name: symbol
+                  description: Trading pair
+                  type: STRING
+                - name: opType
+                  description: Operation type
+                  type: STRING
+                - name: type
+                  description: Order type, limit or market
+                  type: STRING
+                - name: side
+                  description: Order side, buy or sell
+                  type: STRING
+                - name: price
+                  description: Order price
+                  type: BIGDECIMAL
+                - name: size
+                  description: Order size
+                  type: BIGDECIMAL
+                - name: funds
+                  description: Order funds
+                  type: BIGDECIMAL
+                - name: dealSize
+                  description: Executed size
+                  type: BIGDECIMAL
+                - name: dealFunds
+                  description: Executed funds
+                  type: BIGDECIMAL
+                - name: fee
+                  description: Order fee
+                  type: BIGDECIMAL
+                - name: feeCurrency
+                  description: Fee currency
+                  type: STRING
+                - name: active
+                  description: Is the order active
+                  type: BOOLEAN

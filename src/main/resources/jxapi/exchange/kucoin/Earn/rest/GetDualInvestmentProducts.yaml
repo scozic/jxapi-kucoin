@@ -1,0 +1,85 @@
+id: Kucoin
+apis:
+  - name: Earn
+    restEndpoints:
+      - name: GetDualInvestmentProducts
+        description: >
+          Retrieves available dual investment products.
+        docUrl: https://www.kucoin.com/docs-new/3474370e0
+        requestWeight: 4
+        rateLimits:
+          - spot
+        httpMethod: GET
+        url: v1/struct-earn/dual/products
+        request:
+          properties:
+            - name: category
+              description: "Specifies the product category. See ${constants.earn.dualProductCategory} for enumeration."
+              type: STRING
+              sampleValue: ${constants.earn.dualProductCategory.dual_classic}
+            - name: strikeCurrency
+              description: The strike currency.
+              type: STRING
+              sampleValue: "USDT"
+            - name: investCurrency
+              description: The investment currency.
+              type: STRING
+              sampleValue: "BTC"
+            - name: side
+              description: "The direction, either CALL or PUT. See ${constants.earn.dualProductSide} for enumeration."
+              type: STRING
+              sampleValue: ${constants.earn.dualProductSide.call}
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "success"
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinDualInvestmentProduct
+              properties:
+                - name: category
+                  description: "Product category. See ${constants.earn.dualProductCategory} for enumeration."
+                  type: STRING
+                - name: productId
+                  type: STRING
+                - name: targetCurrency
+                  type: STRING
+                - name: quoteCurrency
+                  type: STRING
+                - name: investCurrency
+                  type: STRING
+                - name: strikeCurrency
+                  type: STRING
+                - name: strikePrice
+                  type: STRING
+                - name: protectPrice
+                  type: STRING
+                - name: annualRate
+                  type: STRING
+                - name: expirationTime
+                  type: LONG
+                - name: side
+                  description: "See ${constants.earn.dualProductSide} for enumeration."
+                  type: STRING
+                - name: expectSettleTime
+                  type: LONG
+                - name: duration
+                  type: STRING
+                - name: lowerLimit
+                  type: STRING
+                - name: upperLimit
+                  type: STRING
+                - name: availableScale
+                  type: STRING
+                - name: soldStatus
+                  description: "See ${constants.earn.dualProductSoldStatus} for enumeration."
+                  type: STRING
+                - name: increment
+                  type: STRING

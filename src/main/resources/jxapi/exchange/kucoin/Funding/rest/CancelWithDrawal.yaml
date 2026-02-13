@@ -1,0 +1,37 @@
+id: Kucoin
+apis:
+  - name: Funding
+    restEndpoints:
+      - name: CancelWithdrawal
+        httpMethod: DELETE
+        url: v1/withdrawals
+        description: >
+          <strong>TIP</strong>:
+          On the WEB end, you can open the switch of specified favorite addresses for withdrawal, and when it is turned on, it will verify whether 
+          your withdrawal address(including chain) is a favorite address(it is case sensitive); if it fails validation, it will respond with the 
+          error message {"msg":"Already set withdraw whitelist, this address is not favorite address","code":"260325"}.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/withdrawals/cancel-withdrawal
+        requestWeight: 20
+        rateLimits:
+          - management
+        request:
+          name: withdrawalId
+          description: Path parameter, a unique ID for a withdrawalId
+          sampleValue: 5bffb63303aa675e8bbe18f9
+          in: PATH
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              properties:
+                - name: withdrawalId
+                  description: Withdrawal ID
+                  sampleValue: 5bffb63303aa675e8bbe18f9

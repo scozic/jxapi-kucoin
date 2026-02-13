@@ -1,0 +1,61 @@
+id: Kucoin
+apis:
+  - name: UAMarketData
+    restEndpoints:
+      - name: GetOrderBook
+        httpMethod: GET
+        url: ua/v1/market/orderbook
+        description: Query order book depth information (aggregated by price).
+        docUrl: https://www.kucoin.com/docs-new/rest/ua/get-orderbook
+        requestWeight: 3
+        rateLimits:
+          - public
+        request:
+          properties:
+            - name: tradeType
+              description: Product type
+            - name: symbol
+              description: Trading pair symbol
+            - name: limit
+              description: Order book level
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: Response code
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description
+              sampleValue: success
+            - name: data
+              objectName: KucoinUAOrderBookResponseData
+              properties:
+                - name: tradeType
+                  description: Product type
+                - name: symbol
+                  description: Trading pair symbol
+                - name: sequence
+                  description: Sequence number
+                - name: bids
+                  description: Bids, ordered from high to low
+                  type: OBJECT_LIST
+                  objectName: KucoinOrderBookEntry
+                  properties:
+                    - name: price
+                      description: Price
+                      type: BIGDECIMAL
+                    - name: size
+                      description: Size
+                      type: BIGDECIMAL
+                - name: asks
+                  description: Asks, ordered from low to high
+                  type: OBJECT_LIST
+                  objectName: KucoinOrderBookEntry
+                  properties:
+                    - name: price
+                      description: Price
+                      type: BIGDECIMAL
+                    - name: size
+                      description: Size
+                      type: BIGDECIMAL

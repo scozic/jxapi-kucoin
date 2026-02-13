@@ -1,0 +1,42 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: CancelOrderByOrderId
+        httpMethod: DELETE
+        url: v1/orders
+        description: >
+          Cancel an order (including a stop order).<br/> You will receive a success message once the system has received the cancellation request. The cancellation
+          request will be processed by the matching engine in sequence. To know if the request has been processed, you may check the order status or update message from the
+          pushes.<br/>The order ID is the server-assigned order ID, not the specified clientOid.<br/>If the order cannot be canceled (already filled or previously canceled,
+          etc.), then an error response will indicate the reason in the message field.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/orders/cancel-order-by-orderld
+        requestWeight: 1
+        rateLimits:
+          - futures
+        request:
+          name: orderId
+          description: The order ID is the server-assigned order ID, not the specified clientOid.
+          sampleValue: 5bd6e9286d99522a52e458de
+          type: STRING
+          in: PATH
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: List of market information for each market symbol
+              type: OBJECT
+              properties:
+                - name: cancelledOrderIds
+                  description: ID of the order on the market
+                  sampleValue: 5bd6e9286d99522a52e458de
+                  type: STRING_LIST

@@ -1,0 +1,60 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    restEndpoints:
+      - name: GetMarkPrice
+        url: v1/mark-price
+        description: Get current mark price of the contract.<br>
+          <strong>Explanation</strong><br>
+          <ul>
+          <li>Mark price is used to calculate unrealized profit and loss, and is used as a reference for liquidation price.</li>
+          <li>Index price is used to calculate the mark price, which is the weighted average of the last traded price of the top exchanges.</li>
+          </ul>
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/market-data/get-mark-price
+        httpMethod: GET
+        requestWeight: 2
+        rateLimits:
+          - public
+        request:
+          properties:
+          - name: symbol
+            description: Symbol of the contract
+            sampleValue: XBTUSDM
+            in: PATH
+          - name: current
+            description: "'current' url path parameter. Set to 'current' by default and shall not be modified."
+            defaultValue: current
+            in: PATH
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Mark price information
+              objectName: KucoinFuturesMarkPrice
+              properties:
+                - name: symbol
+                  description: Symbol of the contract
+                  sampleValue: XBTUSDM
+                - name: granularity
+                  description: Granularity in milliseconds
+                  sampleValue: 1000
+                  type: LONG
+                - name: timePoint
+                  description: Time point in milliseconds
+                  sampleValue: 1557999585000
+                  type: LONG
+                - name: value
+                  description: Mark price
+                  sampleValue: 8052.51
+                  type: BIGDECIMAL
+                - name: indexPrice
+                  description: Index price
+                  sampleValue: 8041.95
+                  type: BIGDECIMAL        

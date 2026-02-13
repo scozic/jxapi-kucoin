@@ -1,0 +1,34 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetIsolatedMarginAccountDetailV1
+        httpMethod: GET
+        url: v1/isolated/account
+        description: >
+          This API endpoint returns the info on a single isolated margin account of the current user.
+        docUrl: https://www.kucoin.com/docs/rest/margin-trading/isolated-margin/get-single-isolated-margin-account-info
+        requestWeight: 50
+        rateLimits:
+          - spot
+        request:
+          name: symbol
+          description: > 
+            The trading pair symbol, e.g., BTC-USDT. The symbol must be in the isolated margin trading pair list.
+          sampleValue: BTC-USDT
+          in: PATH
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              objectName: KucoinSingleIsolatedMarginAccountInfo
+                 

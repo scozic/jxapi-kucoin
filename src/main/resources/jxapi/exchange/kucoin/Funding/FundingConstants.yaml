@@ -1,0 +1,181 @@
+id: Kucoin
+constants:
+  - name: funding
+    description: >
+      Kucoin Funding API constants
+    constants:
+    - name: feeDeductType
+      description: >
+        Withdrawal fee deduction type: INTERNAL or EXTERNAL or not specified.<ul>
+        <li>1. INTERNAL- deduct the transaction fees from your withdrawal amount</li>
+        <li>2. EXTERNAL- deduct the transaction fees from your main account</li>
+        <li>3. If you don't specify the feeDeductType parameter, when the balance in your main account is sufficient to support the withdrawal,
+        the system will initially deduct the transaction fees from your main account. But if the balance in your main account is not sufficient to support the withdrawal,
+        the system will deduct the fees from your withdrawal amount. For example: Suppose you are going to withdraw 1 BTC from the KuCoin platform (transaction fee: 0.0001BTC), 
+        if the balance in your main account is insufficient, the system will deduct the transaction fees from your withdrawal amount. In this case, you will be receiving 0.9999BTC. 
+        <li>4. Lightning Network can only deduct internally</li>
+        </ul>
+      constants:
+      - name: internal
+        description: >
+          Deduct the transaction fees from your withdrawal amount
+        value: INTERNAL
+      - name: external
+        description: >
+          Deduct the transaction fees from your main account
+        value: EXTERNAL  
+    - name: withdrawType
+      description: >
+        Withdrawal type, ADDRESS (withdrawal address), UID, MAIL (email), PHONE (mobile phone number). 
+        <br>
+        Note: If you withdraw by uid/mail/phone, there will have rate limited: 
+        3 times/10 seconds, 50 times/24 hours (calculated on a rolling basis based on the first request time)
+      constants:
+      - name: address
+        description: Withdrawal address
+        value: ADDRESS
+      - name: uid
+        description: User ID
+        value: UID
+      - name: mail
+        description: Email address
+        value: MAIL
+      - name: phone
+        description: Mobile phone number
+        value: PHONE
+    - name: currencyType
+      description: >
+        Currency type: 0-crypto currency, 1-fiat currency. default is 0-crypto currency 
+      constants:
+      - name: crypto
+        description: Crypto currency
+        value: "0"
+      - name: fiat
+        description: Fiat currency
+        value: "1"
+    - name: accountType
+      description: >
+        Account type, MAIN (funding account), TRADE (spot trading account)
+      constants:
+      - name: main
+        description: Funding account
+        value: MAIN
+      - name: trade
+        description: Spot trading account
+        value: TRADE
+      - name: contract
+        description: Contract account
+        value: CONTRACT
+      - name: margin
+        description: Margin account
+        value: MARGIN
+      - name: isolated
+        description: Isolated account
+        value: ISOLATED
+      - name: margin_v2
+        description: Margin V2 account
+        value: MARGIN_V2
+      - name: isolatedV2
+        description: Isolated V2 account
+        value: ISOLATED_V2
+      - name: option
+        description: Option account
+        value: OPTION
+    - name: flexTransferType
+      description: >
+        Flex Transfer type, possible values are: PARENT_TO_SUB, SUB_TO_PARENT, INTERNAL
+      constants:
+      - name: parent_to_sub
+        description: Transfer from master account to sub-account
+        value: PARENT_TO_SUB
+      - name: sub_to_parent
+        description: Transfer from sub-account to master account
+        value: SUB_TO_PARENT
+      - name: internal
+        description: Internal transfer within the same account
+        value: INTERNAL
+    - name: queryType
+      description: >
+        Query account type (default MARGIN), MARGIN - only query low frequency cross margin account, MARGIN_V2-only query high frequency cross margin account, ALL - consistent aggregate query with the web side
+      constants:
+      - name: margin
+        description: Low frequency cross margin account
+        value: MARGIN
+      - name: margin_v2
+        description: High frequency cross margin account
+        value: MARGIN_V2
+      - name: all
+        description: Consistent aggregate query with the web side
+        value: ALL
+    - name: crossMarginPositionStatus
+      description: >
+        Cross margin position status; EFFECTIVE-effective, BANKRUPTCY-bankruptcy liquidation, LIQUIDATION-closing, REPAY-repayment, BORROW borrowing
+      constants:
+      - name: effective
+        description: Effective position
+        value: EFFECTIVE
+      - name: bankruptcy
+        description: Bankruptcy liquidation
+        value: BANKRUPTCY
+      - name: liquidation
+        description: Closing position
+        value: LIQUIDATION
+      - name: repay
+        description: Repayment position
+        value: REPAY
+      - name: borrow
+        description: Borrowing position
+        value: BORROW
+    - name: transferStatus
+      description: >
+        Futures transfer status; PROCESSING-processing, SUCCESS-success, FAILURE-failure
+      constants:
+      - name: processing
+        description: Processing transfer
+        value: PROCESSING
+      - name: walletProcessing
+        description: Wallet is processing
+        value: WALLET_PROCESSING  
+      - name: success
+        description: Successful transfer
+        value: SUCCESS
+      - name: failure
+        description: Failed transfer
+        value: FAILURE  
+    - name: subTransferDirection
+      description: IN - the master account transfers to the sub-account, OUT - the sub-account transfers to the master account
+      constants:
+      - name: in
+        description: Master account to sub-account transfer
+        value: IN
+      - name: out
+        description: Sub-account to master account transfer
+        value: OUT
+    - name: innerTransferStatus
+      description: >
+        Internal transfer status:APPLY, PROCESSING, PENDING_APPROVAL, APPROVED, REJECTED, PENDING_CANCEL, CANCEL, SUCCESS
+      constants:
+      - name: apply
+        description: Apply
+        value: APPLY
+      - name: processing
+        description: Processing
+        value: PROCESSING
+      - name: pendingApproval
+        description: Pending approval
+        value: PENDING_APPROVAL
+      - name: approved
+        description: Approved
+        value: APPROVED
+      - name: rejected
+        description: Rejected
+        value: REJECTED
+      - name: pendingCancel
+        description: Pending cancel
+        value: PENDING_CANCEL
+      - name: cancel
+        description: Cancel
+        value: CANCEL
+      - name: success
+        description: Success
+        value: SUCCESS

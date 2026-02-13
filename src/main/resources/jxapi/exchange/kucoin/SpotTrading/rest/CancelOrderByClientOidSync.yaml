@@ -1,0 +1,53 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: CancelOrderByClientOidSync
+        httpMethod: DELETE
+        url: v1/hf/orders/sync/client-order
+        description: >
+          Request via this interface to cancel an order via the clientOid synchronously.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/cancel-order-by-clientoid-sync
+        requestWeight: 1
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: clientOid
+              description: Unique order ID created by users to identify their orders.
+              sampleValue: testKCOrderID
+              type: STRING
+              in: PATH
+            - name: symbol
+              description: The trading pair symbol (e.g., BTC-USDT).
+              sampleValue: BTC-USDT
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              objectName: KucoinSpotCancelOrderByClientOidSyncResponseData
+              properties:
+                - name: clientOid
+                  description: The client order ID.
+                  type: STRING
+                - name: originSize
+                  description: Original order size.
+                  type: BIGDECIMAL
+                - name: dealSize
+                  description: Deal size.
+                  type: BIGDECIMAL
+                - name: remainSize
+                  description: Remaining size.
+                  type: BIGDECIMAL
+                - name: canceledSize
+                  description: Cumulative canceled size.
+                  type: BIGDECIMAL
+                - name: status
+                  description: Order status, which can be open or done.
+                  type: STRING

@@ -1,0 +1,16 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: BatchCancelStopOrders
+        httpMethod: DELETE
+        url: v1/stop-order/cancel
+        description: Request via this interface to cancel a batch of stop orders.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/batch-cancel-stop-orders
+        requestWeight: 3
+        rateLimits:
+          - spot
+        request:
+          objectName: KucoinSpotCancelAllOrdersRequest
+        response:
+          objectName: KucoinSpotCancelOrderByOrderIdResponse

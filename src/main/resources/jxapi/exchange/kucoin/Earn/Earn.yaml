@@ -1,0 +1,7 @@
+id: Kucoin
+apis:
+  - name: Earn
+    description: Kucoin Earn related APIs
+    defaultHttpClient: privateSpot
+    httpUrl: ${constants.spotUrl}
+    defaultWebsocketClient: privateSpotWs

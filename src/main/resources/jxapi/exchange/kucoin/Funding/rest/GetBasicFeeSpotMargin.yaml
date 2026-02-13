@@ -1,0 +1,40 @@
+id: Kucoin
+apis:
+  - name: Funding
+    restEndpoints:
+      - name: GetBasicFeeSpotMargin
+        httpMethod: GET
+        url: v1/base-fee
+        description: >
+          This interface is for the basic fee rate of users
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/trade-fee/get-basic-fee-spot-margin
+        requestWeight: 3
+        rateLimits:
+          - spot
+        request:
+            name: currencyType
+            description: >
+              Currency type: 0-crypto currency, 1-fiat currency. default is 0-crypto currency. See ${constants.funding.currencyType} for enumeration.
+            type: STRING  
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              properties:
+                - name: takerFeeRate
+                  description: Base taker fee rate
+                  sampleValue: 0.004
+                  type: BIGDECIMAL
+                - name: makerFeeRate
+                  description: Base maker fee rate
+                  sampleValue: 0.004
+                  type: BIGDECIMAL
+        

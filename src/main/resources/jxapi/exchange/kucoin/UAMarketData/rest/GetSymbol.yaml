@@ -1,0 +1,153 @@
+id: Kucoin
+apis:
+  - name: UAMarketData
+    restEndpoints:
+      - name: GetSymbol
+        httpMethod: GET
+        url: ua/v1/market/currency
+        description: Request a list of available currency pairs for trading via this endpoint.
+        docUrl: https://www.kucoin.com/docs-new/rest/ua/get-symbol
+        requestWeight: 4
+        rateLimits:
+          - public
+        request:
+          properties:
+            - name: tradeType
+              description: Trading Type
+            - name: symbol
+              description: When the parameter is not provided, all symbols will be returned  
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description
+              sampleValue: success
+            - name: data
+              objectName: KucoinUASymbolResponseData
+              properties:
+                - name: tradeType
+                  description: Product type
+                - name: list
+                  description: List of market information for each market symbol
+                  type: OBJECT_LIST
+                  objectName: KucoinUASymbol
+                  properties:
+                    - name: symbol
+                      description: Unique code of trading pair
+                    - name: name
+                      description: Name of trading pairs
+                    - name: baseCurrency
+                      description: Base currency, e.g., XBT, BTC
+                    - name: quoteCurrency
+                      description: Quote currency, e.g., USDT
+                    - name: market
+                      description: market lable, USDS,BTC, ETC
+                    - name: minBaseOrderSize
+                      description: Minimum order size in base currency
+                      type: BIGDECIMAL
+                    - name: minQuoteOrderSize
+                      description: Minimum order size in quote currency
+                      type: BIGDECIMAL
+                    - name: maxBaseOrderSize
+                      description: Maximum order size in base currency
+                      type: BIGDECIMAL
+                    - name: maxQuoteOrderSize
+                      description: Maximum order size in quote currency
+                      type: BIGDECIMAL
+                    - name: baseOrderStep
+                      description: Order step size in base currency
+                      type: BIGDECIMAL
+                    - name: quoteOrderStep
+                      description: Order step size in quote currency
+                      type: BIGDECIMAL
+                    - name: tickSize
+                      description: minimum price change of the symbol
+                      type: BIGDECIMAL
+                    - name: feeCurrency
+                      description: Currency in which fees are charged
+                    - name: tradingStatus
+                      description: Status for trading
+                    - name: marginMode
+                      description: 'Margin trading mode, e.g., isMarginEnabled: true--1, false--2'
+                    - name: priceLimitRatio
+                      description: Threshold for price protection, returned only for spot symbols
+                    - name: feeCategory
+                      description: Fee type category
+                    - name: makerFeeCoefficient
+                      description: The maker fee coefficient. The actual fee needs to be multiplied by this coefficient to get the final fee. Most currencies have a coefficient of 1. If set to 0, it means no fee
+                    - name: takerFeeCoefficient
+                      description: The taker fee coefficient. The actual fee needs to be multiplied by this coefficient to get the final fee. Most currencies have a coefficient of 1. If set to 0, it means no fee
+                    - name: st
+                      description: Indicates if the symbol is under special treatment
+                    - name: settlementCurrency
+                      description: Currency used for settlement
+                    - name: contractType
+                      description: For perpectual swap, return 0, for deliverable futures, return 1
+                    - name: isInverse
+                      description: Indicates if the contract is inverse
+                    - name: launchTime
+                      description: Launch time (in milliseconds), returned only for futures symbols
+                    - name: expiryTime
+                      description: Expiry time (in milliseconds), returned only for futures symbols. Return null for perpetual swaps
+                    - name: settlementTime
+                      description: Settlement time (in milliseconds), returned only for futures symbols. Returns null for perpetual swaps.
+                    - name: maxPrice
+                      description: Maximum price for orders
+                      type: BIGDECIMAL
+                    - name: lotSize
+                      description: Minimum lot size
+                      type: BIGDECIMAL
+                    - name: unitSize
+                      description: The basic unit of the contract API is lots. For the number of coins in each lot, please refer to the param multiplier. For example, for XBTUSDTM, multiplier=0.001, which corresponds to the value of each XBTUSDTM contract being 0.001 BTC. There is also a special case. All coin-swap contracts, such as each XBTUSDM contract, correspond to 1 USD.
+                      type: BIGDECIMAL
+                    - name: makerFeeRate
+                      description: Maker fee rate
+                      type: BIGDECIMAL
+                    - name: takerFeeRate
+                      description: Taker fee rate
+                      type: BIGDECIMAL
+                    - name: settlementFeeRate
+                      description: Settlement fee rate, null if not applicable
+                      type: BIGDECIMAL
+                    - name: maxLeverage
+                      description: Maximum leverage for the contract
+                      type: INT
+                    - name: indexSourceExchanges
+                      description: List of exchanges used for index price
+                      type: STRING
+                    - name: k
+                      description: constant used in the futures cross margin
+                      type: BIGDECIMAL
+                    - name: m
+                      description: constant used in the futures cross margin
+                      type: BIGDECIMAL
+                    - name: f
+                      description: constant used in the futures cross margin
+                      type: BIGDECIMAL
+                    - name: mmrLimit
+                      description: maximum maintenance ratio in futures cross margin mode
+                      type: BIGDECIMAL
+                    - name: mmrLevConstant
+                      description: constant used in the futures cross margin leverage calcualtion
+                    - name: alertRiskRatio
+                      description: max risk ratio when isolated margin loans can be automatic renewed
+                      type: BIGDECIMAL
+                    - name: liquidationRiskRatio
+                      description: Liquidation risk ratio
+                      type: BIGDECIMAL
+                    - name: baseBorrowEnable
+                      description: whether borrowing base currency is allowed
+                      type: BOOLEAN
+                    - name: quoteBorrowEnable
+                      description: whether borrowing quote currency is allowed
+                      type: BOOLEAN
+                    - name: baseTransferInEnable
+                      description: whether base currency is allowed to transfer in
+                      type: BOOLEAN
+                    - name: quoteTransferInEnable
+                      description: whether quote currency is allowed to transfer in
+                      type: BOOLEAN

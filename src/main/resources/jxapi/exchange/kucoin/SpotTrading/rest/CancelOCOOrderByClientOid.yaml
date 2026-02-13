@@ -1,0 +1,23 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: CancelOcoOrderByClientOid
+        httpMethod: DELETE
+        url: v3/oco/client-order
+        description: >
+          Request via this interface to cancel an order via the clientOid.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/cancel-oco-order-by-clientoid
+        requestWeight: 3
+        rateLimits:
+          - spot
+        request:
+          name: clientOid
+          description: Unique order ID created by users to identify their orders.
+          sampleValue: testKCOrderID
+          in: PATH
+        response:
+        # Remark: The response object looks like 'by order ID' cancel response, not like 'by client OID' cancel response. 
+        # The response object contains List of two order IDs related to the canceled OCO order.
+          objectName: KucoinSpotCancelOrderByOrderIdResponse
+

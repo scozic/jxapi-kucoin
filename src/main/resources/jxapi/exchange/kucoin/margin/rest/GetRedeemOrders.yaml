@@ -1,0 +1,112 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetRedeemOrders
+        httpMethod: GET
+        url: v3/redeem/orders
+        description: >
+          This API endpoint provides pagination query for the redemption orders.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/credit/get-redeem-orders
+        requestWeight: 10
+        rateLimits:
+          - spot        
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest 
+          properties:
+            - name: currency
+              description: >
+                Currency
+              sampleValue: BTC
+            - name: redeemOrderNo
+              description: >
+                Redemption order number
+              sampleValue: 5da6dba0f943c0c81f5d5db5
+            - name: status
+              description: >
+                Status: DONE-completed; PENDING-settling. See ${constants.margin.subscriptionOrderStatus} for enum values.
+              sampleValue: ${constants.margin.subscriptionOrderStatus.done}
+            - name: currentPage
+              description: >
+                Current page; default is 1
+              sampleValue: 1
+              type: INT
+            - name: pageSize
+              description: >
+                Page size; default is 50, max is 100
+              type: INT  
+              sampleValue: 50
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              description: Redemption order list page
+              type: OBJECT
+              objectName: KucoinMarginRedemptionOrderPage
+              properties:
+                - name: currentPage
+                  description: >
+                    Current page
+                  sampleValue: 1
+                  type: INT
+                - name: pageSize
+                  description: Page size  
+                  sampleValue: 50
+                  type: INT
+                - name: totalNum
+                  description: Total number of items
+                  sampleValue: 1
+                  type: INT
+                - name: totalPage
+                  description: >
+                    Total number of pages
+                  sampleValue: 1
+                  type: INT
+                - name: items
+                  description: >
+                    Redemption order list
+                  type: OBJECT_LIST
+                  objectName: KucoinMarginRedemptionOrder
+                  properties:
+                    - name: currency
+                      description: >
+                        Currency
+                      sampleValue: BTC
+                    - name: purchaseOrderNo
+                      description: >
+                        Subscription order number
+                      sampleValue: 5da6dba0f943c0c81f5d5db5
+                    - name: redeemOrderNo
+                      description: >
+                        Redemption order number
+                      sampleValue: 5da6dbasdffga1f5d5dfsb5
+                    - name: redeemSize
+                      description: >
+                        Redemption amount
+                      sampleValue: 300000
+                      type: BIGDECIMAL
+                    - name: receiptSize
+                      description: >
+                        Redeemed amount
+                      sampleValue: 250000
+                      type: BIGDECIMAL
+                    - name: applyTime
+                      description: >
+                        Time of redemption
+                      sampleValue: 1669508513820
+                      type: LONG
+                    - name: status
+                      description: >
+                        Status, including DONE-completed; PENDING-settling. See ${constants.margin.subscriptionOrderStatus} for enum values.
+                      sampleValue: ${constants.margin.subscriptionOrderStatus.pending}

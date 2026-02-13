@@ -1,0 +1,232 @@
+id: Kucoin
+constants:
+  - name: spotUrl
+    description: Kucoin Spot and Margin base URL, see <a href="https://www.kucoin.com/docs/basic-info/base-url">Kucoin Spot API V2</a>.
+    type: STRING
+    value: "https://api.kucoin.com/api/"
+  - name: futuresUrl
+    description: Kucoin Futures REST API base URL, see <a href="https://www.kucoin.com/docs/basic-info/base-url">Kucoin Spot API V2</a>.
+    type: STRING
+    value: "https://api-futures.kucoin.com/api/"
+
+# Pojo enum constants
+  - name: orderSide
+    description: Kucoin order side constants, used in Spot Trading REST API calls
+    constants:
+    - name: buy
+      description: Side for a bid order.
+      type: STRING
+      value: "buy"
+    - name: sell
+      description: Side for an ask order.
+      type: STRING
+      value: "sell"
+  - name: direction
+    description: Value of <i>direction</i> parameter used REST endpoints using 'V2' style pagination, for instance Account <i>GetAccountLedgerMarginHf</i>.    
+    constants:
+    - name: in
+      description: Value of <i>direction</i> parameter for 'in' direction, used REST endpoints using 'V2' style pagination, for instance Account <i>GetAccountLedgerMarginHf</i>.
+      type: STRING
+      value: "in"
+    - name: out
+      description: Value of <i>direction</i> parameter for 'out' direction, used REST endpoints using 'V2' style pagination, for instance Account <i>GetAccountLedgerMarginHf</i>.
+      type: STRING
+      value: "out" 
+  - name: granularity
+    description: >
+      Kline interval. The granularity (granularity parameter of K-line) represents the number of minutes, the available granularity scope is:
+       1,5,15,30,60,120,240,480,720,1440,10080.
+    constants:
+    - name: oneMin
+      description: 1 minute
+      value: 1min
+    - name: fiveMin
+      description: 5 minutes
+      value: 5min
+    - name: fifteenMin
+      description: 15 minutes
+      value: 15min
+    - name: thirtyMin
+      description: 30 minutes
+      value: 30min
+    - name: oneHour
+      description: 1 hour
+      value: 1hour
+    - name: twoHour
+      description: 2 hours
+      value: 2hour
+    - name: fourHour
+      description: 4 hours
+      value: 4hour
+    - name: eightHour
+      description: 8 hours
+      value: 8hour
+    - name: twelveHour
+      description: 12 hours
+      value: 12hour
+    - name: oneDay
+      description: 1 day
+      value: 1day
+    - name: oneWeek
+      description: 1 week
+      value: 1week
+    - name: oneMonth
+      description: 1 month
+      value: 1month
+# Constants related to V2 REST API rate limits
+  - name: rateLimits
+    description: Kucoin REST API rate limits, see <a href="https://www.kucoin.com/docs/basic-info/request-rate-limit/rest-api">specific rules of REST rate limit 2.0</a>.
+    constants:
+    - name: timeInterval
+      description: Time interval in ms for weighted rate limit rules (one rule for each resource pool), see <a href="https://www.kucoin.com/docs/basic-info/request-rate-limit/rest-api">specific rules of REST rate limit 2.0</a>.
+      type: LONG
+      value: 30000
+    - name: vipLevels
+      description: >
+        Kucoin VIP levels, see <a href="https://www.kucoin.com/vip-level">Kucoin VIP levels</a>.<br>, listed from 0 to 12 (VIP0 to VIP12).
+      type: STRING_LIST
+      value:
+        - VIP0
+        - VIP1
+        - VIP2
+        - VIP3
+        - VIP4
+        - VIP5
+        - VIP6
+        - VIP7
+        - VIP8
+        - VIP9
+        - VIP10
+        - VIP11
+        - VIP12
+    - name: resourcePools
+      description: >
+        Kucoin REST API resource pools, see <a href="https://www.kucoin.com/docs-new/rate-limit">specific rules of REST rate limit 2.0</a>.<br>
+        Each API resource pool has a certain quota, the specific amount of which depends on the VIP level:
+        Level	Spot (include Margin)	Futures	Management	Earn	CopyTrading	Public
+      constants:
+        - name: spot
+          description: Spot and Margin trading related endpoints
+          type: STRING
+          value: "spot"
+        - name: futures
+          description: Futures trading related endpoints
+          type: STRING
+          value: "futures"
+        - name: management
+          description: Account and Sub-account management related endpoints
+          type: STRING
+          value: "management"
+        - name: earn
+          description: KuCoin Earn related endpoints
+          type: STRING
+          value: "earn"
+        - name: copyTrading
+          description: KuCoin Copy Trading related endpoints
+          type: STRING
+          value: "copyTrading"
+        - name: public
+          description: Public endpoints
+          type: STRING
+          value: "public"        
+    - name: quotas
+      description: >
+        Kucoin REST API rate limits, see <a href="https://www.kucoin.com/docs-new/rate-limit">specific rules of REST rate limit 2.0</a>.<br>
+        The rate limits a are based on the account's VIP level. The default level is VIP0, which can be upgraded according to 
+        the 30-day trading volume and KCS holding.
+        The returned map is indexed by VIP level (vip0, vip1, ..., vip12), each containing a map of resource 
+        pool (see ${constants.rateLimits.resourcePools}) to  the corresponding quota (number of requests allowed in the time interval 
+        defined by <i>timeInterval</i> constant).
+      type: INT_MAP_MAP
+      value:
+        VIP0:
+          spot: 4000
+          futures: 2000
+          management: 2000
+          public: 2000
+          earn: 2000
+          copyTrading: 2000
+        VIP1:
+          spot: 6000
+          futures: 2000
+          management: 2000
+          public: 2000
+          earn: 2000
+          copyTrading: 2000
+        VIP2:
+          spot: 8000
+          futures: 4000
+          management: 4000
+          public: 2000
+          earn: 2000
+          copyTrading: 2000
+        VIP3:
+          spot: 10000
+          futures: 5000
+          management: 5000
+          public: 2000
+          earn: 2000
+          copyTrading: 2000
+        VIP4:
+          spot: 13000
+          futures: 6000
+          management: 6000
+          public: 2000
+          earn: 2000
+          copyTrading: 2000
+        VIP5:
+          spot: 16000
+          futures: 7000
+          management: 7000
+          public: 2000
+          earn: 2000
+          copyTrading: 2000
+        VIP6:
+          spot: 20000
+          futures: 8000
+          management: 8000
+          public: 2000
+          earn: 2000
+          copyTrading: 2000
+        VIP7:
+          spot: 23000
+          futures: 10000
+          management: 10000
+          public: 2000
+          earn: 2000
+          copyTrading: 2000
+        VIP8:
+          spot: 26000
+          futures: 12000
+          management: 12000
+          public: 2000
+          earn: 2000
+          copyTrading: 2000
+        VIP9:
+          spot: 30000
+          futures: 14000
+          management: 14000
+          public: 2000
+          earn: 2000
+          copyTrading: 2000
+        VIP10:
+          spot: 33000
+          futures: 16000
+          management: 16000
+          public: 2000
+          earn: 2000
+          copyTrading: 2000
+        VIP11:
+          spot: 36000
+          futures: 18000
+          management: 18000
+          public: 2000
+          earn: 2000
+          copyTrading: 2000
+        VIP12:
+          spot: 40000
+          futures: 20000
+          management: 20000
+          public: 2000
+          earn: 2000
+          copyTrading: 2000               

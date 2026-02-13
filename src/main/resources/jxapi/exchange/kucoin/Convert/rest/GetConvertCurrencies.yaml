@@ -1,0 +1,130 @@
+id: Kucoin
+apis:
+  - name: Convert
+    restEndpoints:
+      - name: GetConvertCurrencies
+        httpMethod: GET
+        url: v1/convert/currencies
+        description: "Get all convert currencies."
+        docUrl: https://www.kucoin.com/docs-new/rest/convert/get-convert-currencies
+        requestWeight: 30
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: coin
+              description: "Currency"
+              sampleValue: "BTC"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: "System error code, see <a href=\"https.www.kucoin.com/docs-new/error-code/http\">API</a>"
+              sampleValue: "200000"
+            - name: msg
+              description: "System error code description, provided in error response when code is not '0', see <a href=\"https://www.kucoin.com/docs-new/error-code/http\">API</a>"
+            - name: data
+
+# data
+# object 
+# required
+# currencies
+# array [object {5}] 
+# required
+# List of all currencies supported for convert
+# currency
+# string 
+# required
+# Currency symbol, e.g., 'BTC', 'ETH', 'USDT'
+# Default:
+# BTC
+# Examples:
+# BTCETH
+# maxSize
+# string 
+# required
+# Maximum order size for a single flash swap transaction for the currency
+# minSize
+# string 
+# required
+# Minimum order size for a single flash swap transaction for the currency
+# step
+# string 
+# required
+# Step precision for the currency in flash swap transactions
+# tradeDirection
+# enum<string> 
+# required
+# Supported trading direction for the currency
+# Allowed values:
+# ALLFROMTO
+# usdtCurrencyLimit
+# array [object {4}] 
+# required
+# Limits and precision for USDT when swapped with other currencies
+# currency
+# string 
+# required
+# Currency symbol paired with USDT, e.g., 'BTC', 'ETH'
+# Default:
+# BTC
+# Examples:
+# BTCETH
+# maxSize
+# string 
+# required
+# Maximum USDT order size for a single flash swap transaction with the specified currency
+# minSize
+# string 
+# required
+# Minimum USDT order size for a single flash swap transaction with the specified currency
+# step
+# string 
+# required
+# Step precision for USDT in flash swap transactions with the specified currency
+
+              properties:
+                - name: currencies
+                  type: OBJECT_LIST
+                  objectName: KucoinConvertCurrency
+                  description: "List of all currencies supported for convert"
+                  properties:
+                    - name: currency
+                      description: "Currency symbol, e.g., 'BTC', 'ETH', 'USDT'"
+                      sampleValue: "BTC"
+                    - name: maxSize
+                      description: "Maximum order size for a single flash swap transaction for the currency"
+                      type: STRING
+                      sampleValue: "100000"
+                    - name: minSize
+                      description: "Minimum order size for a single flash swap transaction for the currency"
+                      type: STRING
+                      sampleValue: "10"
+                    - name: step
+                      description: "Step precision for the currency in flash swap transactions"
+                      type: STRING
+                      sampleValue: "0.000001"
+                    - name: tradeDirection
+                      description: Supported trading direction for the currency. See ${constants.Convert.tradeDirection} for enumeration.
+                      type: STRING
+                - name: usdtCurrencyLimit
+                  type: OBJECT_LIST
+                  objectName: KucoinConvertUsdtCurrencyLimit
+                  description: "Limits and precision for USDT when swapped with other currencies"
+                  properties:
+                    - name: currency
+                      description: "Currency symbol paired with USDT, e.g., 'BTC', 'ETH'"
+                      sampleValue: "BTC"
+                    - name: maxSize
+                      description: "Maximum USDT order size for a single flash swap transaction with the specified currency"
+                      type: BIGDECIMAL
+                      sampleValue: "100000"
+                    - name: minSize
+                      description: "Minimum USDT order size for a single flash swap transaction with the specified currency"
+                      type: BIGDECIMAL
+                      sampleValue: "10"
+                    - name: step
+                      description: "Step precision for USDT in flash swap transactions with the specified currency"
+                      type: BIGDECIMAL
+                      sampleValue: "0.000001"      

@@ -1,0 +1,90 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetAllSymbols
+        httpMethod: GET
+        url: v2/symbols
+        description:
+          Request via this endpoint to get a list of available currency pairs for trading. If you want to get the market information of the trading symbol,
+          please use <i>Get All Tickers</i>.
+        docUrl: https://www.kucoin.com/docs/rest/spot-trading/market-data/get-symbols-list
+        requestWeight: 4
+        rateLimits:
+          - public
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+            - name: data
+              description: List of market information for each market symbol
+              type: OBJECT_LIST
+              objectName: KucoinSymbol
+              properties:
+                - name: symbol
+                  description: unique code of a symbol, it would not change after renaming
+                  sampleValue: GALAX-USDT
+                - name: name
+                  description: Name of trading pairs, it would change after renaming
+                  sampleValue: GALA-USDT
+                - name: baseCurrency
+                  description: Base currency,e.g. BTC.
+                  sampleValue: GALAX
+                - name: quoteCurrency
+                  description: Quote currency,e.g. USDT.
+                  sampleValue: USDT
+                - name: feeCurrency
+                  description: The currency of charged fees.
+                  sampleValue: USDT
+                - name: market
+                  description: The trading  <a href="https://docs.kucoin.com/#get-market-list">market</a>.
+                  sampleValue: USDT
+                - name: baseMinSize
+                  description: The minimum order quantity requried to place an order.
+                  sampleValue: "10"
+                  type: BIGDECIMAL
+                - name: quoteMinSize
+                  description: The minimum order funds required to place a market order.
+                  sampleValue: "0.001"
+                  type: BIGDECIMAL
+                - name: baseMaxSize
+                  description: The maximum order size required to place an order.
+                  sampleValue: "10000000000"
+                  type: BIGDECIMAL
+                - name: quoteMaxSize
+                  description: The maximum order funds required to place a market order.
+                  sampleValue: "99999999"
+                  type: BIGDECIMAL
+                - name: baseIncrement
+                  description: The increment of the order size. The value shall be a positive multiple of the baseIncrement.
+                  sampleValue: "0.0001"
+                  type: BIGDECIMAL
+                - name: quoteIncrement
+                  description: The increment of the funds required to place a market order. The value shall be a positive multiple of the quoteIncrement.
+                  sampleValue: "0.00001"
+                  type: BIGDECIMAL
+                - name: priceIncrement
+                  description: The increment of the price required to place a limit order. The value shall be a positive multiple of the priceIncrement.
+                  sampleValue: "0.00001"
+                  type: BIGDECIMAL
+                - name: priceLLimitRate
+                  description: Threshold for price portection
+                  sampleValue: "0.1"
+                  type: BIGDECIMAL
+                - name: minFunds
+                  description: The minimum spot and margin trading amounts
+                  sampleValue: "0.1"
+                  type: BIGDECIMAL
+                - name: enableTrading
+                  description: Available for transaction or not.
+                  sampleValue: true
+                  type: BOOLEAN
+                - name: isMarginEnabled
+                  description: Available for margin or not.
+                  sampleValue: true
+                  type: BOOLEAN

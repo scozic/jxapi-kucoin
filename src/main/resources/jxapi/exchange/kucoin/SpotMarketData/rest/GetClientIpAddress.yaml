@@ -1,0 +1,24 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetClientIpAddress
+        httpMethod: GET
+        url: v1/my-ip
+        description: >
+          Request via this endpoint to get the client's IP address.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-client-ip-address
+        requestWeight: 1
+        rateLimits:
+          - public
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Client's IP address
+              type: STRING
+              sampleValue: "1.2.3.4"

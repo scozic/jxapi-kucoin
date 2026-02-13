@@ -1,0 +1,44 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetCallAuctionInfo
+        httpMethod: GET
+        url: v1/market/callauctionData
+        description: >
+          Request via this endpoint to get the call auction information of the specified symbol.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-call-auction-info
+        requestWeight: 3
+        rateLimits:
+          - public
+        request:
+          name: symbol
+          type: STRING
+          description: "symbol"
+          sampleValue: BTC-USDT
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Call auction information
+              objectName: KucoinCallAuctionInfo
+              properties:
+                - name: timestamp
+                  description: Timestamp
+                  type: LONG
+                - name: transactPrice
+                  description: Estimated transaction price
+                  type: BIGDECIMAL
+                - name: transactSize
+                  description: Estimated transaction quantity
+                  type: BIGDECIMAL
+                - name: bidPriceRange
+                  description: Bid price range
+                  type: BIGDECIMAL
+                - name: askPriceRange
+                  description: Ask price range
+                  type: BIGDECIMAL

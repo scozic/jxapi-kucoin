@@ -1,0 +1,43 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetMarginConfig
+        httpMethod: GET
+        url: v1/margin/config
+        description: >
+          Request via this endpoint to get the index price of the specified symbol.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/market-data/get-margin-config
+        requestWeight: 25
+        rateLimits:
+          - public
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              properties:
+                - name: currencyList
+                  description: Available currencies for margin trade
+                  type: STRING_LIST
+                  sampleValue: ["XEM", "MATIC", "VRA"]
+                - name: warningDebtRatio
+                  description: The warning debt ratio of the forced liquidation
+                  sampleValue: "0.95"
+                  type: BIGDECIMAL
+                - name: liqDebtRatio
+                  description: The debt ratio of the forced liquidation
+                  sampleValue: "0.97"
+                  type: BIGDECIMAL
+                - name: maxLeverage
+                  description: Max leverage available
+                  sampleValue: 5
+                  type: BIGDECIMAL

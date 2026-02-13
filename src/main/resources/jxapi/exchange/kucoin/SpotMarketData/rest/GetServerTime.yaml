@@ -1,0 +1,25 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetServerTime
+        httpMethod: GET
+        url: v1/timestamp
+        description: Get the server time.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-server-time
+        requestWeight: 3
+        rateLimits:
+          - public
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Server time
+              type: LONG

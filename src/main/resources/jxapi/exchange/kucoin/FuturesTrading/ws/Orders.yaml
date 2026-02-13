@@ -1,0 +1,128 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    websocketEndpoints:
+      - name: Orders
+        description: >
+          Orders websocket stream. Use this stream to subcribe to order updates for one specific symbol.
+        docUrl: https://www.kucoin.com/docs-new/3470090w0
+        topic: /contractMarket/tradeOrders:${request}
+        topicMatcher:
+          or:
+            - fieldName: topic
+              fieldValue: ${topic}
+            - and:
+                - fieldName: topic
+                  fieldValue: /contractMarket/tradeOrders
+                - fieldName: symbol
+                  fieldValue: ${request}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: XBTUSDTM    
+        message:
+          properties:
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: subject
+              description: Symbol
+              sampleValue: orderChange
+            - name: topic
+              description: Topic
+              sampleValue: /contractMarket/tickerV2:XBTUSDM
+            - name: channelType
+              description: Channel type 'private'
+              sampleValue: private
+            - name: data
+              description: ""
+              properties:
+                - name: orderId
+                  description: Order ID
+                  sampleValue: 5cdfc138b21023a909e5ad55
+                - name: symbol
+                  description: Symbol of the contract
+                  sampleValue: XBTUSDM
+                - name: type
+                  description: >
+                    Type Descriptions:<ul>
+                    <li><strong>open</strong>: when the order enters into the order book;</li>
+                    <li><strong>match</strong>: when the order has been executed;</li>
+                    <li><strong>filled</strong>: when the order has been executed and its status was changed into DONE;</li>
+                    <li><strong>canceled</strong>: when the order has been cancelled and its status was changed into DONE;</li>
+                    <li><strong>update</strong>: when the order has been updated;</li>
+                    </ul>
+                  sampleValue: match
+                - name: status
+                  description: >
+                    Order Status Descriptions:<ul>
+                    <li><strong>match</strong>: when taker order executes with orders in the order book, the taker order status is “match”;</li>
+                    <li><strong>open</strong>: the order is in the order book;</li>
+                    <li><strong>done</strong>: the order is fully executed successfully;</li>
+                    </ul>
+                  sampleValue: XBTUSDM
+                - name: matchSize
+                  description: Match Size (when the type is <strong>match</strong>)
+                  sampleValue: "0"
+                  type:
+                    canonicalType: BIGDECIMAL
+                - name: matchPrice
+                  description: Match Price (when the type is <strong>match</strong>)
+                  sampleValue: "0"
+                  type:
+                    canonicalType: BIGDECIMAL
+                - name: orderType
+                  description: Order type, <strong>market</strong> or <strong>limit</strong>
+                  sampleValue: limit
+                - name: side
+                  description: Trading direction, <strong>buy</strong> or <strong>sell</strong>
+                  sampleValue: buy
+                - name: price
+                  description: Order price
+                  sampleValue: 3600
+                  type:
+                    canonicalType: BIGDECIMAL
+                - name: size
+                  description: Order size
+                  sampleValue: 20000
+                  type:
+                    canonicalType: BIGDECIMAL
+                - name: remainSize
+                  description: Remaining size for trading
+                  sampleValue: 20001
+                  type:
+                    canonicalType: BIGDECIMAL
+                - name: filledSize
+                  description: Filled size
+                  sampleValue: 20000
+                  type:
+                    canonicalType: BIGDECIMAL
+                - name: canceledSize
+                  description: In the update message, the size of order reduced
+                  sampleValue: 0
+                  type:
+                    canonicalType: BIGDECIMAL
+                - name: tradeId
+                  description: Trade ID (when the type is <strong>match</strong>)
+                  sampleValue: 5ce24c16b210233c36eexxxx
+                - name: clientOid
+                  description: Client order ID
+                  sampleValue: 5ce24c16b210233c36ee321d
+                - name: orderTime
+                  description: Order Time
+                  sampleValue: "1545914149935808589"
+                  type:
+                    canonicalType: LONG
+                - name: oldSize
+                  description: Size Before Update (when the type is <strong>update</strong>)
+                  sampleValue: 15000
+                  type:
+                    canonicalType: BIGDECIMAL
+                - name: liquidity
+                  description: Trading direction, buy or sell in taker
+                  sampleValue: maker
+                - name: ts
+                  description: Timestamp
+                  sampleValue: "1545914149935808589"
+                  type:
+                    canonicalType: LONG

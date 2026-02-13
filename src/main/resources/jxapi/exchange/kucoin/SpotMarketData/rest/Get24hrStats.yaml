@@ -1,0 +1,29 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: Get24hrStats
+        httpMethod: GET
+        url: v1/market/stats
+        description: Request via this endpoint to get the statistics of the specified ticker in the last 24 hours.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-24hr-stats
+        requestWeight: 15
+        rateLimits:
+          - public
+        request:
+          name: symbol
+          type: STRING
+          description: <a href="https://docs.kucoin.com/#get-symbols-list">symbol</a>
+          sampleValue: BTC-USDT
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              objectName: Kucoin24hrStats

@@ -1,0 +1,74 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    restEndpoints:
+      - name: GetTicker
+        url: v1/ticker
+        description: >
+          The real-time ticker includes the last traded price, the last traded size, transaction ID, the side of liquidity taker, the best bid price and size,
+          the best ask price and size as well as the transaction time of the orders. These messages can also be obtained through Websocket. The Sequence Number is used
+          to judge whether the messages pushed by Websocket is continuous.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/market-data/get-ticker
+        httpMethod: GET
+        requestWeight: 2
+        rateLimits:
+          - public
+        request:
+          name: symbol
+          description: Symbol of the contract
+          sampleValue: XBTUSDM
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Ticker information
+              objectName: KucoinFuturesTicker
+              properties:
+                - name: sequence
+                  description: Sequence number
+                  sampleValue: 1001
+                  type: LONG
+                - name: symbol
+                  description: Symbol of the contract
+                  sampleValue: XBTUSDM
+                - name: side
+                  description: Side of the liquidity taker. One of ${constants.orderSide.buy}, ${constants.orderSide.sell}.
+                  sampleValue: buy
+                - name: size
+                  description: Last traded size
+                  sampleValue: 10
+                  type: BIGDECIMAL
+                - name: price
+                  description: Last traded price
+                  sampleValue: "7000.0"
+                  type: BIGDECIMAL
+                - name: bestBidSize
+                  description: Best bid size
+                  sampleValue: 20
+                  type: BIGDECIMAL
+                - name: bestBidPrice
+                  description: Best bid price
+                  sampleValue: "7000.0"
+                  type: BIGDECIMAL
+                - name: bestAskPrice
+                  description: Best ask price
+                  sampleValue: "7001.0"
+                  type: BIGDECIMAL
+                - name: bestAskSize
+                  description: Best ask size
+                  sampleValue: 30
+                  type: BIGDECIMAL
+                - name: tradeId
+                  description: Transaction ID
+                  sampleValue: 5cbd7377a6ffab0c7ba98b26
+                - name: ts
+                  description: Filled time in nanoseconds
+                  sampleValue: 1550653727731
+                  type: LONG

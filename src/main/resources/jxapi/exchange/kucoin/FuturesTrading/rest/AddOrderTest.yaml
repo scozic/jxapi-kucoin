@@ -1,0 +1,19 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: AddOrderTest
+        httpMethod: POST
+        url: v1/orders
+        description: >
+          You can place two types of orders: limit and market. Orders can only be placed if your account has sufficient funds. Once an order is placed, your
+          funds will be put on hold for the duration of the order. The amount of funds on hold depends on the order type and parameters specified. <br/>Please be noted
+          that the system would hold the fees from the orders entered the orderbook in advance. Read Get Fills to learn more.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/orders/add-order-test
+        requestWeight: 2
+        rateLimits:
+          - futures
+        request:
+          objectName: KucoinFuturesAddOrderRequest
+        response:
+          objectName: KucoinFuturesAddOrderResponse

@@ -1,0 +1,84 @@
+id: Kucoin
+apis:
+  - name: UAMarketData
+    restEndpoints:
+      - name: GetAnnouncements
+        httpMethod: GET
+        url: ua/v1/market/announcement
+        description: Get a list of announcements.
+        docUrl: https://www.kucoin.com/docs-new/rest/ua/get-announcements
+        requestWeight: 20
+        rateLimits:
+          - public
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinUAPaginatedRequest
+          properties:
+            - name: language
+              description: Language type
+              sampleValue: en_US
+            - name: type
+              description: Type of announcement, see ${constants.kucoin.announcementType} for enumeration
+            - name: pageNumber
+              description: Page number
+              type: INT
+              sampleValue: 1
+            - name: pageSize
+              description: Page size
+              type: INT
+              sampleValue: 10
+            - name: startTime
+              description: Start time
+              type: LONG
+            - name: endTime
+              description: End time
+              type: LONG
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinUAPaginatedResponse
+          properties:
+            - name: code
+              description: System error code
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description
+              sampleValue: success
+            - name: data
+              objectName: KucoinUAAnnouncements
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinUAPaginatedResponseData
+              properties:
+                - name: totalNumber
+                  description: Total number of announcements
+                  type: INT
+                - name: totalPage
+                  description: Total page
+                  type: INT
+                - name: pageNumber
+                  description: Page number
+                  type: INT
+                - name: pageSize
+                  description: Page size
+                  type: INT
+                - name: list
+                  description: List of announcements
+                  type: OBJECT_LIST
+                  objectName: KucoinAnnouncement
+                  properties:
+                    - name: id
+                      description: Announcement ID
+                      type: INT
+                    - name: title
+                      description: Title of the announcement
+                    - name: type
+                      description: Type of announcement
+                      type: STRING_LIST
+                    - name: description
+                      description: Announcement description
+                    - name: releaseTime
+                      description: Announcement release time, Unix millisecond timestamp format
+                      type: LONG
+                    - name: language
+                      description: language type
+                    - name: url
+                      description: URL of the announcement

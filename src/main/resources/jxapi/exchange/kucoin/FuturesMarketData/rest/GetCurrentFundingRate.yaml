@@ -1,0 +1,83 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    restEndpoints:
+      - name: GetCurrentFundingRate
+        httpMethod: GET
+        url: v1/funding-rate
+        description: >
+          Get the current funding rate for a symbol.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/funding-fees/get-current-funding-rate
+        requestWeight: 2
+        rateLimits:
+          - public
+        request:
+          properties:
+            - name: symbol
+              description: "Symbol of the contract"
+              type: STRING
+              sampleValue: "XBTUSDM"
+              in: PATH
+            - name: current
+              description: "'current' url path parameter. Set to 'current' by default and shall not be modified."
+              defaultValue: current
+              type: STRING
+              in: PATH
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: Response payload
+              properties:
+                - name: symbol
+                  description: "Funding Rate Symbol"
+                  type: STRING
+                  sampleValue: ".XBTUSDTMFPI8H"
+                - name: granularity
+                  description: "Granularity (milisecond)"
+                  type: LONG
+                  sampleValue: 28800000
+                - name: timePoint
+                  description: >
+                    The funding rate settlement time point of the previous cycle (milliseconds)
+                    Before going live, the system will pre-generate the first funding rate record to ensure 
+                    the billing cycle can start immediately after the contract is launched.
+                    The timePoint field represents the time the funding rate data was generated, not 
+                    the actual time it takes effect or is settled.
+                    The first actual settlement will occur at the designated settlement time (00:00 / 08:00 / 14:00) 
+                    after the contract goes live.
+                  type: LONG
+                  sampleValue: 1731441600000
+                - name: value
+                  description: "Funding rate"
+                  type: BIGDECIMAL
+                  sampleValue: 0.000641
+                - name: predictedValue
+                  description: "Predicted funding rate"
+                  type: BIGDECIMAL
+                  sampleValue: 0.000052
+                - name: fundingRateCap
+                  description: "Maximum Funding Rate"
+                  type: BIGDECIMAL
+                  sampleValue: 0.003
+                - name: fundingRateFloor
+                  description: "Minimum Funding Rate"
+                  type: BIGDECIMAL
+                  sampleValue: -0.003
+                - name: period
+                  description: Indicates whether the current funding fee is charged within this cycle
+                  type: LONG
+                  sampleValue: 0
+                - name: fundingTime
+                  description: Indicates the next funding fee settlement time point, which can be used to synchronize periodic settlement timing.
+                  type: LONG
+                  sampleValue: 1748491200000

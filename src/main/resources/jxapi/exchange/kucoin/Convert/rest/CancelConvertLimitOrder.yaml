@@ -1,0 +1,36 @@
+id: Kucoin
+apis:
+  - name: Convert
+    restEndpoints:
+      - name: CancelConvertLimitOrder
+        httpMethod: DELETE
+        url: /api/v1/convert/limit/order
+        description: "Cancel convert limit order"
+        docUrl: https://www.kucoin.com/docs-new/rest/convert/cancel-convert-limit-order
+        requestWeight: 5
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: orderId
+              description: "The order id"
+              type: STRING
+            - name: clientOrderId
+              description: "A unique order identifier defined by the user"
+              type: STRING
+        response:
+          properties:
+            - name: code
+              description: "System error code, see <a href=\"https.www.kucoin.com/docs-new/error-code/http\">API</a>"
+              sampleValue: "200000"
+            - name: msg
+              description: "System error code description, provided in error response when code is not '0', see <a href=\"https://www.kucoin.com/docs-new/error-code/http\">API</a>"
+            - name: data
+              properties:
+                - name: orderId
+                  description: "The order id"
+                  type: STRING
+                - name: clientOrderId
+                  description: "A unique order identifier defined by the user"
+                  type: STRING
+

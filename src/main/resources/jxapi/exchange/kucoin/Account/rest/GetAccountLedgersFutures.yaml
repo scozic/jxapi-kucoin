@@ -1,0 +1,109 @@
+id: Kucoin
+apis:
+  - name: Account
+    restEndpoints:
+      - name: GetAccountLedgersFutures
+        httpMethod: GET
+        url: ${constants.futuresUrl}/v1/transaction-history
+        description: >
+          Get Account Ledgers - Futures
+          This API endpoint returns all transfer (in and out) records in futures account and supports multi-coin queries. The query results are sorted in descending order by createdAt and id.
+          If there are open positions, the status of the first page returned will be Pending, indicating the realised profit and loss in the current 8-hour settlement period. Please specify the minimum offset number of the current page into the offset field to turn the page.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/account-funding/get-account-ledgers-futures
+        requestWeight: 2
+        rateLimits:
+          - management
+        paginated: true    
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequestV3
+          properties:
+            - name: startAt
+              description: Start time (millisecond)
+              sampleValue: 1601395200000
+              type: LONG
+            - name: endAt
+              description: End time (millisecond)
+              sampleValue: 1601395200000
+              type: LONG
+            - name: type
+              description: >
+                Type: RealisedPNL-Realised profit and loss, Deposit-Deposit, Withdrawal-withdraw, Transferin-Transfer in, TransferOut-Transfer out
+              sampleValue: RealisedPNL
+            - name: offset
+              description: >
+                Start offset. Generally, the only attribute of the last returned result of the previous request is used, and the first page is returned by default
+              sampleValue: 1
+              type: LONG
+            - name: maxCount
+              description: >
+                Displayed size per page. The default size is 50
+              sampleValue: 50
+              type: INT
+            - name: currency
+              description: Currency of transaction history XBT or USDT
+              sampleValue: XBT
+            - name: forward
+              description: >
+                This parameter functions to judge whether the lookup is forward or not. True means “yes” and False means “no”. This parameter is set as true by default.
+              sampleValue: true
+              type: BOOLEAN
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseV3
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Account ledger futures list page
+              type: OBJECT
+              objectName: KucoinAccountLedgerFuturesPage
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseV3Page
+              properties:
+                - name: hasMore
+                  description: Whether there are more pages
+                  sampleValue: false
+                  type: BOOLEAN
+                - name: dataList
+                  description: List of account ledgers (transactions)
+                  type: OBJECT_LIST
+                  objectName: KucoinAccountLedgerFutures
+                  implementedInterfaces:
+                    - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseV3Item
+                  properties:
+                    - name: time
+                      description: Event time
+                      sampleValue: 1558596284040
+                      type: LONG
+                    - name: type
+                      description: Type of transaction (RealisedPNL, Deposit, Withdrawal, TransferIn, TransferOut). See ${constants.account.type} for enumeration.
+                      sampleValue: RealisedPNL
+                    - name: amount
+                      description: Transaction amount
+                      sampleValue: 0.000017105
+                      type: BIGDECIMAL
+                    - name: fee
+                      description: Fees (if any)
+                      sampleValue: null
+                      type: BIGDECIMAL
+                    - name: accountEquity
+                      description: Account equity after the transaction
+                      sampleValue: 8060.7899305281
+                      type: BIGDECIMAL
+                    - name: status
+                      description: Status of the transaction (Completed, Pending). See ${constants.account.transactionStatus} for enumeration.
+                    - name: remark
+                      description: Ticker symbol of the contract (if applicable)
+                      sampleValue: XBTUSDM
+                    - name: offset
+                      description: Offset for pagination purposes
+                      sampleValue: 1
+                      type: LONG
+                    - name: currency
+                      description: Currency of the transaction (XBT or USDT)
+                      sampleValue: XBT

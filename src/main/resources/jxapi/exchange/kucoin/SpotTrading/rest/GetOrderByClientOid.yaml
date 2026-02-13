@@ -1,0 +1,32 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: GetOrderByClientOid
+        httpMethod: GET
+        url: v1/hf/orders/client-order
+        description: >
+          Request via this endpoint to get a single order info by clientOid.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/get-order-by-clientoid
+        requestWeight: 4
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: clientOid
+              description: "The unique identifier created by the user when placing the order."
+              type: STRING
+              in: PATH
+            - name: symbol
+              description: "The trading pair (e.g., BTC-USDT)."
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              objectName: KucoinSpotOrder

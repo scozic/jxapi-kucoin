@@ -1,0 +1,56 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetKlines
+        httpMethod: GET
+        url: v1/market/candles
+        description: >
+          Request via this endpoint to get the trade history of the specified symbol, the returned quantity is the last 100 transaction records.<br>
+          <strong>TIP</strong>:For each query, the system would return at most 1500 pieces of data. To obtain more data, please page the data by time.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-klines
+        requestWeight: 3
+        rateLimits:
+          - public
+        request:
+          description: REST K-Line request for a specific market symbol and candlestick type.
+          properties:
+            - name: symbol
+              description: <a href="https://docs.kucoin.com/#get-symbols-list">Symbol</a>
+              sampleValue: BTC-USDT
+            - name: startAt
+              description: Start time (second), default is 0
+              type: LONG
+            - name: endAt
+              description: End time (second), default is 0
+              type: LONG
+            - name: type
+              description: >
+                Type of candlestick patterns: 1min, 3min, 5min, 15min, 30min, 1hour, 2hour, 4hour, 6hour, 8hour, 12hour, 1day, 1week, 1month<br>
+                <strong>TIP</strong>: Klines data may be incomplete. No data is published for intervals where there are no ticks.
+                See ${constants.granularity} for all supported intervals.
+              sampleValue: ${constants.granularity.fifteenMin}
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: > 
+                Trade history detail. The data is a list of lists, each list contains the following elements:
+                <ul>
+                  <li>Start time of the candle cycle</li>
+                  <li>Opening price</li>
+                  <li>Closing price</li>
+                  <li>Highest price</li>
+                  <li>Lowest price</li>
+                  <li>Transaction volume (One-sided transaction volume)</li>
+                  <li>Transaction amount (turnover, one-sided transaction amount)</li>
+                </ul>
+                In order to map this data to a Java object, you can use <code>KucoinKlineUtil.createKlineListFromSpotMsgData()</code> method.
+              type: STRING_LIST_LIST

@@ -1,0 +1,42 @@
+id: Kucoin
+apis:
+  - name: UAMarketData
+    restEndpoints:
+      - name: GetCurrentFundingRate
+        httpMethod: GET
+        url: ua/v1/market/funding-rate
+        description: Get current Futures funding fee rate.
+        docUrl: https://www.kucoin.com/docs-new/rest/ua/get-current-funding-rate
+        requestWeight: 2
+        rateLimits:
+          - public
+        request:
+          name: symbol
+          description: Symbol of the contract
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: Response code
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description
+              sampleValue: success
+            - name: data
+              objectName: KucoinUACurrentFundingRateResponseData
+              properties:
+                - name: symbol
+                  description: Funding rate symbol
+                - name: nextFundingRate
+                  description: Next cycle funding rate
+                  type: BIGDECIMAL
+                - name: fundingTime
+                  description: Next funding fee settlement time point (milliseconds)
+                  type: LONG
+                - name: fundingRateCap
+                  description: Maximum funding rate
+                  type: BIGDECIMAL
+                - name: fundingRateFloor
+                  description: Minimum funding rate
+                  type: BIGDECIMAL

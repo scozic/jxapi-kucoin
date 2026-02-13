@@ -1,0 +1,47 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: Redeem
+        httpMethod: POST
+        url: v3/redeem
+        description: >
+          Redeem your loan order.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/credit/redeem
+        requestWeight: 15
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: currency
+              description: >
+                Currency
+              sampleValue: BTC
+            - name: size
+              description: >
+                Redemption amount
+              sampleValue: 0.001
+            - name: purchaseOrderNo
+              description: >
+                Subscription order number
+              sampleValue: 5da6dba0f943c0c81f5d5db5
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Kucoin margin lending redemption response payload.
+              type: OBJECT
+              objectName: KucoinMarginLendingRedemption
+              properties:
+                - name: orderNo
+                  description: >
+                    Redemption order number
+                  sampleValue: 5da6dba0f943c0c81f5d5db5
+                  

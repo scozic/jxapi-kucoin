@@ -1,0 +1,153 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: GetTradeHistory
+        httpMethod: GET
+        url: v1/fills
+        description: >
+          Get a list of recent fills.
+        docUrl: https://www.kucoin.com/docs-new/est/futures-trading/orders/get-trade-history
+        requestWeight: 5
+        rateLimits:
+          - futures
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest
+          properties:
+            - name: orderId
+              description: "[Optional] Limit the list of fills to this orderId"
+              type: STRING
+            - name: symbol
+              description: "[Optional] Symbol of the contract"
+              type: STRING
+            - name: side
+              description: "[Optional] buy or sell."
+              type: STRING
+            - name: type
+              description: "[Optional] limit, market, limit_stop or market_stop."
+              type: STRING
+            - name: tradeTypes
+              description: "[Optional] Transaction type (e.g., trade, adl, liquid, settlement). Multiple types can be comma-separated."
+              type: STRING
+            - name: startAt
+              description: "[Optional] Start time (millisecond)."
+              type: LONG
+            - name: endAt
+              description: "[Optional] End time (millisecond)."
+              type: LONG
+            - name: currentPage
+              description: "[Optional] Current request page."
+              sampleValue: 1
+              type: INT
+            - name: pageSize
+              description: "[Optional] Number of results per request. Minimum is 10, maximum is 1000."
+              sampleValue: 50
+              type: INT
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              description: Futures fill list page
+              properties:
+                - name: currentPage
+                  description: Current page
+                  sampleValue: 1
+                  type: INT
+                - name: pageSize
+                  description: Request max number of items
+                  sampleValue: 50
+                  type: INT
+                - name: totalPage
+                  description: Page count
+                  sampleValue: 1
+                  type: INT
+                - name: totalNum
+                  description: Request max number of items
+                  sampleValue: 1
+                  type: INT
+                - name: items
+                  description: Fill list
+                  objectName: KucoinFuturesFill
+                  type: OBJECT_LIST
+                  properties:
+                    - name: symbol
+                      description: Symbol of the contract
+                      sampleValue: "XBTUSDM"
+                      type: STRING
+                    - name: tradeId
+                      description: Trade ID
+                      sampleValue: "5d9f3e3e2a3e4b0009e1e1e1"
+                      type: STRING
+                    - name: orderId
+                      description: Order ID
+                      sampleValue: "5d9f3e3e2a3e4b0009e1e1e0"
+                      type: STRING
+                    - name: side
+                      description: Transaction side
+                      sampleValue: "buy"
+                      type: STRING
+                    - name: liquidity
+                      description: Liquidity type
+                      sampleValue: "taker"
+                      type: STRING
+                    - name: price
+                      description: Filled price
+                      sampleValue: "8000"
+                      type: BIGDECIMAL
+                    - name: size
+                      description: Filled quantity
+                      sampleValue: "10"
+                      type: BIGDECIMAL
+                    - name: value
+                      description: Filled value
+                      sampleValue: "0.00125"
+                      type: BIGDECIMAL
+                    - name: fee
+                      description: Transaction fee
+                      sampleValue: "0.000001"
+                      type: BIGDECIMAL
+                    - name: feeRate
+                      description: Fee rate
+                      sampleValue: "0.0008"
+                      type: BIGDECIMAL
+                    - name: feeCurrency
+                      description: Fee currency
+                      sampleValue: "XBT"
+                      type: STRING
+                    - name: stop
+                      description: Stop type
+                      sampleValue: ""
+                      type: STRING
+                    - name: orderType
+                      description: Order type
+                      sampleValue: "market"
+                      type: STRING
+                    - name: createdAt
+                      description: Create time
+                      sampleValue: 1570717214000
+                      type: LONG
+                    - name: tradeType
+                      description: Trade type
+                      sampleValue: "trade"
+                      type: STRING
+                    - name: marginMode
+                      description: Margin mode
+                      sampleValue: "cross"
+                      type: STRING
+                    - name: settleCurrency
+                      description: Settlement currency
+                      sampleValue: "XBT"
+                      type: STRING

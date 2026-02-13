@@ -1,0 +1,47 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    websocketEndpoints:
+      - name: TickerV2
+        description: >
+          Subscribe to this topic to get the real-time push of BBO changes. After subscription, when there are changes in the order book, the system will push
+          the real-time ticker symbol information to you. It is recommended to use the new topic for timely information. Returned for every 100 milliseconds at most.
+        docUrl: https://www.kucoin.com/docs-new/3470080w0
+        topic: /contractMarket/tickerV2:${request}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: XBTUSDM
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        message:
+          properties:
+            - name: subject
+              description: Subject of the message
+              sampleValue: tickerV2
+            - name: topic
+              description: Topic of the message
+              sampleValue: /contractMarket/tickerV2:XBTUSDM
+            - name: data
+              description: Data payload
+              properties:
+                - name: symbol
+                  description: Symbol of the contract
+                  sampleValue: XBTUSDM
+                - name: bestAskPrice
+                  description: Best ask price
+                  sampleValue: "3600.00"
+                  type: BIGDECIMAL
+                - name: bestBidSize
+                  description: Best bid size
+                  sampleValue: 795
+                  type: BIGDECIMAL
+                - name: bestBidPrice
+                  description: Best bid price
+                  sampleValue: "3200.00"
+                  type: BIGDECIMAL
+                - name: bestAskSize
+                  description: Best ask size
+                  sampleValue: 284
+                  type: BIGDECIMAL

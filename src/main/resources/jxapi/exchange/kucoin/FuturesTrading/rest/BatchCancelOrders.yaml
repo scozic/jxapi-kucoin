@@ -1,0 +1,71 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: BatchCancelOrders
+        httpMethod: DELETE
+        url: v1/orders/multi-cancel
+        description: >
+          Using this endpoint, orders can be canceled in batches.<br>
+          Supports batch cancellation of orders by orderId or clientOid. When orderIdsList and clientOidsList are used at the same time, orderIdsList shall prevail. A maximum of 10 orders can be canceled at a time.<br>
+          When using orderId to cancel order, the response will return the orderId.<br>
+          When using clientOid to cancel order, the response will return the clientOid.<br>
+          etc.), then an error response will indicate the reason in the message field.
+        docUrl: https://www.kucoin.com/docs-new/3470241e0
+        requestWeight: 20
+        rateLimits:
+          - futures
+        requestHasBody: true
+        request:
+          properties:
+            - name: orderIdsList
+              description: >
+                List of order IDs to be canceled. If both `orderIdsList` and `clientOidsList` are provided, `orderIdsList` will take precedence.
+              sampleValue: "[\"80465574458560512\", \"80465575289094144\"]"
+              type: STRING_LIST
+            - name: clientOidsList
+              description: >
+                List of objects containing `symbol` and `clientOid` to cancel orders by client ID. This parameter is required when using client Oids to cancel orders.
+              type: OBJECT_LIST
+              properties:
+                - name: symbol
+                  description: The contract symbol for the order.
+                  sampleValue: XBTUSDTM
+                  type: STRING
+                - name: clientOid
+                  description: The unique client-assigned order ID.
+                  sampleValue: clientOid123
+                  type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: List of market information for each market symbol
+              type: OBJECT_LIST
+              objectName: KucoinFuturesBatchCancelOrdersResponseItem
+              properties:
+                - name: orderId
+                  description: ID of the order on the market
+                  sampleValue: 5bd6e9286d99522a52e458de
+                  type: STRING
+                - name: clientOid
+                  description: Client ID of the canceled order, if applicable
+                  sampleValue: clientOid123
+                  type: STRING
+                - name: code
+                  description: Response code for the cancellation request
+                  sampleValue: "200"
+                  type: STRING
+                - name: msg
+                  description: Response message for the cancellation request
+                  sampleValue: "success"
+                  type: STRING

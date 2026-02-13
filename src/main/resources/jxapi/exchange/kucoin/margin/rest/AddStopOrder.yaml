@@ -1,0 +1,127 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: AddStopOrder
+        httpMethod: POST
+        url: v3/hf/margin/stop-order
+        description: >
+          This endpoint allows you to place a stop order to the margin trading system.
+        docUrl: https://www.kucoin.com/docs-new/3473229e0
+        requestWeight: 4
+        rateLimits:
+          - spot
+        request:
+          objectName: KucoinMarginAddStopOrderRequest
+          properties:
+            - name: clientOid
+              description: >
+                A unique ID created by the user (e.g., UUID). Max length 40 characters.
+              type: STRING
+              sampleValue: "9e64g33505cc899h55g615hd"
+            - name: side
+              description: >
+                Specify if the order is to 'buy' or 'sell'. See ${constants.orderSide} for enum values.
+              type: STRING
+              sampleValue: ${constants.orderSide.buy}
+            - name: symbol
+              description: >
+                Trading symbol (e.g., KCS-USDT).
+              type: STRING
+              sampleValue: "KCS-USDT"
+            - name: stopPrice
+              description: >
+                The trigger price for the stop order.
+              type: BIGDECIMAL
+              sampleValue: "136.42"
+            - name: isIsolated
+              description: >
+                true for isolated margin; false for cross margin. Default is false.
+              type: BOOLEAN
+            - name: autoRepay
+              description: >
+                true to automatically repay borrowed assets when closing a position. Default is false.
+              type: BOOLEAN
+            - name: autoBorrow
+              description: >
+                true to automatically borrow assets if the margin account has insufficient balance. Default is false.
+              type: BOOLEAN
+            - name: type
+              description: >
+                Specify if the order is a 'limit' or 'market' order. See ${constants.margin.orderType} for enum values.
+              type: STRING
+              sampleValue: ${constants.margin.orderType.limit}
+            - name: remark
+              description: >
+                Order note, max 100 characters.
+              type: STRING
+              sampleValue: "Test order"
+            - name: stop
+              description: >
+                Stop-profit and stop-loss orders, trigger conditions. 'loss' (less than or equal to) or 'entry' (greater than or equal to). Default is 'loss'.
+              type: STRING
+              sampleValue: "entry"
+            - name: stp
+              description: >
+                Self Trade Prevention strategy. See ${constants.margin.stp} for enum values.
+              type: STRING
+              sampleValue: ${constants.margin.stp.cb}
+            - name: price
+              description: >
+                Specify price for order, required for limit orders. Must adhere to priceIncrement.
+              type: BIGDECIMAL
+              sampleValue: "975.07"
+            - name: size
+              description: >
+                Specify quantity for order, required for limit orders. Must adhere to baseIncrement. For market orders, either size or funds is required.
+              type: BIGDECIMAL
+              sampleValue: "10.5"
+            - name: timeInForce
+              description: >
+                Time in force strategy. See ${constants.margin.timeInForce} for enum values.
+              type: STRING
+              sampleValue: ${constants.margin.timeInForce.gtc}
+            - name: cancelAfter
+              description: >
+                Cancel after n seconds (for GTT orders).
+              type: LONG
+            - name: postOnly
+              description: >
+                Passive order labels. Default: false.
+              type: BOOLEAN
+            - name: hidden
+              description: >
+                Hidden order or not. Default: false.
+              type: BOOLEAN
+            - name: iceberg
+              description: >
+                Whether or not only visible portions of orders are shown in Iceberg orders. Default: false.
+              type: BOOLEAN
+            - name: visibleSize
+              description: >
+                Maximum visible quantity in iceberg orders.
+              type: BIGDECIMAL
+            - name: funds
+              description: >
+                When type is market, select one out of two: size or funds.
+              type: BIGDECIMAL
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          objectName: KucoinMarginAddStopOrderResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              properties:
+                - name: orderId
+                  description: Order ID
+                  type: STRING
+                  sampleValue: "vs8hoq2h6t43dlku003vff2r"
+                - name: clientOid
+                  description: Client Order ID
+                  type: STRING
+                  sampleValue: "9e64g33505cc899h55g615hd"

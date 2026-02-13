@@ -1,0 +1,7 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    description: Kucoin Futures market data API
+    httpUrl: "${constants.futuresUrl}"
+    defaultHttpClient: public
+    defaultWebsocketClient: publicFuturesWs

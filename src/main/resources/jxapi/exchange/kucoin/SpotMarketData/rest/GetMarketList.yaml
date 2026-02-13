@@ -1,0 +1,27 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetMarketList
+        httpMethod: GET
+        url: v1/markets
+        description: Request via this endpoint to get the transaction currency for the entire trading market.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-market-list
+        requestWeight: 3
+        rateLimits:
+          - public
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              type: STRING_LIST
+              description: Transaction currency list

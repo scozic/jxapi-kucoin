@@ -1,0 +1,34 @@
+id: Kucoin
+constants:
+- name: UAMarketData
+  constants:
+    - name: announcementTypes
+      description: Announcement types
+      constants:
+        - name: latestAnnoucements
+          description: Latest announcements
+          value: latest-announcements
+        - name: activities
+          description: Activities
+          value: activities
+        - name: productUpdates
+          description: Product updates  
+          value: product-updates
+        - name: vip
+          description: Institutions and VIPs
+          value: vip
+        - name: maintenanceUpdates
+          description: System maintenance  
+          value: maintenance-updates
+        - name: delistings
+          description: Delistings  
+          value: delistings
+        - name: others
+          description: Others  
+          value: others
+        - name: apiCampaigns
+          description: API campaigns  
+          value: api-campaigns
+        - name: newListings
+          description: New listings    
+          value: new-listings

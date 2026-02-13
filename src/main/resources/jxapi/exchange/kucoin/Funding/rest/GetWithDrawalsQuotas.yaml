@@ -1,0 +1,99 @@
+id: Kucoin
+apis:
+  - name: Funding
+    restEndpoints:
+      - name: GetWithdrawalsQuotas
+        httpMethod: GET
+        url: v1/withdrawals/quotas
+        description: >
+          Request via this endpoint to get withdrawal quotas. The response includes the available withdrawal amount, remaining amount available to withdraw the current day, minimum withdrawal amount, 24-hour total withdrawal limit, equivalent to BTC, fees for internal withdrawal, the estimated BTC amount (based on the daily fiat limit) that can be withdrawn within the current day, and whether the withdraw function is enabled or not.
+          See the <a href="https://www.kucoin.com/docs/basic-info/connection-method/pager/introduction">Pagination</a> section for retrieving additional entries after the first page.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/withdrawals/get-withdrawal-quotas
+        requestWeight: 20
+        rateLimits:
+          - management
+        request:
+            properties:
+            - name: currency
+              description: <a href="https://www.kucoin.com/docs/rest/spot-trading/market-data/get-currency-list">Currency</a>.
+              sampleValue: USDT
+              type: STRING
+            - name: chain
+              description: >
+                [Optional] The chain of currency. This only apply for multi-chain currency, and there is no need for single chain currency; you can query the chainId through the response of the GET /api/v3/currencies/{currency} interface.
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: Response payload
+              type: OBJECT
+              objectName: KucoinGetWithdrawalsQuotasResponseData
+              properties:
+                - name: availableAmount
+                  description: Current available withdrawal amount
+                  sampleValue: 0.00000000
+                  type: BIGDECIMAL
+                - name: remainAmount
+                  description: Remaining amount available to withdraw the current day
+                  sampleValue: 0.00000000
+                  type: BIGDECIMAL
+                - name: withdrawMinSize
+                  description: Minimum withdrawal amount
+                  sampleValue: 0.00000000
+                  type: BIGDECIMAL
+                - name: limitBTCAmount
+                  description: 24-hour total withdrawal limit, equivalent to BTC.
+                  sampleValue: 0.00000000
+                  type: BIGDECIMAL
+                - name: innerWithdrawMinFee
+                  description: Fees for internal withdrawal.
+                  sampleValue: 0.00000000
+                  type: BIGDECIMAL
+                - name: usedBTCAmount
+                  description: The estimated BTC amount (based on the daily fiat limit) that can be withdrawn within the current day.
+                  sampleValue: 0.00000000
+                  type: BIGDECIMAL
+                - name: isWithdrawEnabled
+                  description: Is the withdraw function enabled or not.
+                  sampleValue: true
+                  type: BOOLEAN
+                - name: withdrawMinFee
+                  description: Minimum withdrawal fee.
+                  sampleValue: 0.00000000
+                  type: BIGDECIMAL
+                - name: precision
+                  description: Floating point precision.
+                  sampleValue: 8
+                  type: INT
+                - name: chain
+                  description: The chain name of currency, e.g. The available value for USDT are OMNI, ERC20, TRC20, default is ERC20.
+                  sampleValue: ERC20
+                  type: STRING
+                - name: quotaCurrency
+                  description: withdrawal limit currency.
+                  sampleValue: USDT
+                  type: STRING
+                - name: limitQuotaCurrencyAmount
+                  description: The intraday available withdrawal amount(withdrawal limit currency).
+                  sampleValue: 0.00000000
+                  type: BIGDECIMAL
+                - name: usedQuotaCurrencyAmount
+                  description: The intraday cumulative withdrawal amount(withdrawal limit currency).
+                  sampleValue: 0.00000000
+                  type: BIGDECIMAL
+                - name: lockedAmount
+                  description: Total locked amount (including the amount locked into USDT for each currency).
+                  sampleValue: 0.00000000
+                  type: BIGDECIMAL
+
+        

@@ -1,0 +1,67 @@
+id: Kucoin
+apis:
+  - name: Convert
+    restEndpoints:
+      - name: GetConvertSymbol
+        httpMethod: GET
+        url: v1/convert/symbol
+        description: "Get all convert trade symbol."
+        docUrl: https://www.kucoin.com/docs-new/rest/convert/get-Coconvert-symbol
+        requestWeight: 30
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: fromCurrency
+              description: "Coin to be sold"
+              sampleValue: "USDT"
+            - name: toCurrency
+              description: "Coin to be bought"
+              sampleValue: "BTC"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: "System error code, see <a href=\"https.www.kucoin.com/docs-new/error-code/http\">API</a>"
+              sampleValue: "200000"
+            - name: msg
+              description: "System error code description, provided in error response when code is not '0', see <a href=\"https://www.kucoin.com/docs-new/error-code/http\">API</a>"
+            - name: data
+              type: OBJECT
+              objectName: KucoinConvertSymbol
+              description: "Details of a convert symbol"
+              properties:
+                - name: symbol
+                  description: "Symbol"
+                  sampleValue: "BTC-USDT"
+                - name: fromCurrency
+                  description: "Coin to be sold"
+                  sampleValue: "USDT"
+                - name: toCurrency
+                  description: "Coin to be bought"
+                  sampleValue: "BTC"
+                - name: fromCurrencyMaxSize
+                  description: The maximum allowed size for the source currency in a trade.
+                  sampleValue: "2"
+                  type: BIGDECIMAL
+                - name: fromCurrencyMinSize
+                  description: The minimum allowed size for the source currency in a trade.
+                  sampleValue: "0.01"
+                  type: BIGDECIMAL
+                - name: fromCurrencyStep
+                  description: The incremental step size for the source currency in a trade.
+                  sampleValue: "0.01"
+                  type: BIGDECIMAL
+                - name: toCurrencyMaxSize
+                  description: The maximum allowed size for the target currency in a trade.
+                  sampleValue: "0.1"
+                  type: BIGDECIMAL
+                - name: toCurrencyMinSize
+                  description: The minimum allowed size for the target currency in a trade.
+                  sampleValue: "0.0001"
+                  type: BIGDECIMAL
+                - name: toCurrencyStep
+                  description: The incremental step size for the target currency in a trade.
+                  sampleValue: "0.0001"
+                  type: BIGDECIMAL

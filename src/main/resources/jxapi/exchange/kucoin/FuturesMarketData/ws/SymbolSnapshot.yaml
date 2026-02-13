@@ -1,0 +1,71 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    websocketEndpoints:
+      - name: SymbolSnapshot
+        topic: /contractMarket/snapshot:${request}
+        description: Subscribe this topic to get the statistics event of a symbol intervally, including 24h transaction volume,price change, etc.
+        docUrl: https://www.kucoin.com/docs-new/3470089w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: XBTUSDTM
+        message:
+          properties:
+            - name: topic
+              description: Topic of the message
+              sampleValue: /contractMarket/snapshot:XBTUSDTM
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: subject
+              description: Subject of the message
+              sampleValue: snapshot.24h
+            - name: id
+              description: Unique ID
+              sampleValue: "67c01b710329940001118cb1"
+            - name: data
+              description: Data payload
+              properties:
+                - name: highPrice
+                  description: Highest price in 24 hours
+                  sampleValue: 89299.9
+                  type: BIGDECIMAL
+                - name: lastPrice
+                  description: Last price
+                  sampleValue: 86262.6
+                  type: BIGDECIMAL
+                - name: lowPrice
+                  description: Lowest price in 24 hours
+                  sampleValue: 82205.2
+                  type: BIGDECIMAL
+                - name: price24HoursBefore
+                  description: Price 24 hours before
+                  sampleValue: 88762.5
+                  type: BIGDECIMAL
+                - name: priceChg
+                  description: Price change
+                  sampleValue: -2499.9
+                  type: BIGDECIMAL
+                - name: priceChgPct
+                  description: Price change percentage
+                  sampleValue: -0.0281
+                  type: BIGDECIMAL
+                - name: symbol
+                  description: Symbol of the contract
+                  sampleValue: XBTUSDTM
+                - name: turnover
+                  description: Turnover
+                  sampleValue: 1033552780.2532196044
+                  type: BIGDECIMAL
+                - name: volume
+                  description: Volume
+                  sampleValue: 12062.039
+                  type: BIGDECIMAL
+                - name: ts
+                  description: Timestamp
+                  sampleValue: 1740643185017646670
+                  type: LONG

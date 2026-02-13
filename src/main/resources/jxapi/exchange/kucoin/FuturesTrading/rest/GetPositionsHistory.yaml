@@ -1,0 +1,113 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: GetPositionsHistory
+        httpMethod: GET
+        url: v1/history-positions
+        description: >
+          Get the history of positions.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/positions/get-positions-history
+        requestWeight: 6
+        rateLimits:
+          - futures
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequestV4
+          properties:
+            - name: symbol
+              description: "[Optional] Symbol of the contract"
+              type: STRING
+            - name: from
+              description: "[Optional] From time, millisecond"
+              type: LONG
+            - name: to
+              description: "[Optional] To time, millisecond"
+              type: LONG
+            - name: limit
+              description: "[Optional] Number of records per page. Default 50, max 100."
+              type: INT
+              sampleValue: 50
+            - name: pageId
+              description: "[Optional] The page id, which is the closeId of the last data of the previous page"
+              type: INT
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: Response payload
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              properties:
+                - name: currentPage
+                  description: Current page
+                  type: INT
+                - name: pageSize
+                  description: Page size
+                  type: INT
+                - name: totalNum
+                  description: Total number of records
+                  type: INT
+                - name: totalPage
+                  description: Total number of pages
+                  type: INT
+                - name: items
+                  description: List of position history
+                  type: OBJECT_LIST
+                  objectName: KucoinPositionHistory
+                  properties:
+                    - name: closeId
+                      description: Close ID
+                      type: STRING
+                    - name: positionId
+                      description: Position ID
+                      type: STRING
+                    - name: symbol
+                      description: Symbol
+                      type: STRING
+                    - name: pnl
+                      description: Realized PNL
+                      type: BIGDECIMAL
+                    - name: tradeFee
+                      description: Trading fee
+                      type: BIGDECIMAL
+                    - name: fundingFee
+                      description: Funding fee
+                      type: BIGDECIMAL
+                    - name: openTime
+                      description: Open time
+                      type: LONG
+                    - name: closeTime
+                      description: Close time
+                      type: LONG
+                    - name: closeType
+                      description: Close type
+                      type: STRING
+                    - name: openPrice
+                      description: Average open price
+                      type: BIGDECIMAL
+                    - name: closePrice
+                      description: Average close price
+                      type: BIGDECIMAL
+                    - name: openSize
+                      description: Open size
+                      type: LONG
+                    - name: closeSize
+                      description: Close size
+                      type: LONG
+                    - name: settlePrice
+                      description: Settlement price
+                      type: BIGDECIMAL
+                    - name: settleType
+                      description: Settlement type
+                      type: STRING

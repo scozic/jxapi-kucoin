@@ -1,0 +1,95 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: GetPrivateFundingHistory
+        httpMethod: GET
+        url: v1/funding-history
+        description: >
+          Get private funding history.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/funding-fees/get-private-funding-history
+        requestWeight: 2
+        rateLimits:
+          - futures
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequestV3
+          properties:
+            - name: symbol
+              description: "Symbol of the contract"
+              type: STRING
+              sampleValue: "XBTUSDM"
+            - name: startAt
+              description: "[Optional] Start time (millisecond)"
+              type: LONG
+            - name: endAt
+              description: "[Optional] End time (millisecond)"
+              type: LONG
+            - name: reverse
+              description: "[Optional] This parameter functions to judge whether the lookup is reverse. True means 'yes'."
+              type: BOOLEAN
+            - name: offset
+              description: "[Optional] Start offset. The unique attribute of the last returned result of the last request. The data of the first page will be returned by default."
+              type: LONG
+            - name: forward
+              description: "[Optional] This parameter functions to judge whether the lookup is forward or not. True means 'yes' and False means 'no'. This parameter is set as true by default"
+              type: BOOLEAN
+            - name: maxCount
+              description: "[Optional] Maximum record count, default is 10, maximum is 100"
+              type: INT
+              sampleValue: 10
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseV4
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: Response payload
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseV4Page
+              properties:
+                - name: hasMore
+                  description: "Whether there are more pages"
+                  type: BOOLEAN
+                - name: dataList
+                  description: "List of private funding history"
+                  type: OBJECT_LIST
+                  objectName: KucoinPrivateFundingHistory
+                  implementedInterfaces:
+                    - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseV4Item
+                  properties:
+                    - name: id
+                      description: "ID"
+                      type: LONG
+                    - name: symbol
+                      description: "Symbol"
+                      type: STRING
+                    - name: timePoint
+                      description: "Time point"
+                      type: LONG
+                    - name: fundingRate
+                      description: "Funding rate"
+                      type: BIGDECIMAL
+                    - name: markPrice
+                      description: "Mark price"
+                      type: BIGDECIMAL
+                    - name: positionQty
+                      description: "Position quantity"
+                      type: LONG
+                    - name: positionCost
+                      description: "Position value"
+                      type: BIGDECIMAL
+                    - name: funding
+                      description: "Funding"
+                      type: BIGDECIMAL
+                    - name: settleCurrency
+                      description: "Settlement currency"
+                      type: STRING

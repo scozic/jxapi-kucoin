@@ -1,0 +1,56 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    restEndpoints:
+      - name: GetFullOrderBook
+        url: v1/level2/snapshot
+        description: >
+          Get a snapshot of aggregated open orders for a symbol.<br>
+          Level 2 order book includes all bids and asks (aggregated by price). 
+          This level returns only one aggregated size for each price (as if there was only one single order for that price).<br>
+          This API will return data with full depth.<br>
+          It is generally used by professional traders because it uses more server resources and traffic, and we have strict access frequency control.<br>
+          To maintain up-to-date Order Book, please use Websocket incremental feed after retrieving the Level 2 snapshot.<br>
+          In the returned data, the sell side is sorted low to high by price and the buy side is sorted high to low by price.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/market-data/get-full-orderbook
+        httpMethod: GET
+        requestWeight: 3
+        rateLimits:
+          - public
+        request:
+          name: symbol
+          description: Symbol of the contract
+          sampleValue: XBTUSDM
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Ticker information
+              objectName: KucoinFuturesOrderBook
+              implementedInterfaces:
+                -  org.jxapi.exchanges.kucoin.common.KucoinOrderBook
+              properties:
+                - name: sequence
+                  description: Sequence number
+                  sampleValue: 1001
+                  type: LONG
+                - name: symbol
+                  description: Symbol of the contract
+                  sampleValue: XBTUSDM
+                - name: asks
+                  description: Asks. [Price, quantity]
+                  type: BIGDECIMAL_LIST_LIST
+                - name: bids
+                  description: Bids. [Price, quantity]
+                  type: BIGDECIMAL_LIST_LIST
+                - name: ts
+                  description: Timestamp
+                  sampleValue: 1604643655040584408
+                  type: LONG  

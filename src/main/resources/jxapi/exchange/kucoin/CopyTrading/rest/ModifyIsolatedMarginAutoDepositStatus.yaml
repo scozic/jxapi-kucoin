@@ -1,0 +1,35 @@
+id: Kucoin
+apis:
+  - name: CopyTrading
+    restEndpoints:
+      - name: ModifyIsolatedMarginAutoDepositStatus
+        httpMethod: POST
+        url: v1/copy-trade/futures/position/margin/auto-deposit-status
+        description: >
+          Modify the auto-deposit margin status for a specific trading symbol in isolated margin mode.
+        docUrl: https://www.kucoin.com/docs-new/rest/copy-trading/modify-isolated-margin-auto-deposit-status
+        requestWeight: 4
+        rateLimits:
+          - copyTrading
+        request:
+          properties:
+            - name: symbol
+              description: "Ticker symbol of the contract"
+              type: STRING
+              sampleValue: "XBTUSDM"
+            - name: status
+              description: "The desired auto-deposit status; true to enable, false to disable."
+              type: BOOLEAN
+              sampleValue: "true"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+              type: STRING
+            - name: data
+              description: "Indicates if the operation was successful"
+              type: BOOLEAN
+              sampleValue: "true"

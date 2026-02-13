@@ -1,0 +1,103 @@
+id: Kucoin
+apis:
+  - name: Account
+    restEndpoints:
+      - name: GetSubAccountListSpotBalance
+        httpMethod: GET
+        url: v2/sub-accounts
+        description: This endpoint returns the account info of all sub-users.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/sub-account/get-subaccount-list-spot-balance-v2
+        requestWeight: 20
+        rateLimits:
+          - management
+        request:
+          properties:
+            - name: currentPage
+              description: Current request page. Default is 1
+              sampleValue: 1
+              type: INT
+            - name: pageSize
+              description: Number of results per request. Minimum is 1, maximum is 100, default is 10.
+              sampleValue: 10
+              type: INT        
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              properties:
+                - name: currentPage
+                  description: Current page number
+                  sampleValue: 1
+                  type: INT
+                - name: pageSize
+                  description: Number of items per page
+                  sampleValue: 50
+                  type: INT
+                - name: totalNum
+                  description: Total number of items
+                  sampleValue: 2
+                  type: INT
+                - name: totalPage
+                  description: Total number of pages
+                  sampleValue: 1
+                  type: INT
+                - name: items
+                  description: List of sub-accounts
+                  type: OBJECT_LIST
+                  objectName: KucoinSubAccountSpotBalance
+                  properties:
+                    - name: subUserId
+                      description: The user ID of the sub-user.
+                      sampleValue: 5caefba7d9575a0688f83c45
+                    - name: subName
+                      description: The username of the sub-user.
+                      sampleValue: kucoin1
+                    - name: mainAccounts
+                      objectName: KucoinSpotSubAccountData
+                      type: OBJECT_LIST
+                      properties:
+                        - name: currency
+                          description: Currency
+                          sampleValue: BTC
+                        - name: balance
+                          description: Total funds in the account
+                          sampleValue: "237582.04299"
+                          type: BIGDECIMAL
+                        - name: available
+                          description: Funds available to withdraw or trade
+                          sampleValue: "237582.032"
+                          type: BIGDECIMAL
+                        - name: holds
+                          description: Funds on hold (not available for use)
+                          sampleValue: "0.01099"
+                          type: BIGDECIMAL
+                        - name: baseCurrency
+                          description: Calculated on this currency.
+                          sampleValue: BTC
+                        - name: baseCurrencyPrice
+                          description: The base currency price.
+                          sampleValue: "1"
+                          type: BIGDECIMAL
+                        - name: baseAmount
+                          description: The base currency amount.
+                          sampleValue: "1.1"
+                          type: BIGDECIMAL
+                    - name: tradeAccounts
+                      objectName: KucoinSpotSubAccountData
+                      type: OBJECT_LIST
+                    - name: marginAccounts
+                      objectName: KucoinSpotSubAccountData
+                      type: OBJECT_LIST
+                    - name: tradeHFAccounts
+                      objectName: KucoinSpotSubAccountData
+                      type: OBJECT_LIST

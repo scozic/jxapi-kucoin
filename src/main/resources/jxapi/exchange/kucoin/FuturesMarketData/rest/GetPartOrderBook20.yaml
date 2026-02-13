@@ -1,0 +1,36 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    restEndpoints:
+      - name: GetPartOrderBook20
+        url: v1/level2/depth20
+        description: >
+          This interface can obtain the order data of the specified contract.<br>
+          The buy and sell orders on the order book are aggregated according to the price, and only one 
+          pending order volume aggregated according to the price is returned under each price.<br>
+          This interface will only return part of the order data, level2_20 means to return 20 pieces of 
+          data for each buy and sell, and level_100 means to return 100 pieces of data for each buy and sell. 
+          It is recommended that you use this interface, because the response speed is faster and the 
+          traffic consumption is small.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/market-data/get-part-orderbook
+        httpMethod: GET
+        requestWeight: 5
+        rateLimits:
+          - public
+        request:
+          name: symbol
+          description: Symbol of the contract
+          sampleValue: XBTUSDM
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Ticker information
+              objectName: KucoinFuturesOrderBook

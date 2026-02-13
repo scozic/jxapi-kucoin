@@ -1,0 +1,47 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetOcoOrderByOrderId
+        httpMethod: GET
+        url: v3/hf/margin/oco-order/orderId
+        description: >
+          Requests OCO order information via the order ID.
+        docUrl: https://www.kucoin.com/docs-new/3473256e0
+        requestWeight: 3
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: orderId
+              description: >
+                The ID of the OCO order.
+              type: STRING
+              sampleValue: "685a0dc1c01cd6000716c615"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              objectName: KucoinOcoOrder
+              properties:
+                - name: orderId
+                  description: Unique order ID.
+                  type: STRING
+                - name: symbol
+                  description: Trading pair.
+                  type: STRING
+                - name: clientOid
+                  description: Client Order ID.
+                  type: STRING
+                - name: orderTime
+                  description: Order placement time in milliseconds.
+                  type: LONG
+                - name: status
+                  description: Order status (NEW, DONE, TRIGGERED, CANCELLED).
+                  type: STRING

@@ -1,0 +1,51 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    websocketEndpoints:
+      - name: AllSymbolsTickerStream
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        topic: /market/ticker:all
+        description: "Subscribe to this topic to get the push of all market symbols BBO change. Push frequency: once every 100ms."
+        docUrl: https://www.kucoin.com/docs-new/3470064w0
+        message:
+          properties:
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: topic
+              description: Topic
+              sampleValue: /market/ticker:BTC-USDT
+            - name: subject
+              description: Symbol
+              sampleValue: BTC-USDT
+            - name: data
+              properties:
+                - name: sequence
+                  description: Sequence
+                  sampleValue: "1550467636704"
+                - name: bestAsk
+                  description: Best ask price
+                  sampleValue: "0.03715004"
+                  type: BIGDECIMAL
+                - name: size
+                  description: Last traded size
+                  sampleValue: "0.17"
+                  type: BIGDECIMAL
+                - name: price
+                  description: Last traded price
+                  sampleValue: "0.09715005"
+                  type: BIGDECIMAL
+                - name: bestBidSize
+                  description: Best bid size
+                  sampleValue: "3.803"
+                  type: BIGDECIMAL
+                - name: bestBid
+                  description: Best bid price
+                  sampleValue: "0.03710768"
+                  type: BIGDECIMAL
+                - name: bestAskSize
+                  description: Best ask size
+                  sampleValue: "1.788"
+                  type: BIGDECIMAL

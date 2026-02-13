@@ -1,0 +1,80 @@
+id: Kucoin
+constants:
+  - name: margin
+    description: Margin Trading constants
+    constants:
+    - name: borrowOrderStatus
+      description: >
+        Borrow status; include 'borrowed', 'repaying', 'cleared'
+      constants:
+      - name: pending
+        description: Pending borrow
+        value: PENDING
+      - name: success
+        description: Successful borrow
+        value: SUCCESS
+      - name: failed
+        description: Failed borrow
+        value: FAILED
+    - name: subscriptionOrderStatus
+      description: >
+        Subscription or redemption order status: DONE-completed; PENDING-settling
+      constants:
+      - name: done
+        description: Completed order
+        value: DONE
+      - name: pending
+        description: Settling order
+        value: PENDING
+    - name: timeInForce
+      description: >
+        Time in force, one of IOC, FOK, GTC, GTT. See <a href="https://docs.kucoin.com/#time-in-force">Time In Force</a>
+      constants:
+      - name: ioc
+        description: Immediate or Cancel
+        value: IOC
+      - name: fok
+        description: Fill or Kill
+        value: FOK
+      - name: gtc
+        description: Good Till Cancel
+        value: GTC
+      - name: gtt
+        description: Good Till Time    
+        value: GTT
+    - name: orderType
+      description: >
+        Order type; include 'limit' (limit order), 'market' (market order)
+      constants:
+      - name: limit
+        description: Limit order
+        value: limit
+      - name: market
+        description: Market order
+        value: market
+    - name: stp
+      description: >
+        Self trade prevention; include CN (Cancel New), CO (Cancel Old), DC (Decrease and Cancel), CB (Cancel Both)
+      constants:
+      - name: cn
+        description: Cancel New
+        value: CN
+      - name: co
+        description: Cancel Old
+        value: CO
+      - name: dc
+        description: Decrease and Cancel
+        value: DC
+      - name: cb
+        description: Cancel Both
+        value: CB
+    - name: tradeType
+      description: >
+        Trade type; include 'MARGIN_TRADE' (cross margin trade), 'MARGIN_ISOLATED_TRADE' (isolated margin trade)
+      constants:
+      - name: marginTrade
+        description: Cross margin trade
+        value: MARGIN_TRADE
+      - name: marginIsolatedTrade
+        description: Isolated margin trade
+        value: MARGIN_ISOLATED_TRADE        

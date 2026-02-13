@@ -1,0 +1,193 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetMarginStopOrdersList
+        httpMethod: GET
+        url: v3/hf/margin/stop-orders
+        description: >
+          Request via this endpoint to get your current untriggered stop order list.
+        docUrl: https://www.kucoin.com/docs-new/3473234e0
+        requestWeight: 8
+        rateLimits:
+          - spot
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest
+          properties:
+            - name: symbol
+              description: >
+                Only list orders for a specific symbol
+              type: STRING
+            - name: side
+              description: >
+                buy or sell. See ${constants.orderSide} for enum values.
+              type: STRING
+            - name: type
+              description: >
+                limit, market, limit_stop, market_stop. See ${constants.margin.orderType} for enum values.
+              type: STRING
+            - name: tradeType
+              description: >
+                MARGIN_TRADE: cross margin, MARGIN_ISOLATED_TRADE: isolated margin. See ${constants.margin.tradeType} for enum values.
+              type: STRING
+            - name: startAt
+              description: >
+                Start time (milisecond)
+              type: LONG
+            - name: endAt
+              description: >
+                End time (milisecond)
+              type: LONG
+            - name: currentPage
+              description: >
+                Current page
+              type: INT
+            - name: orderIds
+              description: >
+                Comma seperated order ID list
+              type: STRING
+            - name: pageSize
+              description: >
+                Page size
+              type: INT
+            - name: stop
+              description: >
+                Order type: stop: stop loss order, oco: oco order
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              description: Response payload
+              type: OBJECT
+              properties:
+                - name: currentPage
+                  description: current page id
+                  type: INT
+                - name: pageSize
+                  description: page size
+                  type: INT
+                - name: totalNum
+                  description: the stop order count
+                  type: INT
+                - name: totalPage
+                  description: total page count of the list
+                  type: INT
+                - name: items
+                  description: the list of stop orders
+                  type: OBJECT_LIST
+                  objectName: KucoinMarginStopOrder
+                  properties:
+                    - name: id
+                      description: Order ID
+                      type: STRING
+                    - name: symbol
+                      description: Trading symbol
+                      type: STRING
+                    - name: userId
+                      description: User ID
+                      type: STRING
+                    - name: status
+                      description: Status
+                      type: STRING
+                    - name: type
+                      description: Order type
+                      type: STRING
+                    - name: side
+                      description: Order side
+                      type: STRING
+                    - name: price
+                      description: Order price
+                      type: BIGDECIMAL
+                    - name: size
+                      description: Order size
+                      type: BIGDECIMAL
+                    - name: funds
+                      description: Order funds
+                      type: BIGDECIMAL
+                    - name: stp
+                      description: Self Trade Prevention strategy
+                      type: STRING
+                    - name: timeInForce
+                      description: Time in force
+                      type: STRING
+                    - name: cancelAfter
+                      description: Cancel after
+                      type: LONG
+                    - name: postOnly
+                      description: Post only
+                      type: BOOLEAN
+                    - name: hidden
+                      description: Hidden
+                      type: BOOLEAN
+                    - name: iceberg
+                      description: Iceberg
+                      type: BOOLEAN
+                    - name: visibleSize
+                      description: Visible size
+                      type: BIGDECIMAL
+                    - name: channel
+                      description: Channel
+                      type: STRING
+                    - name: clientOid
+                      description: Client Order Id
+                      type: STRING
+                    - name: remark
+                      description: Order remarks
+                      type: STRING
+                    - name: tags
+                      description: Tags
+                      type: STRING
+                    - name: relatedNo
+                      description: Related number
+                      type: STRING
+                    - name: orderTime
+                      description: Order time
+                      type: LONG
+                    - name: domainId
+                      description: Domain ID
+                      type: STRING
+                    - name: tradeSource
+                      description: Trade source
+                      type: STRING
+                    - name: tradeType
+                      description: Trade type
+                      type: STRING
+                    - name: feeCurrency
+                      description: Fee currency
+                      type: STRING
+                    - name: takerFeeRate
+                      description: Taker fee rate
+                      type: BIGDECIMAL
+                    - name: makerFeeRate
+                      description: Maker fee rate
+                      type: BIGDECIMAL
+                    - name: createdAt
+                      description: Created at
+                      type: LONG
+                    - name: stop
+                      description: Stop
+                      type: STRING
+                    - name: stopTriggerTime
+                      description: Stop trigger time
+                      type: LONG
+                    - name: stopPrice
+                      description: Stop price
+                      type: BIGDECIMAL
+                    - name: limitPrice
+                      description: Limit price
+                      type: BIGDECIMAL
+                    - name: pop
+                      description: Pop
+                      type: STRING
+                    - name: activateCondition
+                      description: Activate condition
+                      type: STRING

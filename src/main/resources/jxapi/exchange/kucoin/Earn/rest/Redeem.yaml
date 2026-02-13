@@ -1,0 +1,60 @@
+id: Kucoin
+apis:
+  - name: Earn
+    restEndpoints:
+      - name: Redeem
+        description: >
+          This endpoint allows initiating redemption by holding ID. If the current holding is fully redeemed or in the process of being redeemed, it indicates that the holding does not exist.
+        docUrl: https://www.kucoin.com/docs-new/rest/earn/redeem
+        requestWeight: 4
+        rateLimits: 
+          - spot
+        httpMethod: DELETE
+        url: v1/earn/orders
+        request:
+          properties:
+            - name: orderId
+              description: Holding ID
+              type: STRING
+              sampleValue: "30112"
+            - name: amount
+              description: Redemption amount
+              type: STRING
+              sampleValue: "100"
+            - name: fromAccountType
+              description: "Account type: MAIN (funding account), TRADE (spot trading account). This parameter is valid only when orderId=ETH2. See ${constants.earn.accountType} for enumeration."
+              type: STRING
+              sampleValue: ${constants.earn.accountType.main}
+            - name: confirmPunishRedeem
+              description: "Confirmation field for early redemption penalty: 1 (confirm early redemption, and the current holding will be fully redeemed). This parameter is valid only for fixed-term products"
+              type: STRING
+              sampleValue: "1"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              properties:
+                - name: orderTxId
+                  description: Redemption order ID
+                  type: STRING
+                  sampleValue: "1293359"
+                - name: deliverTime
+                  description: Expected deliver time (milliseconds)
+                  type: LONG
+                  sampleValue: 1716965967000
+                - name: status
+                  description: "Redemption status: SUCCESS (successful), PENDING (redemption pending)"
+                  type: STRING
+                  sampleValue: "SUCCESS"
+                - name: amount
+                  description: Redemption amount credited
+                  type: STRING
+                  sampleValue: "2"

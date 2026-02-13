@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.jxapi.exchanges.kucoin</groupId>
+  <artifactId>jxapi-kucoin</artifactId>
+  <version>0.17.0</version>
+
+  <name>jxapi-kucoin</name>
+  <description>Kucoin exchange bindings for JXAPI</description>
+  <url>https://github.com/scozic/jxapi-kucoin</url>
+
+  <!-- Licence Apache 2.0 -->
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <!-- Auteur -->
+  <developers>
+    <developer>
+      <id>scozic</id>
+      <name>Sylvestre Cozic</name>
+      <email>scozic.dev@gmail.com</email>
+      <url>https://github.com/scozic</url>
+    </developer>
+  </developers>
+
+  <!-- SCM obligatoire -->
+  <scm>
+    <url>https://github.com/scozic/jxapi-kucoin</url>
+    <connection>scm:git:https://github.com/scozic/jxapi-kucoin.git</connection>
+    <developerConnection>scm:git:git@github.com:scozic/jxapi-kucoin.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <!-- Dépôts Sonatype -->
+  <distributionManagement>
+    <snapshotRepository>
+      <id>sonatype-snapshots</id>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+    </snapshotRepository>
+    <repository>
+      <id>sonatype-staging</id>
+      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <maven.compiler.release>17</maven.compiler.release>
+
+    <jxapi.version>1.0.0</jxapi.version>
+
+    <baseJavaDocUrl>https://javadoc.io/doc/org.jxapi.exchanges.kucoin/jxapi-kucoin/latest/index.html</baseJavaDocUrl>
+    <baseSrcUrl>https://github.com/scozic/jxapi-kucoin/blob/main/src</baseSrcUrl>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jxapi</groupId>
+      <artifactId>jxapi-core</artifactId>
+      <version>${jxapi.version}</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+
+      <!-- Plugin JXAPI -->
+      <plugin>
+        <groupId>org.jxapi</groupId>
+        <artifactId>jxapi-maven-plugin</artifactId>
+        <version>${jxapi.version}</version>
+        <configuration>
+          <baseProjectDir>${project.basedir}</baseProjectDir>
+          <baseJavaDocUrl>${baseJavaDocUrl}/</baseJavaDocUrl>
+          <baseSrcUrl>${baseSrcUrl}/</baseSrcUrl>
+        </configuration>
+        <executions>
+          <execution>
+            <id>jxapi-exchange-generator</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>generate-exchanges</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Ajout des sources générées -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.4.0</version>
+        <executions>
+          <execution>
+            <id>add-generated-sources</id>
+            <phase>generate-sources</phase>
+            <goals><goal>add-source</goal></goals>
+            <configuration>
+              <sources>
+                <source>${project.build.directory}/generated-sources/jxapi</source>
+              </sources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>add-generated-test-sources</id>
+            <phase>generate-sources</phase>
+            <goals><goal>add-test-source</goal></goals>
+            <configuration>
+              <sources>
+                <source>${project.build.directory}/generated-test-sources/jxapi</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- sources.jar -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.3.0</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals><goal>jar</goal></goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- javadoc.jar -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals><goal>jar</goal></goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Signature GPG -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals><goal>sign</goal></goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+
+</project>

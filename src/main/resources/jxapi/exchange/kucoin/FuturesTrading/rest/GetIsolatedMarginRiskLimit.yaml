@@ -1,0 +1,65 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: GetIsolatedMarginRiskLimit
+        httpMethod: GET
+        url: v1/contracts/risk-limit
+        description: >
+          Obtain risk limit levels for a specific contract.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/positions/get-isolated-margin-risk-limit
+        requestWeight: 5
+        rateLimits:
+          - futures
+        request:
+          properties:
+            - name: symbol
+              description: "Symbol of the contract"
+              type: STRING
+              sampleValue: "XBTUSDM"
+              in: PATH
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinFuturesRiskLimitLevel
+              properties:
+                - name: symbol
+                  description: "Symbol of the contract"
+                  type: STRING
+                  sampleValue: "XBTUSDM"
+                - name: level
+                  description: "Risk limit level"
+                  type: INT
+                  sampleValue: 1
+                - name: maxRiskLimit
+                  description: "Maximum risk limit"
+                  type: INT
+                  sampleValue: 2000000
+                - name: minRiskLimit
+                  description: "Minimum risk limit"
+                  type: INT
+                  sampleValue: 0
+                - name: maxLeverage
+                  description: "Maximum leverage"
+                  type: INT
+                  sampleValue: 100
+                - name: initialMargin
+                  description: "Initial margin rate"
+                  type: BIGDECIMAL
+                  sampleValue: "0.01"
+                - name: maintainMargin
+                  description: "Maintenance margin rate"
+                  type: BIGDECIMAL
+                  sampleValue: "0.005"

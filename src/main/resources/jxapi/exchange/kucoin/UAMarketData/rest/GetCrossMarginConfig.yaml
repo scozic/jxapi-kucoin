@@ -1,0 +1,37 @@
+id: Kucoin
+apis:
+  - name: UAMarketData
+    restEndpoints:
+      - name: GetCrossMarginConfig
+        httpMethod: GET
+        url: ua/v1/market/cross-config
+        description: Request the configure info of the 'spot cross margin' via this endpoint.
+        docUrl: https://www.kucoin.com/docs-new/rest/ua/get-cross-margin-config
+        requestWeight: 25
+        rateLimits:
+          - public
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: Response code
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description
+              sampleValue: success
+            - name: data
+              objectName: KucoinUACrossMarginConfigResponseData
+              properties:
+                - name: maxLeverage
+                  description: Maximum leverage available
+                  type: INT
+                - name: alertRiskRatio
+                  description: Risk ratio threshold for margin alerts
+                  type: BIGDECIMAL
+                - name: liquidationRiskRatio
+                  description: Risk ratio threshold for forced liquidation
+                  type: BIGDECIMAL
+                - name: currencyList
+                  description: Available currencies for cross margin trading
+                  type: STRING_LIST

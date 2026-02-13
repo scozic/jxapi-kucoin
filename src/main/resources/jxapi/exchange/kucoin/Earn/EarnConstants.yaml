@@ -1,0 +1,130 @@
+id: Kucoin
+constants:
+  - name: earn
+    description: >
+      Kucoin Earn API constants
+    constants:
+      - name: accountType
+        description: Account type, MAIN (funding account), TRADE (spot trading account)
+        constants:
+          - name: main
+            description: Funding account
+            value: MAIN
+          - name: trade
+            description: Spot trading account
+            value: TRADE
+      - name: productCategory
+        description: "Product category. Allowed values: DEMAND (savings), ACTIVITY, STAKING, KCS_STAKING, ETH2"
+        constants:
+          - name: demand
+            description: "Savings"
+            value: "DEMAND"
+          - name: activity
+            description: "Activity"
+            value: "ACTIVITY"
+          - name: staking
+            description: "Staking"
+            value: "STAKING"
+          - name: kcs_staking
+            description: "KCS Staking"
+            value: "KCS_STAKING"
+          - name: eth2
+            description: "ETH Staking"
+            value: "ETH2"
+      - name: savingProductType
+        description: "Product subtype. Allowed values: TIME (fixed), DEMAND (demand)"
+        constants:
+          - name: time
+            description: "Fixed"
+            value: "TIME"
+          - name: demand
+            description: "Demand"
+            value: "DEMAND"
+      - name: savingProductStatus
+        description: "Product status. Allowed values: ONGOING (Subscription in progress), PENDING (Preheating Subscription), FULL (Subscribed), INTERESTING (Interest in progress)"
+        constants:
+          - name: ongoing
+            description: "Subscription in progress"
+            value: "ONGOING"
+          - name: pending
+            description: "Preheating Subscription"
+            value: "PENDING"
+          - name: full
+            description: "Subscribed"
+            value: "FULL"
+          - name: interesting
+            description: "Interest in progress"
+            value: "INTERESTING"
+      - name: savingProductRedeemType
+        description: "Redemption channel. Allowed values: MANUAL (manual redemption), TRANS_DEMAND (transfer to corresponding demand product upon maturity), AUTO (redeem to funding account upon maturity)"
+        constants:
+          - name: manual
+            description: "Manual redemption"
+            value: "MANUAL"
+          - name: trans_demand
+            description: "Transfer to corresponding demand product upon maturity"
+            value: "TRANS_DEMAND"
+          - name: auto
+            description: "Redeem to funding account upon maturity"
+            value: "AUTO"
+      - name: savingProductIncomeReleaseType
+        description: "Income release type. Allowed values: DAILY (daily release), AFTER (release after product ends)"
+        constants:
+          - name: daily
+            description: "Daily release"
+            value: "DAILY"
+          - name: after
+            description: "Release after product ends"
+            value: "AFTER"
+      - name: earlyRedeemSupported
+        description: "Whether the fixed product supports early redemption. Allowed values: 0 (no), 1 (yes)"
+        constants:
+          - name: no
+            description: "No"
+            type: INT
+            value: 0
+          - name: yes
+            description: "Yes"
+            type: INT
+            value: 1
+      - name: newUserOnly
+        description: "Whether the product is exclusive to new users. Allowed values: 0 (no), 1 (yes)"
+        constants:
+          - name: no
+            description: "No"
+            type: INT
+            value: 0
+          - name: yes
+            description: "Yes"
+            type: INT
+            value: 1
+      - name: dualProductCategory
+        description: "Specifies the product category. Allowed values: DUAL_CLASSIC, DUAL_BOOSTER, DUAL_EXTRA"
+        constants:
+          - name: dual_classic
+            description: "Dual Classic"
+            value: "DUAL_CLASSIC"
+          - name: dual_booster
+            description: "Dual Booster"
+            value: "DUAL_BOOSTER"
+          - name: dual_extra
+            description: "Dual Extra"
+            value: "DUAL_EXTRA"
+      - name: dualProductSide
+        description: "The direction, either CALL or PUT"
+        constants:
+          - name: call
+            description: "Call"
+            value: "CALL"
+          - name: put
+            description: "Put"
+            value: "PUT"
+      - name: dualProductSoldStatus
+        description: "Product availability status. Allowed values: SOLD_OUT, AVAILABLE"
+        constants:
+          - name: sold_out
+            description: "Sold Out"
+            value: "SOLD_OUT"
+          - name: available
+            description: "Available"
+            value: "AVAILABLE"

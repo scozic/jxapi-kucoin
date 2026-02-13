@@ -1,0 +1,47 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    websocketEndpoints:
+      - name: MarginMarkPrice
+        description: Subscribe to this topic to get the mark price for margin trading.
+        docUrl: https://www.kucoin.com/docs-new/3470077w0
+        topic: /indicator/markPirce:${request}
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: USDT-BTC  
+        message:
+          properties:
+            - name: id
+              description: Unique ID
+              sampleValue: 5c24c5da03aa673885cd67a0
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: topic
+              description: Topic of the message
+              sampleValue: /indicator/mark:USDT-BTC
+            - name: subject
+              description: Subject of the message
+              sampleValue: tick
+            - name: data
+              description: Data payload
+              properties:
+                - name: symbol
+                  description: Trading pair symbol
+                  sampleValue: USDT-BTC
+                - name: granularity
+                  description: Granularity of the mark price
+                  sampleValue: 5000
+                  type: LONG
+                - name: timestamp
+                  description: Timestamp of the mark price
+                  sampleValue: 1551770400000
+                  type: LONG
+                - name: value
+                  description: Mark price value
+                  sampleValue: 0.0001092
+                  type: BIGDECIMAL

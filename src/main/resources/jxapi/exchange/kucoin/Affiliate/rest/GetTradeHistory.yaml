@@ -1,0 +1,86 @@
+id: Kucoin
+apis:
+  - name: Affiliate
+    restEndpoints:
+      - name: GetTradeHistory
+        description: >
+          This endpoint allows you to obtain trade history information for an invitee.
+        docUrl: https://www.kucoin.com/docs-new/3474062e0
+        requestWeight: 30
+        rateLimits:
+          - spot
+        httpMethod: GET
+        url: v2/affiliate/queryTransactionByUid
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequestV5
+          properties:
+            - name: uid
+              description: The invitee's UID.
+              type: STRING
+              sampleValue: "248222838"
+            - name: tradeType
+              description: "The trading type. See ${constants.affiliate.affiliateTradeType} for enumeration."
+              type: STRING
+              sampleValue: ${constants.affiliate.affiliateTradeType.spot}
+            - name: tradeStartAt
+              description: Trade start time (13-digit timestamp).
+              type: LONG
+            - name: tradeEndAt
+              description: Trade end time (13-digit timestamp).
+              type: LONG
+            - name: page
+              description: Page number.
+              type: INT
+              sampleValue: 1
+            - name: pageSize
+              description: Page size.
+              type: INT
+              sampleValue: 10
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "success"  
+            - name: data
+              description: Response payload
+              type: OBJECT
+              objectName: KucoinTradeHistoryPage
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              properties:
+                - name: currentPage
+                  type: INT
+                - name: pageSize
+                  type: INT
+                - name: totalNum
+                  type: INT
+                - name: totalPage
+                  type: INT
+                - name: items
+                  type: OBJECT_LIST
+                  objectName: KucoinAffiliateTradeHistory
+                  properties:
+                    - name: tradeTime
+                      type: LONG
+                    - name: tradeType
+                      description: "See ${constants.affiliate.affiliateTradeType} for enumeration."
+                      type: STRING
+                    - name: tradeCurrency
+                      type: STRING
+                    - name: tradeAmount
+                      type: BIGDECIMAL
+                    - name: tradeAmountU
+                      type: BIGDECIMAL
+                    - name: feeU
+                      type: BIGDECIMAL
+                    - name: commission
+                      type: BIGDECIMAL
+                    - name: currency
+                      type: STRING

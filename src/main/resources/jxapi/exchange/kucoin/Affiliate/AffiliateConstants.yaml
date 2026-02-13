@@ -1,0 +1,56 @@
+id: Kucoin
+constants:
+  - name: affiliate
+    description: >
+      Kucoin Affiliate API constants
+    constants:
+      - name: siteType
+        description: "Site Type."
+        constants:
+          - name: all
+            description: "All"
+            value: "all"  
+      - name: rebateType
+        description: "Rebate Type."
+        constants:
+          - name: all
+            description: "All"
+            type: INT
+            value: 0
+          - name: trading_fee
+            description: "Trading Fee"
+            type: INT
+            value: 1
+          - name: lending
+            description: "Lending"
+            type: INT
+            value: 2
+      - name: commissionStatus
+        description: "Commission Status."
+        constants:
+          - name: pending
+            description: "Pending"
+            type: INT
+            value: 1
+          - name: paid
+            description: "Paid"
+            type: INT
+            value: 2
+      - name: affiliateTradeType
+        description: "The trading type."
+        constants:
+          - name: spot
+            description: "Spot Trading"
+            value: "SPOT"
+          - name: feature
+            description: "Feature Trading"
+            value: "FEATURE"
+      - name: paginationDirection
+        description: "Page direction."
+        constants:
+          - name: pre
+            description: "Previous page"
+            value: "PRE"
+          - name: next
+            description: "Next page"
+            value: "NEXT"

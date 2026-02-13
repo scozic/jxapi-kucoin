@@ -1,0 +1,35 @@
+id: Kucoin
+properties:
+- name: apiKey
+  description: Kucoin spot trading API Key
+- name: apiSecret
+  description: Kucoin spot trading API secret
+- name: apiPassphrase
+  description: Kucoin spot trading API passphrase
+- name: futuresApiKey
+  description: Kucoin futures trading API Key
+- name: futuresApiSecret
+  description: Kucoin futures trading API secret
+- name: futuresApiPassphrase
+  description: Kucoin futures trading API passphrase
+- name: vipLevel
+  description: |-
+    Kucoin VIP level of this account, used to configure REST endpoint rate limits as according to <a href="https://www.kucoin.com/docs/basic-info/request-rate-limit/rest-api">REST rate limit 2.0</a>
+    <p>
+    Should be one of:
+    <ul>
+      <li><i>VIP1</i></li>
+      <li><i>VIP2</i></li>
+      <li><i>VIP3</i></li>
+      <li><i>VIP4</i></li>
+      <li><i>VIP5</i></li>
+      <li><i>VIP6</i></li>
+      <li><i>VIP7</i></li>
+      <li><i>VIP8</i></li>
+      <li><i>VIP9</i></li>
+      <li><i>VIP10</i></li>
+      <li><i>VIP11</i></li>
+      <li><i>VIP12</i></li>
+    </ul>
+    Default is <i>VIP0</i>.
+  defaultValue: VIP0

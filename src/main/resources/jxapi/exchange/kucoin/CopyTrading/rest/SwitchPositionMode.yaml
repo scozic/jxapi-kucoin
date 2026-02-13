@@ -1,0 +1,31 @@
+id: Kucoin
+apis:
+  - name: CopyTrading
+    restEndpoints:
+      - name: SwitchPositionMode
+        httpMethod: POST
+        url: v2/copy-trade/position/switchPositionMode
+        description: >
+          This endpoint is used to toggle between one-way mode and hedge mode for the position mode, which applies to all futures trading pairs.
+        docUrl: https://www.kucoin.com/docs-new/3475556e0
+        requestWeight: 2
+        rateLimits:
+          - copyTrading
+        request:
+          properties:
+            - name: positionMode
+              description: "Position mode. 0 for one-way mode, 1 for hedge mode."
+              type: STRING
+              sampleValue: "1"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+              type: STRING
+            - name: data
+              description: "Indicates if the operation was successful"
+              type: BOOLEAN
+              sampleValue: "true"

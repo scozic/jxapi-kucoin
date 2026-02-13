@@ -1,0 +1,27 @@
+id: Kucoin
+version: 1.0.0-SNAPSHOT
+basePackage: org.jxapi.exchanges.kucoin.gen
+description: Kucoin Spot and futures API
+docUrl: https://www.kucoin.com/docs
+afterInitHookFactory: org.jxapi.exchanges.kucoin.net.KucoinAfterInitExchangeHookFactory
+network:
+  httpClients:
+    - name: public
+    - name: privateSpot
+      httpRequestInterceptorFactory: org.jxapi.exchanges.kucoin.net.KucoinSpotPrivateHttpRequestInterceptorFactory  
+    - name: privateFutures
+      httpRequestInterceptorFactory: org.jxapi.exchanges.kucoin.net.KucoinFuturesPrivateHttpRequestInterceptorFactory  
+  websocketClients:  
+    - name: publicSpotWs
+      websocketUrl: wss://ws-api-spot.kucoin.com/
+      websocketHookFactory: org.jxapi.exchanges.kucoin.net.KucoinPublicSpotWebsocketHookFactory
+    - name: privateSpotWs
+      websocketUrl: wss://ws-api-spot.kucoin.com/
+      websocketHookFactory: org.jxapi.exchanges.kucoin.net.KucoinPrivateSpotWebsocketHookFactory
+    - name: publicFuturesWs
+      websocketHookFactory: org.jxapi.exchanges.kucoin.net.KucoinPublicFuturesWebsocketHookFactory
+      websocketUrl: wss://ws-api-futures.kucoin.com/
+    - name: privateFuturesWs
+      websocketUrl: wss://ws-api-futures.kucoin.com/
+      websocketHookFactory: org.jxapi.exchanges.kucoin.net.KucoinPrivateFuturesWebsocketHookFactory
+      

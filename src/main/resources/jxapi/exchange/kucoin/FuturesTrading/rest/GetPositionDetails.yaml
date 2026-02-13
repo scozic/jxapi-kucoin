@@ -1,0 +1,30 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: GetPositionDetails
+        httpMethod: GET
+        url: v1/position
+        description: >
+          Get the position details of a specified position.<br/>See <a href="https://docs.kucoin.com/futures/#positions">API</a>
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/positions/get-position-details
+        requestWeight: 2
+        rateLimits:
+          - futures
+        request:
+          name: symbol
+          description: Symbol of the contract
+          sampleValue: XBTUSDM
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              objectName: KucoinFuturesPositionData

@@ -1,0 +1,102 @@
+id: Kucoin
+apis:
+  - name: Account
+    restEndpoints:
+      - name: GetAllSubAccountsInfo
+        httpMethod: GET
+        url: v2/sub/user
+        description: >
+          This endpoint can be used to get paginated sub-account information. Pagination is required.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/sub-account/get-subaccount-list-summary-info
+        requestWeight: 20
+        rateLimits:
+          - management
+        paginated: true  
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest
+          properties:
+            - name: currentPage
+              description: Current request page. Default is 1
+              sampleValue: 1
+              type: INT
+            - name: pageSize
+              description: Number of results per request. Minimum is 1, maximum is 100, default is 10.
+              sampleValue: 10
+              type: INT
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              properties:
+                - name: currentPage
+                  description: Current page number
+                  sampleValue: 1
+                  type: INT
+                - name: pageSize
+                  description: Number of items per page
+                  sampleValue: 50
+                  type: INT
+                - name: totalNum
+                  description: Total number of items
+                  sampleValue: 2
+                  type: INT
+                - name: totalPage
+                  description: Total number of pages
+                  sampleValue: 1
+                  type: INT
+                - name: items
+                  description: List of sub-accounts
+                  type: OBJECT_LIST
+                  objectName: KucoinSubAccountInfo
+                  properties:
+                    - name: userId
+                      description: The user ID of your sub-account.
+                      sampleValue: 5cbd31ab9c93e9280cd36a0a
+                    - name: uid
+                      description: The UID of your sub-account.
+                      sampleValue: 1789234
+                      type: LONG
+                    - name: subName
+                      description: The username of your sub-account.
+                      sampleValue: kucoin1
+                    - name: status
+                      description: Account status; 2:Enable, 3:Frozen. See ${constants.account.subAccountStatus} for enumeration.
+                      sampleValue: ${constants.account.subAccountStatus.enabled}
+                      type: INT
+                    - name: type
+                      description: The type of your sub-account, see ${constants.account.subAccountType} for enumeration.
+                      sampleValue: ${constants.account.subAccountType.normal}
+                      type: INT
+                    - name: access
+                      description: The permissions of your sub-account.
+                      sampleValue: Margin
+                    - name: createdAt
+                      description: Time of the event
+                      sampleValue: 1666187844000
+                      type: LONG
+                    - name: remarks
+                      description: Remarks
+                      sampleValue: kucoin1
+                    - name: tradeTypes
+                      description: A list of trade types
+                      sampleValue: "SPOT,MARGIN"
+                      type: STRING
+                    - name: openedTradeTypes
+                      description: A list of opened trade types
+                      sampleValue: "SPOT"
+                      type: STRING
+                    - name: hostedStatus
+                      description: The hosted status
+                      sampleValue: "false"
+                      type: BOOLEAN

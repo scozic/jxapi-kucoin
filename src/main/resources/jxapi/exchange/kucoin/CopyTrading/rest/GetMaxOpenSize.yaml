@@ -1,0 +1,54 @@
+id: Kucoin
+apis:
+  - name: CopyTrading
+    restEndpoints:
+      - name: GetMaxOpenSize
+        httpMethod: GET
+        url: v1/copy-trade/futures/get-max-open-size
+        description: >
+          Get the maximum open position size for a contract.
+        docUrl: https://www.kucoin.com/docs-new/rest/copy-trading/get-max-open-size
+        requestWeight: 2
+        rateLimits:
+          - copyTrading
+        request:
+          properties:
+            - name: symbol
+              description: "Contract symbol"
+              type: STRING
+              sampleValue: "XBTUSDTM"
+            - name: price
+              description: "Order price"
+              type: BIGDECIMAL
+              sampleValue: "8000"
+            - name: leverage
+              description: "Leverage"
+              type: BIGDECIMAL
+              sampleValue: "10"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: Response payload
+              properties:
+                - name: symbol
+                  description: Contract symbol
+                  type: STRING
+                  sampleValue: "XBTUSDTM"
+                - name: maxBuyOpenSize
+                  description: Maximum buy size
+                  type: INT
+                  sampleValue: 13808
+                - name: maxSellOpenSize
+                  description: Maximum sell size
+                  type: INT
+                  sampleValue: 13808

@@ -1,0 +1,5 @@
+id: Kucoin
+constants:
+  - name: vipLending
+    description: >
+      Kucoin VIP Lending API constants

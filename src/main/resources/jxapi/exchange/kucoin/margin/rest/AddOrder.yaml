@@ -1,0 +1,126 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: AddOrder
+        httpMethod: POST
+        url: v3/margin/order
+        description: >
+          Place order in the Cross-margin or Isolated-margin trading system. 
+          You can place two major types of order: Limit and market. 
+          Orders can only be placed if your account has sufficient funds. 
+          Once an order is placed, your funds will be put on hold for the duration of the order. 
+          The amount of funds on hold depends on the order type and parameters specified.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/orders/add-order
+        requestWeight: 2
+        rateLimits:
+          - spot
+        request:
+          objectName: KucoinMarginAddOrderRequest
+          properties:
+            - name: clientOid
+              description: >
+                Unique order id created by users to identify their orders, e.g. UUID.
+              type: STRING
+              sampleValue: "6d539dc6-b5d6-4067-83b2-52535129447a"
+            - name: side
+              description: >
+                buy or sell. See ${constants.orderSide} for enum values.
+              type: STRING
+              sampleValue: ${constants.orderSide.buy}
+            - name: symbol
+              description: >
+                a valid trading symbol.
+              type: STRING
+              sampleValue: "BTC-USDT"
+            - name: type
+              description: >
+                limit or market (default is limit). See ${constants.margin.orderType} for enum values.
+              type: STRING
+              sampleValue: ${constants.margin.orderType.limit}
+            - name: remark
+              description: >
+                remark for the order
+              type: STRING
+              sampleValue: "test"
+            - name: stp
+              description: >
+                self trade prevention strategy, CN, CO, CB or DC. See ${constants.margin.stp} for enum values.
+              type: STRING
+              sampleValue: ${constants.margin.stp.cn}
+            - name: tradeType
+              description: >
+                The type of trading, CROSS (cross margin) or ISOLATED (isolated margin). See ${constants.margin.tradeType} for enum values.
+              type: STRING
+              sampleValue: ${constants.margin.tradeType.marginTrade}
+            - name: isIsolated
+              description: >
+                true or false, Whether to trade in isolated margin mode.
+              type: BOOLEAN
+            - name: price
+              description: >
+                price per base currency.
+              type: BIGDECIMAL
+              sampleValue: "1000"
+            - name: size
+              description: >
+                (Select one out of two: ‘size’ or ‘funds’)
+              type: BIGDECIMAL
+              sampleValue: "0.1"
+            - name: funds
+              description: >
+                (Select one out of two: ‘size’ or ‘funds’)
+              type: BIGDECIMAL
+              sampleValue: "100"  
+            - name: timeInForce
+              description: >
+                GTC, GTT, IOC, or FOK (default is GTC). See ${constants.margin.timeInForce} for enum values.
+              type: STRING
+              sampleValue: ${constants.margin.timeInForce.gtc}
+            - name: cancelAfter
+              description: >
+                cancel after n seconds.
+              type: LONG
+            - name: postOnly
+              description: >
+                Post only flag.
+              type: BOOLEAN
+            - name: hidden
+              description: >
+                Only true is supported.
+              type: BOOLEAN
+            - name: iceberg
+              description: >
+                Only true is supported.
+              type: BOOLEAN
+            - name: visibleSize
+              description: >
+                The maximum visible size of an iceberg order.
+              type: BIGDECIMAL
+            - name: autoBorrow
+              description: >
+                Auto-borrow to place order.
+              type: BOOLEAN
+            - name: autoRepay
+              description: >
+                Auto-repay the debt.
+              type: BOOLEAN
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          objectName: KucoinMarginAddOrderResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description, provided in error response when code is not ''0'', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "success"
+            - name: data
+              description: Payload for add margin order response.
+              type: OBJECT
+              properties:
+                - name: orderId
+                  description: order id
+                  sampleValue: "5bd6e9286d9f52759a2d20cf"
+                  type: STRING

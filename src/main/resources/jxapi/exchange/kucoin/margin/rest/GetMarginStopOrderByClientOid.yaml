@@ -1,0 +1,31 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetMarginStopOrderByClientOid
+        httpMethod: GET
+        url: v3/hf/margin/stop-order/clientOid
+        description: >
+          Request via this interface to get stop order information via the clientOid.
+        docUrl: https://www.kucoin.com/docs-new/3473251e0
+        requestWeight: 3
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: clientOid
+              description: >
+                The unique client order ID.
+              type: STRING
+              sampleValue: "6d73f22304aa677g33e494fs"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: The details of the stop order.
+              type: OBJECT
+              objectName: KucoinMarginStopOrder

@@ -1,0 +1,89 @@
+id: Kucoin
+apis:
+  - name: Funding
+    restEndpoints:
+      - name: ApplyWithdrawV3
+        httpMethod: POST
+        url: v3/withdrawals
+        description: >
+          <strong>TIP</strong>:
+          On the WEB end, you can open the switch of specified favorite addresses for withdrawal, and when it is turned on, it will verify whether 
+          your withdrawal address(including chain) is a favorite address(it is case sensitive); if it fails validation, it will respond with the 
+          error message {"msg":"Already set withdraw whitelist, this address is not favorite address","code":"260325"}.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/withdrawals/withdraw-v3
+        requestWeight: 5
+        rateLimits:
+          - management
+        request:
+          properties:
+            - name: currency
+              description: <a href="https://www.kucoin.com/docs/rest/spot-trading/market-data/get-currency-list">Currency</a>.
+              sampleValue: USDT
+              type: STRING
+            - name: toAddress
+              description: Withdrawal address, ADDRESS (withdrawal address), UID, MAIL (email), PHONE (mobile phone number).
+              sampleValue: 0x0a2586d5a901c8e7e68f6b0dc83bfd8bd8600ff5
+              type: STRING
+            - name: amount
+              description: Withdrawal amount, a positive number which is a multiple of the amount precision (fees excluded)
+              sampleValue: 0.00000000
+              type: STRING
+            - name: memo
+              description: Address remark. If there’s no remark, it is empty. When you withdraw from other platforms to the KuCoin, you need to fill in memo(tag). If you do not fill memo (tag), your deposit may not be available, please be cautious.
+              sampleValue: null
+              type: STRING
+            - name: isInner
+              description: >
+                Internal withdrawal or not. Default : false
+              sampleValue: false
+              type: BOOLEAN
+            - name: remark
+              description: Remark
+              sampleValue: null
+              type: STRING
+            - name: chain
+              description: >
+                The chain of currency. For a currency with multiple chains, it is recommended to specify chain parameter instead of using the default chain; 
+                you can query the chainId through the response of the GET /api/v3/currencies/{currency} interface.
+              sampleValue: ERC20
+              type: STRING
+            - name: feeDeductType
+              description: >
+                Withdrawal fee deduction type: INTERNAL or EXTERNAL or not specified.<ul>
+                <li>1. INTERNAL- deduct the transaction fees from your withdrawal amount</li>
+                <li>2. EXTERNAL- deduct the transaction fees from your main account</li>
+                <li>3. If you don't specify the feeDeductType parameter, when the balance in your main account is sufficient to support the withdrawal,
+                the system will initially deduct the transaction fees from your main account. But if the balance in your main account is not sufficient to support the withdrawal,
+                the system will deduct the fees from your withdrawal amount. For example: Suppose you are going to withdraw 1 BTC from the KuCoin platform (transaction fee: 0.0001BTC), 
+                if the balance in your main account is insufficient, the system will deduct the transaction fees from your withdrawal amount. In this case, you will be receiving 0.9999BTC. 
+                <li>4. Lightning Network can only deduct internally</li>
+                </ul>
+                See ${constants.funding.feeDeductType} for enumeration.
+            - name: withdrawType
+              description: >
+                Withdrawal type, ADDRESS (withdrawal address), UID, MAIL (email), PHONE (mobile phone number). Note: If you withdraw by uid/mail/phone, there will have rate limited: 
+                3 times/10 seconds, 50 times/24 hours (calculated on a rolling basis based on the first request time).
+                See ${constants.funding.withdrawType} for enumeration.
+              sampleValue: ${constants.funding.withdrawType.address}
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: Response payload
+              type: OBJECT
+              objectName: KucoinApplyWithdrawV3ResponseData
+              properties:
+                - name: withdrawalId
+                  description: Withdrawal id, a unique ID for a withdrawal
+                  sampleValue: 63564dbbd17bef00019371fb
+                  type: STRING

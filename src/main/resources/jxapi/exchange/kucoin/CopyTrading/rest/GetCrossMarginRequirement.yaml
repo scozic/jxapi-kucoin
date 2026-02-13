@@ -1,0 +1,64 @@
+id: Kucoin
+apis:
+  - name: CopyTrading
+    restEndpoints:
+      - name: GetCrossMarginRequirement
+        httpMethod: POST
+        url: v2/copy-trade/getCrossModeMarginRequirement
+        description: >
+          This endpoint supports querying the cross margin requirements of a symbol by position value.
+        docUrl: https://www.kucoin.com/docs-new/3475555e0
+        requestWeight: 3
+        rateLimits:
+          - copyTrading
+        request:
+          properties:
+            - name: symbol
+              description: "Trading pair name, supports up to 50 trading pairs separated by commas."
+              type: STRING
+              sampleValue: "XBTUSDTM"
+            - name: positionValue
+              description: "Position value. For USDT contracts, the unit is USDT. For USDC contracts, the unit is USDC. For coin-margined contracts, the unit is USD."
+              type: STRING
+              sampleValue: "10000"
+            - name: leverage
+              description: "Trading pair leverage multiplier, defaults to the maximum leverage multiplier of the trading pair."
+              type: STRING
+              sampleValue: "15"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+              type: STRING
+            - name: data
+              description: Margin requirement information
+              type: OBJECT_LIST
+              objectName: KucoinCrossMarginRequirement
+              properties:
+                - name: imr
+                  description: "Initial Margin Rate"
+                  type: STRING
+                  sampleValue: "0.06666667"
+                - name: mmr
+                  description: "Maintenance Margin Rate"
+                  type: STRING
+                  sampleValue: "0.00400117"
+                - name: positionValue
+                  description: "Position value"
+                  type: STRING
+                  sampleValue: "10000"
+                - name: price
+                  description: "Latest trading price for calculation"
+                  type: STRING
+                  sampleValue: "113876.3"
+                - name: size
+                  description: "Position size, unit is in contracts."
+                  type: LONG
+                  sampleValue: "87"
+                - name: symbol
+                  description: "Symbol of the contract"
+                  type: STRING
+                  sampleValue: "XBTUSDTM"

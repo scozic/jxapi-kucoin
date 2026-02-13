@@ -1,0 +1,45 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: BatchCancelOcoOrder
+        httpMethod: DELETE
+        url: v3/hf/margin/oco-order/cancel
+        description: >
+          This interface allows you to batch cancel OCO (One-Cancels-the-Other) orders.
+        docUrl: https://www.kucoin.com/docs-new/3473255e0
+        requestWeight: 3
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: orderIds
+              description: >
+                Specify one or more order IDs, separated by commas.
+              type: STRING
+              sampleValue: "674c388172cf2800072ee746,674c38bdfd8300000795167e"
+            - name: symbol
+              description: >
+                The trading pair (e.g., BTC-USDT). If not passed, OCO orders for all symbols will be canceled.
+              type: STRING
+              sampleValue: "BTC-USDT"
+            - name: tradeType
+              description: >
+                Specifies the margin type. See ${constants.margin.tradeType} for enum values.
+              type: STRING
+              sampleValue: ${constants.margin.tradeType.marginIsolatedTrade}
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              properties:
+                - name: cancelledOrderIds
+                  description: A list of cancelled order IDs.
+                  type: STRING_LIST
+                  sampleValue: ["vs8t6q2q15qpbcik003ss820", "vs8t6q2q15qpbcik003ss821", "vs8t6q2q15ts076m003hdhfn"]

@@ -1,0 +1,64 @@
+id: Kucoin
+apis:
+  - name: Earn
+    restEndpoints:
+      - name: GetEarnRedeemPreviewByHoldingId
+        description: >
+          This endpoint retrieves redemption preview information by holding ID. If the current holding is fully redeemed or in the process of being redeemed, it indicates that the holding does not exist.
+        docUrl: https://www.kucoin.com/docs/rest/earn/general/get-earn-redeem-preview-by-holding-id
+        requestWeight: 4
+        rateLimits:
+          - spot
+        httpMethod: GET
+        url: v1/earn/redeem-preview
+        request:
+          properties:
+            - name: orderId
+              description: Holding ID
+              type: STRING
+              sampleValue: "30112"
+            - name: fromAccountType
+              description: "Account type: MAIN (funding account), TRADE (spot trading account). This parameter is valid only when orderId=ETH2. See ${constants.earn.accountType} for enumeration."
+              type: STRING
+              sampleValue: ${constants.earn.accountType.main}
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              properties:
+                - name: currency
+                  description: Redemption currency
+                  type: STRING
+                  sampleValue: "USDT"
+                - name: redeemAmount
+                  description: Expected redemption amount
+                  type: STRING
+                  sampleValue: "216.82345600"
+                - name: penaltyInterestAmount
+                  description: Penalty interest amount, incurred for early redemption of fixed-term products
+                  type: STRING
+                  sampleValue: "1.00000000"
+                - name: redeemPeriod
+                  description: Redemption waiting period (days)
+                  type: INT
+                  sampleValue: 0
+                - name: deliverTime
+                  description: Expected deliver time (milliseconds)
+                  type: LONG
+                  sampleValue: 1716967121000
+                - name: manualRedeemable
+                  description: Whether manual redemption is possible
+                  type: BOOLEAN
+                  sampleValue: true
+                - name: redeemAll
+                  description: Whether the entire holding must be redeemed, required for early redemption of fixed-term products
+                  type: BOOLEAN
+                  sampleValue: true

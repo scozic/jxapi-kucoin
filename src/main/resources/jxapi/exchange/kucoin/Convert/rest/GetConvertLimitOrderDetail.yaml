@@ -1,0 +1,71 @@
+id: Kucoin
+apis:
+  - name: Convert
+    restEndpoints:
+      - name: GetConvertLimitOrderDetail
+        httpMethod: GET
+        url: /api/v1/convert/limit/order/detail
+        description: "Query convert limit order detail"
+        docUrl: https://www.kucoin.com/docs-new/rest/convert/get-convert-limit-order-detail
+        requestWeight: 5
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: clientOrderId
+              description: "Either orderId or clientOrderId must be provided"
+              type: STRING
+            - name: orderId
+              description: "Either orderId or clientOrderId must be provided"
+              type: STRING
+        response:
+          properties:
+            - name: code
+              description: "System error code, see <a href=\"https.www.kucoin.com/docs-new/error-code/http\">API</a>"
+              sampleValue: "200000"
+            - name: msg
+              description: "System error code description, provided in error response when code is not '0', see <a href=\"https://www.kucoin.com/docs-new/error-code/http\">API</a>"
+            - name: data
+              properties:
+                - name: orderId
+                  description: "Order ID"
+                  type: STRING
+                - name: clientOrderId
+                  description: "A unique order identifier defined by the user"
+                  type: STRING
+                - name: status
+                  description: "Order status. See ${constants.convert.orderStatus} for possible values enumeration."
+                  type: STRING
+                - name: fromCurrency
+                  description: "The source currency for the trading pair"
+                  type: STRING
+                - name: toCurrency
+                  description: "The target currency for the trading pair"
+                  type: STRING
+                - name: fromCurrencySize
+                  description: "The amount of the source currency in the order"
+                  type: BIGDECIMAL
+                - name: toCurrencySize
+                  description: "The amount of the target currency in the order"
+                  type: BIGDECIMAL
+                - name: accountType
+                  description: "The account used for the transaction. See ${constants.convert.accountType} for possible values enumeration."
+                  type: STRING
+                - name: price
+                  description: "The price of the order"
+                  type: BIGDECIMAL
+                - name: orderTime
+                  description: "The time the order was placed, in Unix milliseconds."
+                  type: LONG
+                - name: expiryTime
+                  description: "The expiration time of the order, in Unix milliseconds."
+                  type: LONG
+                - name: cancelTime
+                  description: "The time the order was cancelled, in Unix milliseconds."
+                  type: LONG
+                - name: filledTime
+                  description: "The time the order was filled, in Unix milliseconds."
+                  type: LONG
+                - name: cancelType
+                  description: "The type of cancellation"
+                  type: INT

@@ -1,0 +1,31 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetSymbol
+        httpMethod: GET
+        url: v2/symbols
+        description:
+          Request via this endpoint to get detail currency pairs for trading. If you want to get the market information of the trading symbol, please use Get All Tickers.
+        docUrl: https://www.kucoin.com/docs/rest/spot-trading/market-data/get-symbol-detail
+        requestWeight: 4
+        rateLimits:
+          - public
+        request:
+          name: symbol
+          description: <a href="https://docs.kucoin.com/#get-symbols-list">symbol</a>
+          sampleValue: BTC-USDT  
+          in: PATH
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+            - name: data
+              description: Market information for a market symbol
+              type: OBJECT
+              objectName: KucoinSymbol

@@ -1,0 +1,38 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: ModifyRiskLimitLevel
+        httpMethod: POST
+        url: v1/position/risk-limit-level/change
+        description: >
+          Modify the risk limit level of a position.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/positions/modify-isolated-margin-risk-limit
+        requestWeight: 4
+        rateLimits:
+          - futures
+        request:
+          properties:
+            - name: symbol
+              description: "Contract symbol"
+              type: STRING
+              sampleValue: "XBTUSDM"
+            - name: level
+              description: "The new risk limit level"
+              type: INT
+              sampleValue: 2
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: "Indicates whether the submission of the adjustment request was successful"
+              type: BOOLEAN

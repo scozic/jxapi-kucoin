@@ -1,0 +1,47 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    websocketEndpoints:
+      - name: OrderBookIncrement
+        topic: /market/level2:${request}
+        description: The system will return the increment change orderbook data (All depth).
+        docUrl: https://www.kucoin.com/docs-new/3470068w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: BTC-USDT
+        message:
+          properties:
+            - name: topic
+              description: Topic
+              sampleValue: /market/level2:BTC-USDT
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: subject
+              description: Subject
+              sampleValue: trade.l2update
+            - name: data
+              properties:
+                - name: changes
+                  properties:
+                    - name: asks
+                      description: Ask order data, each entry containing price, size, and sequence.
+                      type: BIGDECIMAL_LIST_LIST
+                    - name: bids
+                      description: Bid order data, each entry containing price, size, and sequence.
+                      type: BIGDECIMAL_LIST_LIST
+                - name: sequenceEnd
+                  description: Sequence end
+                  type: LONG
+                - name: sequenceStart
+                  description: Sequence start
+                  type: LONG
+                - name: symbol
+                  description: Trading pair symbol
+                - name: time
+                  description: The exchange's order matching time, in milliseconds.
+                  type: LONG

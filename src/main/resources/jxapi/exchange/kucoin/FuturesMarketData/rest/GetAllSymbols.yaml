@@ -1,0 +1,225 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    restEndpoints:
+    - name: GetSymbolsList
+      url: v1/contracts/active
+      httpMethod: GET
+      description: Submit request to get the info of all open futures contracts.
+      docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/market-data/get-all-symbols
+      requestWeight: 3
+      rateLimits:
+        - public
+      response:
+        implementedInterfaces:
+        - org.jxapi.exchanges.kucoin.common.KucoinResponse
+        properties:
+        - description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+          name: code
+          sampleValue: '0'
+        - name: msg
+          description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+          sampleValue: '0'
+        - name: data
+          description: Market information for open contracts
+          objectName: KucoinFuturesContract
+          type: OBJECT_LIST
+          properties:
+          - name: symbol
+            description: Contract symbol
+            sampleValue: XBTUSDM
+          - name: rootSymbol
+            description: Contract group
+            sampleValue: USDT
+          - name: type
+            description: Type of the contract
+            sampleValue: FFWCSX
+          - name: firstOpenDate
+            description: First Open Date
+            sampleValue: 1585555200000
+            type: LONG
+          - name: expireDate
+            description: Expiration date. Null means it will never expire
+            type: LONG
+          - name: settleDate
+            description: Settlement date. Null indicates that automatic settlement is not supported
+            type: LONG
+          - name: baseCurrency
+            description: Base currency
+            sampleValue: XBT
+          - name: quoteCurrency
+            description: Quote currency
+            sampleValue: USDT
+          - name: settleCurrency
+            description: Currency used to clear and settle the trades
+            sampleValue: USDT
+          - name: maxOrderQty
+            description: Maximum order quantity
+            sampleValue: 10000
+            type: INT
+          - name: maxPrice
+            description: Maximum order price
+            sampleValue: '1000000.0'
+            type: BIGDECIMAL
+          - name: lotSize
+            description: ' Minimum lot size'
+            sampleValue: 1
+            type: INT
+          - name: tickSize
+            description: 'Minimum price changes'
+            sampleValue: 1.0
+            type: BIGDECIMAL
+          - name: indexPriceTickSize
+            description: Index price of tick size
+            sampleValue: 0.01
+            type: BIGDECIMAL
+          - name: multiplier
+            description: Contract multiplier
+            sampleValue: 0.001
+            type: BIGDECIMAL
+          - name: initialMargin
+            description: Initial margin requirement
+            sampleValue: 0.01
+            type: BIGDECIMAL
+          - name: maintainMargin
+            description: Maintenance margin requirement
+            sampleValue: 0.005
+            type: BIGDECIMAL
+          - name: maxRiskLimit
+            description: 'Maximum risk limit (unit: XBT)'
+            sampleValue: 2000000
+            type: INT
+          - name: minRiskLimit
+            description: 'Minimum risk limit (unit: XBT)'
+            sampleValue: 2000000
+            type: INT
+          - name: riskStep
+            description: 'Risk limit increment value (unit: XBT)'
+            sampleValue: 1000000
+            type: INT
+          - name: makerFeeRate
+            description: Maker fees
+            sampleValue: 2.0E-4
+            type: BIGDECIMAL
+          - name: takerFeeRate
+            description: Taker fees
+            sampleValue: 6.0E-4
+            type: BIGDECIMAL
+          - name: makerFixFee
+            description: Fixed maker fees(Deprecated field, no actual use of the value field)
+            sampleValue: 0.0
+            type: BIGDECIMAL
+          - name: takerFixFee
+            description: Fixed taker fees(Deprecated field, no actual use of the value field)
+            sampleValue: 0.0
+            type: BIGDECIMAL
+          - name: settlementFee
+            description: Settlement fee
+            type: BIGDECIMAL
+          - name: isDeleverage
+            description: Enabled ADL or not
+            sampleValue: true
+            type: BOOLEAN
+          - name: isQuanto
+            description: Whether quanto or not(Deprecated field, no actual use of the value field)
+            sampleValue: true
+            type: BOOLEAN
+          - name: isInverse
+            description: Reverse contract or not
+            sampleValue: false
+            type: BOOLEAN
+          - name: markMethod
+            description: Marking method
+            sampleValue: FairPrice
+          - name: fairMethod
+            description: Fair price marking method
+            sampleValue: FundingRate
+          - name: fundingBaseSymbol
+            description: Ticker symbol of the base currency
+            sampleValue: .XBTINT8H
+          - name: fundingQuoteSymbol
+            description: Ticker symbol of the quote currency
+            sampleValue: .USDTINT8H
+          - name: fundingRateSymbol
+            description: Funding rate symbol
+            sampleValue: .XBTUSDTMFPI8H
+          - name: indexSymbol
+            description: Index symbol
+            sampleValue: .KXBTUSDT
+          - name: settlementSymbol
+            description: Settlement Symbol
+            sampleValue: .KXBTUSDT
+          - name: status
+            description: Contract status
+            sampleValue: Open
+          - name: fundingFeeRate
+            description: Funding fee rate
+            sampleValue: 1.0E-4
+            type: BIGDECIMAL
+          - name: predictedFundingFeeRate
+            description: Predicted funding fee rate
+            sampleValue: 1.0E-4
+            type: BIGDECIMAL
+          - name: openInterest
+            description: Open interest
+            sampleValue: '5191275'
+          - name: turnoverOf24h
+            description: Turnover of 24 hours
+            sampleValue: 2.361994501712677E9
+            type: BIGDECIMAL
+          - name: volumeOf24h
+            description: Volume of 24 hours
+            sampleValue: 56067.116
+            type: BIGDECIMAL
+          - name: markPrice
+            description: Mark price
+            sampleValue: 44514.03
+            type: BIGDECIMAL
+          - name: indexPrice
+            description: Index price
+            sampleValue: 44510.78
+            type: BIGDECIMAL
+          - name: lastTradePrice
+            description: Last trade price
+            sampleValue: 44493.0
+            type: BIGDECIMAL
+          - name: nextFundingRateTime
+            description: Next funding rate time
+            sampleValue: 21031525
+            type: LONG
+          - name: maxLeverage
+            description: Maximum leverage
+            sampleValue: 100
+            type: BIGDECIMAL
+          - name: sourceExchanges
+            description: The contract index source exchange
+            sampleValue: '["huobi","Okex","Binance","Kucoin","Poloniex","Hitbtc"]'
+            type: STRING_LIST
+          - name: premiumsSymbol1M
+            description: Premium index symbol (1 minute)
+            sampleValue: .XBTUSDTMPI
+          - name: premiumsSymbol8H
+            description: Premium index symbol (8 hours)
+            sampleValue: .XBTUSDTMPI8H
+          - name: fundingBaseSymbol1M
+            description: Base currency interest rate symbol (1 minute)
+            sampleValue: .XBTINT
+          - name: fundingQuoteSymbol1M
+            description: Quote currency interest rate symbol (1 minute)
+            sampleValue: .USDTINT
+          - name: lowPrice
+            description: 24H Low
+            sampleValue: 38040
+            type: BIGDECIMAL
+          - name: highPrice
+            description: 24H High
+            sampleValue: 44948
+            type: BIGDECIMAL
+          - name: priceChgPct
+            description: 24H Change%
+            sampleValue: 0.1702
+            type: BIGDECIMAL
+          - name: priceChg
+            description: 24H Change
+            sampleValue: 6476
+            type: BIGDECIMAL

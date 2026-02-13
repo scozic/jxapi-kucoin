@@ -1,0 +1,35 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: CancelMarginStopOrderByClientOid
+        httpMethod: DELETE
+        url: v3/hf/margin/stop-order/cancel-by-clientOid
+        description: >
+          This endpoint is used to cancel a stop order by its unique clientOid.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/stop-order/cancel-stop-order-by-clientoid
+        requestWeight: 5
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: clientOid
+              description: >
+                Unique order ID created by users to identify their orders.
+              type: STRING
+              sampleValue: "9e64g33505cc899h55g615hd"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              properties:
+                - name: cancelledOrderIds
+                  description: An array containing the IDs of the successfully cancelled orders.
+                  type: STRING_LIST
+                  sampleValue: ["vs8t6q2ovifc076m003hdbpp"]

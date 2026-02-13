@@ -1,0 +1,45 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: BatchCancelStopOrders
+        httpMethod: DELETE
+        url: v3/hf/margin/stop-order/cancel
+        description: >
+          Request via this interface to cancel a batch of stop orders.
+        docUrl: https://www.kucoin.com/docs-new/3473233e0
+        requestWeight: 3
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: symbol
+              description: >
+                Cancel the open order for the specified symbol.
+              type: STRING
+              sampleValue: "BTC-USDT"
+            - name: tradeType
+              description: >
+                The transaction type. MARGIN_TRADE (cross margin), MARGIN_ISOLATED_TRADE (isolated margin). See ${constants.margin.tradeType} for enum values.
+              type: STRING
+              sampleValue: ${constants.margin.tradeType.marginTrade}
+            - name: orderIds
+              description: >
+                Comma-separated order IDs.
+              type: STRING
+              sampleValue: "vs8t6q2ig66rv9r3003i782s,vs8t6q2ig68nhgf9003vcd8c"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              properties:
+                - name: cancelledOrderIds
+                  description: An array containing the IDs of the successfully cancelled orders.
+                  type: STRING_LIST
+                  sampleValue: ["vs8t6q2ig66rv9r3003i782s", "vs8t6q2ig68nhgf9003vcd8c"]

@@ -1,0 +1,105 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetInterestHistory
+        httpMethod: GET
+        url: v3/margin/interest
+        description: >
+          This interface can obtain the risk limit and currency configuration of cross margin/isolated margin.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/debit/get-interest-history
+        requestWeight: 20
+        rateLimits:
+          - spot
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest   
+          properties:
+            - name: isIsolated
+              description: >
+                true - isolated, false - cross ; default false
+              sampleValue: true
+              type: BOOLEAN
+            - name: symbol
+              description: >
+                symbol, required for isolated margin accounts
+            - name: currency
+              description: >
+                currency, for isolating margin, this param don't need to be filled in
+              sampleValue: BTC
+            - name: startTime
+              description: >
+                Start time (milliseconds)
+              type: LONG
+            - name: endTime
+              description: >
+                End time (milliseconds)
+              type: LONG
+            - name: currentPage
+              description: >
+                Current request page, The default currentPage is 1
+              sampleValue: 1
+              type: INT
+            - name: pageSize
+              description: >
+                pageSize, The default pageSize is 50
+              sampleValue: 50
+              type: INT  
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              description: Interest record list page
+              properties:
+                - name: currentPage
+                  description: Current page number
+                  sampleValue: 1
+                  type: INT
+                - name: pageSize
+                  description: Number of items per page
+                  sampleValue: 50
+                  type: INT
+                - name: totalNum
+                  description: Total number of items
+                  sampleValue: 1
+                  type: INT
+                - name: totalPage
+                  description: Total number of pages
+                  sampleValue: 1
+                  type: INT
+                - name: items
+                  description: >
+                    List of interest records, including currency, interest amount, daily interest rate, and time.
+                  type: OBJECT_LIST
+                  objectName: KucoinMarginInterestRecord
+                  properties:
+                    - name: createdAt
+                      description: >
+                        Time of interest record creation
+                      sampleValue: 1697783812257
+                      type: LONG
+                    - name: currency
+                      description: >
+                        Currency of the interest record
+                      sampleValue: XMR
+                      type: STRING
+                    - name: interestAmount
+                      description: >
+                        Amount of interest charged
+                      sampleValue: 0.1
+                      type: BIGDECIMAL
+                    - name: dayRatio
+                      description: >
+                        Daily interest rate for the currency
+                      sampleValue: 0.001
+                      type: BIGDECIMAL

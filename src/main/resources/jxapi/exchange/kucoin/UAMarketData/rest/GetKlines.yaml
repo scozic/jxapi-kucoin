@@ -1,0 +1,68 @@
+id: Kucoin
+apis:
+  - name: UAMarketData
+    restEndpoints:
+      - name: GetKlines
+        httpMethod: GET
+        url: ua/v1/market/kline
+        description: Get the Kline of the symbol. Data are returned in grouped buckets based on requested type.
+        docUrl: https://www.kucoin.com/docs-new/rest/ua/get-klines
+        requestWeight: 3
+        rateLimits:
+          - public
+        request:
+          properties:
+            - name: tradeType
+              description: Product type
+            - name: symbol
+              description: Trading pair symbol
+            - name: interval
+              description: Type of candlestick patterns, see ${constants.granularity} for all supported intervals.
+              sampleValue: ${constants.granularity.fifteenMin}
+            - name: startAt
+              description: Start time (second)
+            - name: endAt
+              description: End time (second)
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: Response code
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description
+              sampleValue: success
+            - name: data
+              objectName: KucoinUAKlinesResponseData
+              properties:
+                - name: tradeType
+                  description: Product type
+                - name: symbol
+                  description: Trading pair symbol
+                - name: list
+                  description: List of candlestick data
+                  type: OBJECT_LIST
+                  objectName: KucoinKlineEntry
+                  properties:
+                    - name: startTime
+                      description: Start time of the candle cycle (timestamp)
+                      type: LONG
+                    - name: openPrice
+                      description: Opening price
+                      type: BIGDECIMAL
+                    - name: closePrice
+                      description: Closing price
+                      type: BIGDECIMAL
+                    - name: highPrice
+                      description: Highest price
+                      type: BIGDECIMAL
+                    - name: lowPrice
+                      description: Lowest price
+                      type: BIGDECIMAL
+                    - name: transactionAmount
+                      description: Two-way transaction amount (Futures is lots)
+                      type: BIGDECIMAL
+                    - name: transactionVolume
+                      description: Two-way transaction volume
+                      type: BIGDECIMAL

@@ -1,0 +1,17 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetRepayHistory
+        httpMethod: GET
+        url: v3/margin/repay
+        description: >
+          This API endpoint is used to get the repayment orders for cross and isolated margin accounts.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/debit/get-repay-history
+        requestWeight: 15
+        rateLimits:
+          - spot
+        request:
+          objectName: KucoinMarginBorrowingRepaymentHistoryRequest
+        response:
+          objectName: KucoinMarginBorrowingRepaymentHistoryResponse

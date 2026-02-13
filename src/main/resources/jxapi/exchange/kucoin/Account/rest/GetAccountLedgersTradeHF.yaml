@@ -1,0 +1,61 @@
+id: Kucoin
+apis:
+  - name: Account
+    restEndpoints:
+      - name: GetAccountLedgerTradeHf
+        httpMethod: GET
+        url: v1/hf/accounts/ledgers
+        description: >
+          Get Account Ledgers - trade_hf
+          This API endpoint returns all transfer (in and out) records in high-frequency trading account and supports multi-coin queries. The query results are sorted in descending order by createdAt and id.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/account-funding/get-account-ledgers-tradehf
+        requestWeight: 2
+        rateLimits:
+          - spot
+        paginated: true    
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequestV2
+          properties:
+            - name: currency
+              description: Currency ( you can choose more than one currency). You can specify 10 currencies at most for one time. If not specified, all currencies will be inquired by default.
+              sampleValue: BTC
+            - name: direction
+              description: >
+                direction: in, out. See ${constants.account.direction} for enumeration.
+              sampleValue: ${constants.account.direction.in}
+            - name: bizType
+              description: >
+                Type: See ${constants.account.hfAccountLedgerBizType} for enumeration.
+              sampleValue: ${constants.account.hfAccountLedgerBizType.tradeExchange}
+            - name: lastId
+              description: >
+                The id of the last set of data from the previous batch of data. By default, the latest information is given.
+              sampleValue: 611a1e7c6a053300067a88d9
+            - name: limit
+              description: >
+                The default is 100, and the maximum is 200.
+              sampleValue: 100
+            - name: startAt
+              description: Start time (milisecond)
+              sampleValue: 1601395200000
+              type: LONG
+            - name: endAt
+              description: End time (milisecond)
+              sampleValue: 1601395200000
+              type: LONG
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseV2
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinAccountLedger
+              # Definition of KucoinAccountLedger is shared with GetAccountLedgerMarginHf

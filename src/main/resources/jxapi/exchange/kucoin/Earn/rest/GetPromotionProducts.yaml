@@ -1,0 +1,126 @@
+id: Kucoin
+apis:
+  - name: Earn
+    restEndpoints:
+      - name: GetPromotionProducts
+        description: >
+          This endpoint allows you to obtain available limited-duration products. If no products are available, an empty list is returned.
+        docUrl: https://www.kucoin.com/docs-new/rest/earn/get-promotion-products
+        requestWeight: 4
+        rateLimits:
+          - spot
+        httpMethod: GET
+        url: v1/earn/promotion/products
+        request:
+          properties:
+            - name: currency
+              description: Filter products by currency.
+              type: STRING
+              sampleValue: "BTC"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "success"
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinPromotionProduct
+              properties:
+                - name: id
+                  description: Product ID
+                  type: STRING
+                  sampleValue: "2685"
+                - name: currency
+                  description: "Currency of the product (e.g., BTC, ETH, USDT)"
+                  type: STRING
+                  sampleValue: "BTC"
+                - name: category
+                  description: "Product category. See ${constants.earn.productCategory} for enumeration."
+                  type: STRING
+                  sampleValue: ${constants.earn.productCategory.activity}
+                - name: type
+                  description: "Product subtype. See ${constants.earn.savingProductType} for enumeration."
+                  type: STRING
+                  sampleValue: ${constants.earn.savingProductType.time}
+                - name: precision
+                  description: Maximum precision supported
+                  type: INT
+                  sampleValue: 8
+                - name: productUpperLimit
+                  description: Total subscription amount limit for the product
+                  type: STRING
+                  sampleValue: "50"
+                - name: userUpperLimit
+                  description: Maximum subscription amount per user
+                  type: STRING
+                  sampleValue: "1"
+                - name: userLowerLimit
+                  description: Minimum subscription amount per user
+                  type: STRING
+                  sampleValue: "0.001"
+                - name: redeemPeriod
+                  description: Redemption waiting period in days
+                  type: INT
+                  sampleValue: 0
+                - name: lockStartTime
+                  description: Earliest interest start time in milliseconds
+                  type: LONG
+                  sampleValue: 1702371601000
+                - name: lockEndTime
+                  description: Earliest interest end time in milliseconds
+                  type: LONG
+                  sampleValue: 1729858405000
+                - name: applyStartTime
+                  description: Subscription start time in milliseconds
+                  type: LONG
+                  sampleValue: 1702371600000
+                - name: applyEndTime
+                  description: Subscription end time in milliseconds
+                  type: LONG
+                  sampleValue: null
+                - name: returnRate
+                  description: "Annualized Rate of Return (e.g., 0.035 for 3.5%)"
+                  type: STRING
+                  sampleValue: "0.03"
+                - name: incomeCurrency
+                  description: "Currency in which income is paid (e.g., BTC, ETH, USDT)"
+                  type: STRING
+                  sampleValue: "BTC"
+                - name: earlyRedeemSupported
+                  description: "Whether fixed product supports early redemption. See ${constants.earn.earlyRedeemSupported} for enumeration."
+                  type: INT
+                  sampleValue: ${constants.earn.earlyRedeemSupported.no}
+                - name: productRemainAmount
+                  description: Remaining product subscription amount
+                  type: STRING
+                  sampleValue: "49.78203998"
+                - name: status
+                  description: "Product status. See ${constants.earn.savingProductStatus} for enumeration."
+                  type: STRING
+                  sampleValue: ${constants.earn.savingProductStatus.ongoing}
+                - name: redeemType
+                  description: "Redemption channel. See ${constants.earn.savingProductRedeemType} for enumeration."
+                  type: STRING
+                  sampleValue: ${constants.earn.savingProductRedeemType.trans_demand}
+                - name: incomeReleaseType
+                  description: "Income release type. See ${constants.earn.savingProductIncomeReleaseType} for enumeration."
+                  type: STRING
+                  sampleValue: ${constants.earn.savingProductIncomeReleaseType.daily}
+                - name: interestDate
+                  description: Most recent interest date in milliseconds
+                  type: LONG
+                  sampleValue: 1729253605000
+                - name: duration
+                  description: Product duration in days
+                  type: INT
+                  sampleValue: 7
+                - name: newUserOnly
+                  description: "Whether the product is exclusive to new users. See ${constants.earn.newUserOnly} for enumeration."
+                  type: INT
+                  sampleValue: ${constants.earn.newUserOnly.yes}

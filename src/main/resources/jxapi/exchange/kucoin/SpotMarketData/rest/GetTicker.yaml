@@ -1,0 +1,63 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetTicker
+        httpMethod: GET
+        url: v1/market/orderbook/level1
+        description:
+          Request via this endpoint to get Level 1 Market Data. The returned value includes the best bid price and size, the best ask price and size as well
+          as the last traded price and the last traded size.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-ticker
+        requestWeight: 2
+        rateLimits:
+          - public           
+        request:
+          name: symbol
+          description: <a href="https://docs.kucoin.com/#get-symbols-list">symbol</a>
+          sampleValue: BTC-USDT
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Ticker information for a market symbol
+              objectName: KucoinTicker
+              properties:
+                - name: sequence
+                  description: Sequence
+                  sampleValue: "1550467636704"
+                - name: bestAsk
+                  description: Best ask price
+                  sampleValue: "0.03715004"
+                  type: BIGDECIMAL
+                - name: size
+                  description: Last traded size
+                  sampleValue: "0.17"
+                  type: BIGDECIMAL
+                - name: price
+                  description: Last traded price
+                  sampleValue: "0.09715005"
+                  type: BIGDECIMAL
+                - name: bestBidSize
+                  description: Best bid size
+                  sampleValue: "3.803"
+                  type: BIGDECIMAL
+                - name: bestBid
+                  description: Best bid price
+                  sampleValue: "0.03710768"
+                  type: BIGDECIMAL
+                - name: bestAskSize
+                  description: Best ask size
+                  sampleValue: "1.788"
+                  type: BIGDECIMAL
+                - name: time
+                  description: Timestamp
+                  sampleValue: 1550653727731
+                  type: LONG

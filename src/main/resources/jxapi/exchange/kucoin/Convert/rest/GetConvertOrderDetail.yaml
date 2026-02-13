@@ -1,0 +1,63 @@
+id: Kucoin
+apis:
+  - name: Convert
+    restEndpoints:
+      - name: GetConvertOrderDetail
+        httpMethod: GET
+        url: v1/convert/order/detail
+        description: "Query convert market order details"
+        docUrl: https://www.kucoin.com/docs-new/rest/convert/get-convert-order-detail
+        requestWeight: 5
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: clientOrderId
+              description: "A unique order identifier defined by the user. Either orderId or clientOrderId must be provided."
+              type: STRING
+            - name: orderId
+              description: "Convert Order ID. Either orderId or clientOrderId must be provided."
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: "System error code, see <a href=\"https.www.kucoin.com/docs-new/error-code/http\">API</a>"
+              sampleValue: "200000"
+            - name: msg
+              description: "System error code description, provided in error response when code is not '0', see <a href=\"https://www.kucoin.com/docs-new/error-code/http\">API</a>"
+            - name: data
+              objectName: KucoinConvertOrderDetail
+              description: "Details of a convert order"
+              properties:
+                - name: orderId
+                  description: "Convert Order ID"
+                  type: LONG
+                - name: clientOrderId
+                  description: "A unique order identifier defined by the user."
+                  type: STRING
+                - name: status
+                  description: "Order status. See ${constants.convert.orderStatus} for possible values enumeration."
+                  type: STRING
+                - name: fromCurrency
+                  description: "The source currency for the trading pair."
+                  type: STRING
+                - name: toCurrency
+                  description: "The target currency for the trading pair."
+                  type: STRING
+                - name: fromCurrencySize
+                  description: "The amount of the source currency in the order."
+                  type: BIGDECIMAL
+                - name: toCurrencySize
+                  description: "The amount of the target currency in the order."
+                  type: BIGDECIMAL
+                - name: accountType
+                  description: "The account used for the transaction. See ${constants.convert.accountType} for possible values enumeration."
+                  type: STRING
+                - name: price
+                  description: "The price at which the order is executed, expressed in the target currency."
+                  type: BIGDECIMAL
+                - name: orderTime
+                  description: "The time the order was placed, in Unix milliseconds."
+                  type: LONG

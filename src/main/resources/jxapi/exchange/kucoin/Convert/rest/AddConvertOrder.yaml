@@ -1,0 +1,44 @@
+id: Kucoin
+apis:
+  - name: Convert
+    restEndpoints:
+      - name: AddConvertOrder
+        httpMethod: POST
+        url: v1/convert/orders
+        description: "The trade endpoint is used to accept a quote and execute a trade."
+        docUrl: https://www.kucoin.com/docs-new/rest/convert/add-convert-order
+        requestWeight: 20
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: fromCoin
+              description: "Coin to be sold"
+              sampleValue: "USDT"
+            - name: toCoin
+              description: "Coin to be bought"
+              sampleValue: "BTC"
+            - name: fromAmount
+              description: "Amount of coin to be sold. Either fromAmount or toAmount is required."
+              type: BIGDECIMAL
+            - name: toAmount
+              description: "Amount of coin to be bought. Either fromAmount or toAmount is required."
+              type: BIGDECIMAL
+            - name: clientId
+              description: "Unique request ID, the user is recommended to fill in this parameter to identify the request."
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: "System error code, see <a href=\"https.www.kucoin.com/docs-new/error-code/http\">API</a>"
+              sampleValue: "200000"
+            - name: msg
+              description: "System error code description, provided in error response when code is not '0', see <a href=\"https://www.kucoin.com/docs-new/error-code/http\">API</a>"
+            - name: data
+              objectName: KucoinConvertOrder
+              description: "Details of a convert order"
+              properties:
+                - name: orderId
+                  description: "Order ID"
+                  sampleValue: "63197a8c1163270001dc4933"

@@ -1,0 +1,80 @@
+id: Kucoin
+apis:
+  - name: Affiliate
+    restEndpoints:
+      - name: GetCommission
+        description: >
+          Get affiliate commission information.
+        docUrl: https://www.kucoin.com/docs-new/3474057e0
+        requestWeight: 30
+        rateLimits:
+          - spot
+        httpMethod: GET
+        url: v1/affiliate/queryRebate
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequestV5
+          properties:
+            - name: siteType
+              description: "The source site of the commission. See ${constants.affiliate.siteType} for enumeration."
+              type: STRING
+              sampleValue: ${constants.affiliate.siteType.all}
+            - name: rebateType
+              description: "Rebate Type. See ${constants.affiliate.rebateType} for enumeration."
+              type: INT
+              sampleValue: ${constants.affiliate.rebateType.all}
+            - name: rebateStartAt
+              description: Rebate start timestamp.
+              type: LONG
+            - name: rebateEndAt
+              description: Rebate end timestamp.
+              type: LONG
+            - name: page
+              description: > 
+                Page number, default is 1.
+              type: INT
+              sampleValue: 1
+            - name: pageSize
+              description: > 
+                Max number of records per page, default is 10, max is 500
+              type: INT
+              sampleValue: 10
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseV6
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "success"  
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinCommission
+              properties:
+                - name: siteType
+                  description: "See ${constants.affiliate.siteType} for enumeration."
+                  type: STRING
+                - name: rebateType
+                  description: "See ${constants.affiliate.rebateType} for enumeration."
+                  type: INT
+                - name: payoutTime
+                  type: LONG
+                - name: periodStartTime
+                  type: LONG
+                - name: periodEndTime
+                  type: LONG
+                - name: status
+                  description: "See ${constants.affiliate.commissionStatus} for enumeration."
+                  type: INT
+                - name: takerVolume
+                  type: BIGDECIMAL
+                - name: makerVolume
+                  type: BIGDECIMAL
+                - name: commission
+                  type: BIGDECIMAL
+                - name: currency
+                  type: STRING

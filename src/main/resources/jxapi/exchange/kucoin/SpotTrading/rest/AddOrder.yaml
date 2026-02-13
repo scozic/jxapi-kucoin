@@ -1,0 +1,78 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: AddOrder
+        httpMethod: POST
+        url: v3/orders
+        description: >
+          You can place two types of orders: limit and market. Orders can only be placed if your account has sufficient funds.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/add-order
+        requestWeight: 2
+        rateLimits:
+          - spot
+        request:
+          objectName: KucoinSpotAddOrderRequest
+          properties:
+            - name: clientOid
+              description: Unique order ID created by users to identify their orders, e.g., UUID.
+              type: STRING
+            - name: side
+              description: buy or sell
+              type: STRING
+            - name: symbol
+              description: a valid trading symbol.
+              type: STRING
+            - name: type
+              description: limit or market (default is limit)
+              type: STRING
+            - name: remark
+              description: remark for the order
+              type: STRING
+            - name: stp
+              description: self trade prevention strategy, CN, CO, CB or DC
+              type: STRING
+            - name: tradeType
+              description: The type of trading, TRADE (Spot Trade)
+              type: STRING
+            - name: price
+              description: price per base currency
+              type: BIGDECIMAL
+            - name: size
+              description: amount of base currency to buy or sell
+              type: BIGDECIMAL
+            - name: timeInForce
+              description: GTC, GTT, IOC, or FOK (default is GTC)
+              type: STRING
+            - name: cancelAfter
+              description: cancel after n seconds
+              type: LONG
+            - name: postOnly
+              description: Post only flag
+              type: BOOLEAN
+            - name: hidden
+              description: Only true is supported
+              type: BOOLEAN
+            - name: iceberg
+              description: Only true is supported
+              type: BOOLEAN
+            - name: visibleSize
+              description: The maximum visible size of an iceberg order
+              type: BIGDECIMAL
+            - name: funds
+              description: The desired amount of quote currency to use
+              type: BIGDECIMAL
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          objectName: KucoinSpotAddOrderResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              properties:
+                - name: orderId
+                  description: The ID of the order
+                  type: STRING

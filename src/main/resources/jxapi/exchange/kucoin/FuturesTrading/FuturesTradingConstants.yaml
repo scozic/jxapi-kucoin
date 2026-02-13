@@ -1,0 +1,117 @@
+id: Kucoin
+constants:
+  - name: futuresTrading
+    description: Futures Trading constants
+    constants:
+    - name: orderType
+      description: >
+        Order type; limit-limit order, market-market order, limit_stop-stop limit order, market_stop-stop market order
+      constants:
+      - name: limit
+        description: Limit order
+        value: limit
+      - name: market
+        description: Market order
+        value: market
+      - name: limitStop
+        description: Stop limit order
+        value: limit_stop
+      - name: marketStop
+        description: Stop market order
+        value: market_stop
+    - name: selfTradePrevention
+      description: >
+        Self trade prevention, include CN, CO, DC, CB
+      constants:
+      - name: cn
+        description: Cancel New
+        value: CN
+      - name: co
+        description: Cancel Old
+        value: CO
+      - name: dc
+        description: Decrease and Cancel
+        value: DC
+      - name: cb
+        description: Cancel Both
+        value: CB
+    - name: marginMode
+      description: >
+        Margin mode, include ISOLATED (isolated), CROSS (cross margin)
+      constants:
+      - name: isolated
+        description: Isolated margin
+        value: ISOLATED
+      - name: cross
+        description: Cross margin
+        value: CROSS    
+    - name: orderStatus
+      description: >
+        Order status: <strong>open</strong> or <strong>done</strong>
+      constants:
+      - name: active
+        description: Active order
+        value: active
+      - name: done
+        description: Completed order
+        value: done
+    - name: stop    
+      description: >
+        'stop' parameter possible value in future trading stop orders APIs. Either <strong>down</strong> or <strong>up</strong>. Requires <strong>stopPrice</strong> and <strong>stopPriceType</strong> to be defined.
+      constants:
+      - name: down
+        description: Down stop order
+        value: down
+      - name: up
+        description: Up stop order
+        value: up
+    - name: stopPriceType
+      description: >
+        'stopPriceType' parameter possible value in future trading stop orders APIs. <strong>TP</strong>, <strong>IP</strong>, or <strong>MP</strong>.
+      constants:
+      - name: tp
+        description: TP (Trigger Price)
+        value: TP
+      - name: ip
+        description: IP (Indicator Price)
+        value: IP
+      - name: mp
+        description: MP (Market Price)
+        value: MP
+    - name: timeInForce
+      description: >
+        Time in force policy, include GTC (Good Till Cancel), IOC (Immediate Or Cancel). 
+        See <a href="https://docs.kucoin.com/futures/#time-in-force">Time In Force</a>
+      constants:
+      - name: gtc
+        description: Good Till Cancel
+        value: GTC
+      - name: ioc
+        description: Immediate Or Cancel
+        value: IOC
+    - name: positionEventSubject    
+      description: >
+        Either <strong>position.change</strong>, <strong>position.settlement</strong> or <strong>position.adjustRiskLimit</strong>
+      constants:
+      - name: change
+        description: Position change event
+        value: position.change
+      - name: settlement
+        description: Position settlement event
+        value: position.settlement
+      - name: adjustRiskLimit
+        description: Risk limit adjustment event
+        value: position.adjustRiskLimit
+    - name: stopOrderMessageType
+      description: >
+        Message type: <strong>open</strong> (place order), <strong>triggered</strong> (order triggered), <strong>cancel</strong> (cancel order)
+      constants:
+      - name: open
+        description: Place order
+        value: open
+      - name: triggered
+        description: Order triggered
+        value: triggered
+      - name: cancel
+        description: Cancel order
+        value: cancel    

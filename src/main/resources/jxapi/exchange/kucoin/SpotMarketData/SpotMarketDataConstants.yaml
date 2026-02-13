@@ -1,0 +1,179 @@
+id: Kucoin
+constants:
+  - name: spotMarketData
+    description: >
+      Kucoin Futures Market Data API constants
+    constants:    
+    - name: lang  
+      description: >
+        Language type, the default is en_US, the specific value parameters are as follows:
+                        Language type, the default is en_US, the specific value parameters are as follows:
+                <table>
+                  <caption>Available languages</caption>
+                  <tr>
+                    <td>zh_HK</td>
+                    <td>Chinese (Hong Kong)</td>
+                  </tr>
+                  <tr>
+                    <td>ja_JP</td>
+                    <td>Japanese (Japan)</td>
+                  </tr>
+                  <tr>
+                    <td>ko_KR</td>
+                    <td>Korean (Korea)
+                  </tr>
+                  <tr>
+                    <td>en_US</td>
+                    <td>English</td>
+                  </tr>
+                  <tr>
+                    <td>pl_PL</td>
+                    <td>Polish (Poland)</td>
+                  </tr>
+                  <tr>
+                    <td>es_ES</td>
+                    <td>Spanish (Spain)</td>
+                  </tr>
+                  <tr>
+                    <td>fr_FR</td>
+                    <td>French (France)</td>
+                  </tr>
+                  <tr>
+                    <td>ar_AE</td>
+                    <td>Arabic (Egypt)</td>
+                  </tr>
+                  <tr>
+                    <td>it_IT</td>
+                    <td>Italian (Italy)</td>
+                  </tr>
+                  <tr>
+                    <td>id_ID</td>
+                    <td>Indonesian (Indonesia)</td>
+                  </tr>
+                  <tr>
+                    <td>nl_NL</td>
+                    <td>Dutch (Netherlands)</td>
+                  </tr>
+                  <tr>
+                    <td>pt_PT</td>
+                    <td>Portuguese (Brazil)</td>
+                  </tr>
+                  <tr>
+                    <td>vi_VN</td>
+                    <td>Vietnamese (Vietnam)</td>
+                  </tr>
+                  <tr>
+                    <td>de_DE</td>
+                    <td>German (Germany)</td>
+                  </tr>
+                  <tr>
+                    <td>tr_TR</td>
+                    <td>Turkish (Turkey)</td>
+                  </tr>
+                  <tr>
+                    <td>ms_MY</td>
+                    <td>Malay (Malaysia)
+                  </tr>
+                  <tr>
+                    <td>ru_RU</td>
+                    <td>Russian (Russia)</td>
+                  </tr>
+                  <tr>
+                    <td>th_TH</td>
+                    <td>Thai (Thailand)</td>
+                  </tr>
+                  <tr>
+                    <td>hi_IN</td>
+                    <td>Hindi (India)</td>
+                  </tr>
+                  <tr>
+                    <td>bn_BD</td>
+                    <td>Bengali (Bangladesh)</td>
+                  </tr>
+                  <tr>
+                    <td>fil_PH</td>
+                    <td>Filipino (Philippines)</td>
+                  </tr>
+                  <tr>
+                    <td>ur_PK</td>
+                    <td>Urdu (Pakistan)</td>
+                  </tr>
+                </table>
+      constants:
+      - name: zh
+        description: Chinese (Hong Kong)
+        value: zh_HK
+      - name: ja
+        description: Japanese (Japan)
+        value: ja_JP
+      - name: ko
+        description: Korean (Korea)
+        value: ko_KR
+      - name: en
+        description: English
+        value: en_US
+      - name: pl
+        description: Polish (Poland)
+        value: pl_PL
+      - name: es
+        description: Spanish (Spain)
+        value: es_ES
+      - name: fr
+        description: French (France)
+        value: fr_FR
+      - name: it
+        description: Italian (Italy)
+        value: it_IT
+      - name: ar
+        description: Arabic (Egypt)  
+        value: ar_AE
+      - name: id
+        description: Indonesian (Indonesia)  
+        value: id_ID
+      - name: de
+        description: German (Germany)
+        value: de_DE
+      - name: nl
+        description: Dutch (Netherlands)  
+        value: nl_NL
+      - name: ru
+        description: Russian (Russia)
+        value: ru_RU
+      - name: tr
+        description: Turkish (Turkey)
+        value: tr_TR
+      - name: vi
+        description: Vietnamese (Vietnam)
+        value: vi_VN
+      - name: th
+        description: Thai (Thailand)
+        value: th_TH  
+      - name: ms
+        description: Malay (Malaysia)
+        value: ms_MY
+      - name: hi
+        description: Hindi (India)
+        value: hi_IN
+      - name: bn
+        description: Bengali (Bangladesh)
+        value: bn_BD
+      - name: fil
+        description: Filipino (Philippines)
+        value: fil_PH
+      - name: ur
+        description: Urdu (Pakistan)
+        value: ur_PK
+    - name: serviceStatus
+      description: >
+        Status of service: open:normal transaction, close:Stop Trading/Maintenance, cancelonly:can only cancel the order but not place order 
+      constants:
+      - name: open
+        description: Normal transaction
+        value: open
+      - name: close
+        description: Stop Trading/Maintenance
+        value: close
+      - name: cancelonly
+        description: Can only cancel the order but not place order
+        value: cancelonly
+  

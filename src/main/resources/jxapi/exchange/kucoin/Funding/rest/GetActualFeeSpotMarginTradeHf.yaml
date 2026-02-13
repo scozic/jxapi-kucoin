@@ -1,0 +1,48 @@
+id: Kucoin
+apis:
+  - name: Funding
+    restEndpoints:
+      - name: GetActualFeeSpotMarginTradeHf
+        httpMethod: GET
+        url: v1/trade-fees
+        description: >
+          This interface is for the actual fee rate of the trading pair. 
+          You can inquire about fee rates of 10 trading pairs each time at most. 
+          The fee rate of your sub-account is the same as that of the master account.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/trade-fee/get-actual-fee-spot-margin
+        requestWeight: 3
+        rateLimits:
+          - spot
+        request:
+            name: symbols
+            description: >
+              Trading pair (optional, you can inquire fee rates of 10 trading pairs each time at most)
+            sampleValue: BTC-USDT,KCS-USDT
+            type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              type: OBJECT_LIST
+              objectName: KucoinTradingPairActualFee
+              description: Fees for the trading pair
+              properties:
+                - name: symbol
+                  description: The unique identity of the trading pair and will not change even if the trading pair is renamed
+                  sampleValue: BTC-USDT
+                - name: takerFeeRate
+                  description: Base taker fee rate
+                  sampleValue: 0.004
+                  type: BIGDECIMAL
+                - name: makerFeeRate
+                  description: Base maker fee rate
+                  sampleValue: 0.004
+                  type: BIGDECIMAL
+        

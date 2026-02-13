@@ -1,0 +1,59 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    websocketEndpoints:
+      - name: Balance
+        topic: /account/balance
+        description: You will receive this message when an account balance changes. The message contains the details of the change.
+        docUrl: https://www.kucoin.com/docs-new/3470075w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        message:
+          properties:
+            - name: type
+              sampleValue: message
+            - name: topic
+              sampleValue: /account/balance
+            - name: subject
+              sampleValue: account.balance
+            - name: data
+              properties:
+                - name: total
+                  description: Total balance
+                  sampleValue: "88"
+                  type: BIGDECIMAL
+                - name: available
+                  description: Available balance
+                  sampleValue: "88"
+                  type: BIGDECIMAL
+                - name: availableChange
+                  description: The change of available balance
+                  sampleValue: "88"
+                  type: BIGDECIMAL
+                - name: currency
+                  description: Currency
+                  sampleValue: KCS
+                - name: hold
+                  description: Hold amount
+                  sampleValue: "0"
+                  type: BIGDECIMAL
+                - name: holdChange
+                  description: The change of hold balance
+                  sampleValue: "0"
+                  type: BIGDECIMAL
+                - name: relationEvent
+                  description: Relation event, see <a href="https://docs.kucoin.com/#account-balance-notice">API</a>
+                  sampleValue: trade.settled
+                - name: relationContext
+                  description: The context of trade event
+                  properties:
+                    - name: symbol
+                      sampleValue: BTC-USDT
+                    - name: tradeId
+                      sampleValue: 5e6a5dca9e16882a7d83b7a4
+                    - name: orderId
+                      sampleValue: 5ea10479415e2f0009949d54
+                - name: time
+                  sampleValue: now()
+                  type: LONG

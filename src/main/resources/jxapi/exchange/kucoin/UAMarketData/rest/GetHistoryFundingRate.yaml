@@ -1,0 +1,49 @@
+id: Kucoin
+apis:
+  - name: UAMarketData
+    restEndpoints:
+      - name: GetHistoryFundingRate
+        httpMethod: GET
+        url: ua/v1/market/funding-rate-history
+        description: Query the Futures funding rate at each settlement time point within a certain time range of the corresponding contract.
+        docUrl: https://www.kucoin.com/docs-new/rest/ua/get-history-funding-rate
+        requestWeight: 5
+        rateLimits:
+          - public
+        request:
+          properties:
+            - name: symbol
+              description: Symbol of the contract
+              sampleValue: XBTUSDTM
+            - name: startAt
+              description: Start time (milliseconds)
+              sampleValue: 1700310700000
+            - name: endAt
+              description: End time (milliseconds)
+              sampleValue: 1702310700000
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: Response code
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description
+              sampleValue: success
+            - name: data
+              objectName: KucoinUAHistoryFundingRateResponseData
+              properties:
+                - name: symbol
+                  description: Symbol of the contract
+                - name: list
+                  description: List of funding rate history records
+                  type: OBJECT_LIST
+                  objectName: KucoinFundingRateHistoryEntry
+                  properties:
+                    - name: fundingRate
+                      description: Funding rate
+                      type: BIGDECIMAL
+                    - name: ts
+                      description: Timestamp (milliseconds)
+                      type: LONG

@@ -1,0 +1,56 @@
+id: Kucoin
+apis:
+  - name: Account
+    restEndpoints:
+      - name: GetAccountListSpotMarginTradeHf
+        httpMethod: GET
+        url: v1/accounts
+        description: Get a list of accounts. Please deposit funds to the main account firstly, then transfer the funds to the trade account via Inner Transfer before transaction.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/account-funding/get-account-list-spot
+        requestWeight: 5
+        rateLimits:
+          - management
+        request:
+          properties:
+            - name: currency
+              description: <a href="https://www.kucoin.com/docs/rest/spot-trading/market-data/get-currency-list">Currency</a>
+            - name: type
+              description: "Account type. See ${constants.account.accountType} for enumeration."
+              sampleValue: ${constants.account.accountType.trade}
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              properties:
+                - name: id
+                  description: The ID of the account
+                  sampleValue: 9165194431494
+                - name: currency
+                  description: Currency
+                  sampleValue: BTC
+                - name: type
+                  description: >
+                    Account type. See ${constants.account.accountType} for enumeration.
+                  sampleValue: ${constants.account.accountType.trade}
+                - name: balance
+                  description: Total funds in the account
+                  sampleValue: "237582.04299"
+                  type: BIGDECIMAL
+                - name: available
+                  description: Funds available to withdraw or trade
+                  sampleValue: "237582.032"
+                  type: BIGDECIMAL
+                - name: holds
+                  description: Funds on hold (not available for use)
+                  sampleValue: "0.01099"
+                  type: BIGDECIMAL
+        

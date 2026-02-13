@@ -1,0 +1,35 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: CancelOcoOrderByOrderId
+        httpMethod: DELETE
+        url: v3/hf/margin/oco-order/cancel-by-id
+        description: >
+          Requests the cancellation of a single OCO order that was previously placed.
+        docUrl: https://www.kucoin.com/docs-new/3473253e0
+        requestWeight: 3
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: orderId
+              description: >
+                The ID of the OCO order to cancel.
+              type: STRING
+              sampleValue: "685924a1e09c5d0007ff6b00"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              properties:
+                - name: cancelledOrderIds
+                  description: A list containing the two order IDs related to the canceled OCO order.
+                  type: STRING_LIST
+                  sampleValue: ["vs93gpqc6kkmkk57003gok16", "vs93gpqc6kkmkk57003gok17"]

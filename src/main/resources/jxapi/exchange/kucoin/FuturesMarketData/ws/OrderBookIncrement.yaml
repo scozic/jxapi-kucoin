@@ -1,0 +1,44 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    websocketEndpoints:
+      - name: OrderBookIncrement
+        topic: /contractMarket/level2:${request}
+        description: The system will return the increment change orderbook data(All depth). If there is no change in the market, data will not be pushed.
+        docUrl: https://www.kucoin.com/docs-new/3470082w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: XBTUSDTM
+        message:
+          properties:
+            - name: topic
+              description: Topic of the message
+              sampleValue: /contractMarket/level2:XBTUSDTM
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: subject
+              description: Subject of the message
+              sampleValue: level2
+            - name: sn
+              description: Sequence number
+              sampleValue: 1709400450243
+              type: LONG
+            - name: data
+              description: Data payload
+              properties:
+                - name: sequence
+                  description: Sequence number
+                  sampleValue: 1709400450243
+                  type: LONG
+                - name: change
+                  description: Change information (price, side, size)
+                  sampleValue: "90631.2,sell,2"
+                - name: timestamp
+                  description: Timestamp
+                  sampleValue: 1731897467182
+                  type: LONG

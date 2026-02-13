@@ -1,0 +1,41 @@
+id: Kucoin
+apis:
+  - name: Convert
+    restEndpoints:
+      - name: GetConvertLimitQuote
+        httpMethod: GET
+        url: /api/v1/convert/limit/quote
+        description: "Query the protection price threshold for limit orders for convert, user's order price must be ≥ the protection price"
+        docUrl: https://www.kucoin.com/docs-new/rest/convert/get-convert-limit-quote
+        requestWeight: 20
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: fromCurrency
+              description: "The source currency"
+              type: STRING
+            - name: toCurrency
+              description: "The target currency"
+              type: STRING
+            - name: fromCurrencySize
+              description: "Either fromCurrencySize or toCurrencySize must be provided, but not both simultaneously."
+              type: BIGDECIMAL
+            - name: toCurrencySize
+              description: "Either fromCurrencySize or toCurrencySize must be provided, but not both simultaneously."
+              type: BIGDECIMAL
+        response:
+          properties:
+            - name: code
+              description: "System error code, see <a href=\"https.www.kucoin.com/docs-new/error-code/http\">API</a>"
+              sampleValue: "200000"
+            - name: msg
+              description: "System error code description, provided in error response when code is not '0', see <a href=\"https://www.kucoin.com/docs-new/error-code/http\">API</a>"
+            - name: data
+              properties:
+                - name: price
+                  description: "Quote price"
+                  type: BIGDECIMAL
+                - name: validUntill
+                  description: "The expiration time of the quote, in Unix milliseconds."
+                  type: LONG

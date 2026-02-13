@@ -1,0 +1,88 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    websocketEndpoints:
+      - name: OrderV2
+        topic: /spotMarket/tradeOrdersV2
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        description: >
+          This topic will push all change events of your orders. Compared with v1, v2 adds an Order Status: "new", there is no difference in push speed.
+        docUrl: https://www.kucoin.com/docs-new/3470073w0
+        message:
+          properties:
+            - name: type
+              sampleValue: message
+            - name: topic
+              sampleValue: /spotMarket/tradeOrdersV2
+            - name: subject
+              sampleValue: orderChange
+            - name: data
+              properties:
+                - name: symbol
+                  sampleValue: KCS-USDT
+                - name: orderType
+                  sampleValue: limit
+                - name: side
+                  sampleValue: buy
+                - name: orderId
+                  sampleValue: 5efab07953bdea00089965d2
+                - name: liquidity
+                  description: Provided only when message type is <i>match</i>
+                  sampleValue: taker
+                - name: type
+                  description: received, open, match, filled or canceled.
+                  sampleValue: received
+                - name: orderTime
+                  sampleValue: 1593487481683297666
+                  type: LONG
+                - name: size
+                  description: Provided only when message type is <i>new</i>
+                  sampleValue: "0.1"
+                  type: BIGDECIMAL
+                - name: filledSize
+                  description: Provided only when message type is <i>new</i>, <i>match</i>, <i>filled</i>, or <i>canceled</i>
+                  sampleValue: "0"
+                  type: BIGDECIMAL
+                - name: price
+                  sampleValue: "0.937"
+                  type: BIGDECIMAL
+                - name: matchPrice
+                  description: Provided only when message type is <i>match</i>
+                  sampleValue: "0.96738"
+                  type: BIGDECIMAL
+                - name: matchSize
+                  description: Provided only when message type is <i>match</i>
+                  sampleValue: "0.1"
+                  type: BIGDECIMAL
+                - name: tradeId
+                  description: Provided only when message type is <i>match</i>
+                  sampleValue: "0.1"
+                - name: clientOid
+                  sampleValue: "1593487481000906"
+                - name: remainSize
+                  description: Provided only when message type is <i>new</i>, <i>match</i>, <i>filled</i>, or <i>canceled</i>
+                  sampleValue: "0.1"
+                  type: BIGDECIMAL
+                - name: status
+                  sampleValue: new
+                - name: canceledSize
+                  description: Cumulative number of cancellations. Provided only when message type is <i>new</i>, <i>match</i>, <i>filled</i>, or <i>canceled</i>
+                  sampleValue: "0.1"
+                  type: BIGDECIMAL
+                - name: canceledFunds
+                  description: Market order accumulative cancellation funds. Provided only when message type is <i>new</i>, <i>match</i>, <i>filled</i>, or <i>canceled</i>
+                  sampleValue: "0.1"
+                  type: BIGDECIMAL
+                - name: originSize
+                  description: Original quantity. Provided only when message type is <i>new</i>, <i>match</i>, <i>filled</i>, or <i>canceled</i>
+                  sampleValue: new
+                  type: BIGDECIMAL
+                - name: originFunds
+                  description: The original funds of the market order. Provided only when message type is <i>new</i>, <i>match</i>, <i>filled</i>, or <i>canceled</i>
+                  sampleValue: new
+                  type: BIGDECIMAL
+                - name: ts
+                  sampleValue: now()
+                  type: LONG

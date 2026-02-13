@@ -1,0 +1,34 @@
+id: Kucoin
+apis:
+  - name: UAMarketData
+    restEndpoints:
+      - name: GetServiceStatus
+        httpMethod: GET
+        url: ua/v1/server/status
+        description: Get the service status.
+        docUrl: https://www.kucoin.com/docs-new/rest/ua/get-service-status
+        requestWeight: 3
+        rateLimits:
+          - public
+        request:
+          name: tradeType
+          description: Product type
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: Response code
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description
+              sampleValue: success
+            - name: data
+              objectName: KucoinUAServiceStatusResponseData
+              properties:
+                - name: tradeType
+                  description: Product type
+                - name: serverStatus
+                  description: Status of service
+                - name: msg
+                  description: Remark for operation

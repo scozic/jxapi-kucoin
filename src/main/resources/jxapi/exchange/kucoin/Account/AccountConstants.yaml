@@ -1,0 +1,200 @@
+id: Kucoin
+constants:
+  - name: account
+    description: >
+      Kucoin Account API constants
+    constants:
+    - name: bizType
+      description: >
+        Possible values for <i>bizType</i> parameter used in Account REST endpoints, for instance Account <i>GetAccountLedgersMarginHF</i>.
+      constants:
+        - name: deposit
+          description: Deposit
+          value: DEPOSIT
+        - name: withdraw
+          description: Withdraw
+          value: WITHDRAW
+        - name: transfer
+          description: Transfer
+          value: TRANSFER
+        - name: subTransfer
+          description: Subaccount transfer
+          value: SUB_TRANSFER
+        - name: tradeExchange
+          description: Trade exchange
+          value: TRADE_EXCHANGE
+        - name: marginExchange
+          description: Margin exchange
+          value: MARGIN_EXCHANGE
+        - name: kucoin_bonus
+          description: Kucoin bonus
+          value: KUCOIN_BONUS
+        - name: brokerTransfer
+          description: Broker transfer record
+          value: BROKER_TRANSFER
+    - name: hfAccountLedgerBizType
+      description: >
+        Possible values for <i>bizType</i> parameter used in Account REST endpoint <i>GetAccountLedgerTradeHf</i>.
+      constants:
+        - name: tradeExchange
+          description: Trade exchange
+          value: TRADE_EXCHANGE
+        - name: transfer
+          description: Transfer
+          value: TRANSFER
+        - name: subTransfer
+          description: Subaccount transfer
+          value: SUB_TRANSFER
+        - name: returnedFees
+          description: Returned fees
+          value: RETURNED_FEES
+        - name: deductionFees
+          description: Deduction fees
+          value: DEDUCTION_FEES
+        - name: other
+          description: Other
+          value: OTHER
+    - name: spotMarginAccountLedgerBizType
+      description: >
+        Possible values for <i>bizType</i> parameter used in Account REST endpoint <i>GetAccountLedgersSpotMargin</i>.
+      constants:
+        - name: transfer
+          description: Transfer
+          value: TRANSFER
+        - name: marginExchange
+          description: Margin exchange
+          value: MARGIN_EXCHANGE
+        - name: isolatedExchange
+          description: Isolated exchange
+          value: ISOLATED_EXCHANGE
+        - name: liquidation
+          description: Liquidation
+          value: LIQUIDATION
+        - name: assertReturn
+          description: Assert return
+          value: ASSERT_RETURN
+    - name: marginHfAccountLedgerBizType
+      description: >
+        Possible values for <i>bizType</i> parameter used in Account REST endpoint <i>GetAccountLedgerMarginHf</i>.
+      constants:
+        - name: transfer
+          description: Transfer
+          value: TRANSFER
+        - name: marginExchange
+          description: Margin exchange
+          value: MARGIN_EXCHANGE
+        - name: isolatedExchange
+          description: Isolated exchange
+          value: ISOLATED_EXCHANGE
+        - name: liquidation
+          description: Liquidation
+          value: LIQUIDATION
+        - name: assertReturn
+          description: Assert return
+          value: ASSERT_RETURN
+    - name: type
+      description: >
+        Possible values for <i>type</i> parameter used in Account REST endpoints, for instance Account <i>GetAccountLedgersFutures</i>.
+        <br>
+        Type: RealisedPNL-Realised profit and loss, Deposit-Deposit, Withdrawal-withdraw, Transferin-Transfer in, TransferOut-Transfer out
+      constants:
+        - name: realizedPnl
+          description: Realised profit and loss
+          value: RealisedPNL
+        - name: deposit
+          description: Deposit
+          value: Deposit
+        - name: withdrawal
+          description: Withdrawal
+          value: Withdrawal
+        - name: transferIn
+          description: Transfer in
+          value: TransferIn
+        - name: transferOut
+          description: Transfer out
+          value: TransferOut
+    - name: direction
+      description: >
+        Possible values for <i>direction</i> parameter used in Account REST endpoints, for instance Account <i>GetAccountLedgersSpotMargin</i>.
+      constants:
+        - name: in
+          description: Incoming funds
+          value: in
+        - name: out
+          description: Outgoing funds
+          value: out
+    - name: accountType
+      description: >
+        Possible values for <i>accountType</i> parameter used in Account REST endpoints, for instance Account <i>GetAccountListSpotMarginTradeHf</i>.
+      constants:
+        - name: main
+          description: Main account
+          value: main
+        - name: trade
+          description: Trade account
+          value: trade
+        - name: margin
+          description: Margin account
+          value: margin
+        - name: futures
+          description: Futures account
+          value: futures
+        - name: option
+          description: Option account
+          value: option
+    - name: access
+      description: Permission (types include Spot, Futures, Margin permissions, which can be used alone or in combination).
+      constants:
+        - name: spot
+          description: Spot trading permission
+          value: Spot
+        - name: futures
+          description: Futures trading permission
+          value: Futures
+        - name: margin
+          description: Margin trading permission
+          value: Margin
+        - name: all
+          description: All permissions
+          value: All 
+    - name: transactionStatus
+      description: > 
+        Transaction status tatus of the transaction (Completed, Pending)
+      constants:
+        - name: completed
+          description: Completed
+          value: Completed
+        - name: pending
+          description: Pending
+          value: Pending
+    - name: subAccountType
+      description: Sub-account type
+      constants:
+        - name: normal
+          type: INT
+          description: Normal sub-account
+          value: 0
+        - name: robot
+          type: INT
+          description: Robot sub-account
+          value: 1
+        - name: novice
+          type: INT
+          description: New financial sub-account
+          value: 2
+        - name: hosted
+          type: INT
+          description: Asset management sub-account
+          value: 5    
+    - name: subAccountStatus
+      description: >
+        Account status; 2:Enable, 3:Frozen
+      constants:
+        - name: enabled
+          type: INT
+          description: Enabled
+          value: 2
+        - name: frozen
+          type: INT
+          description: Frozen
+          value: 3

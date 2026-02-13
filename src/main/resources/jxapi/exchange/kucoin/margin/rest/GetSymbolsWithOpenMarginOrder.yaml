@@ -1,0 +1,40 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetSymbolsWithOpenMarginOrder
+        httpMethod: GET
+        url: v3/hf/margin/order/active/symbols
+        description: >
+          This interface can get symbols with open margin orders.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/orders/get-symbols-with-open-order
+        requestWeight: 4
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: tradeType
+              description: >
+                The transaction type. MARGIN_TRADE (cross margin trade), MARGIN_ISOLATED_TRADE (isolated margin trade). See ${constants.margin.tradeType} for enum values.
+              type: STRING
+              sampleValue: ${constants.margin.tradeType.marginTrade}
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          objectName: KucoinSymbolsWithOpenMarginOrderResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              properties:
+                - name: symbolSize
+                  description: Symbol Size
+                  type: INT
+                  sampleValue: 1
+                - name: symbols
+                  description: The symbol that has active orders
+                  type: STRING_LIST
+                  sampleValue: ["BTC-USDT"]

@@ -1,0 +1,30 @@
+id: Kucoin
+apis:
+  - name: Account
+    restEndpoints:
+      - name: AddSubAccountFuturesPermission
+        description: >
+          This endpoint can be used to add sub-accounts Futures permission. 
+          Before using this endpoints, you need to ensure that the master account apikey has Futures permissions and the Futures function has been activated.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/sub-account/add-subaccount-futures-permission
+        requestWeight: 15
+        rateLimits:
+          - management
+        httpMethod: POST
+        url: v3/sub/user/futures/enable
+        request:
+          properties:
+            - name: uid
+              description: Sub account UID
+              sampleValue: 6167572d90cbca0001d6102b
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"

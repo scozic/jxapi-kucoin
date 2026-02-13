@@ -1,0 +1,75 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetLoanMarket
+        httpMethod: GET
+        url: v3/project/list
+        description: >
+          This API endpoint is used to get the information about the currencies available for lending.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/credit/get-loan-market
+        requestWeight: 10
+        rateLimits:
+          - spot        
+        request:
+          name: currency
+          description: Currency, if empty query all currencies
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinMarginLendingCurrencyInformation
+              properties:
+                - name: currency
+                  description: currency
+                  sampleValue: BTCUP
+                - name: purchaseEnable
+                  description: Support subscription
+                  type: BOOLEAN
+                  sampleValue: true
+                - name: redeemEnable
+                  description: Support redemption
+                  type: BOOLEAN
+                  sampleValue: true
+                - name: increment
+                  description: Increment precision for subscription and redemption
+                  type: BIGDECIMAL
+                  sampleValue: 1
+                - name: minPurchaseSize
+                  description: Minimum subscription amount
+                  type: BIGDECIMAL
+                  sampleValue: 10
+                - name: minInterestRate
+                  description: Minimum annualized interest rate
+                  type: BIGDECIMAL
+                  sampleValue: 0.004
+                - name: maxInterestRate
+                  description: Maximum annualized interest rate
+                  type: BIGDECIMAL
+                  sampleValue: 0.02
+                - name: interestIncrement
+                  description: Increment precision for interest; default is 0.0001
+                  type: BIGDECIMAL
+                  sampleValue: 0.0001
+                - name: maxPurchaseSize
+                  description: Maximum subscription limit per user
+                  type: BIGDECIMAL
+                  sampleValue: 20000
+                - name: marketInterestRate
+                  description: Latest market annualized interest rate
+                  type: BIGDECIMAL
+                  sampleValue: 0.009
+                - name: autoPurchaseEnable
+                  description: > 
+                    Auto-Subscribe enabled?: true: enable, false: disable
+                  type: BOOLEAN
+                  sampleValue: true

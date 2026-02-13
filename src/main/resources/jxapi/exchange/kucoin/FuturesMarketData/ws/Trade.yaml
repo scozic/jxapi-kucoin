@@ -1,0 +1,64 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    websocketEndpoints:
+      - name: Trade
+        topic: /contractMarket/execution:${request}
+        description: For each order executed, the system will send you the match messages in the format as following.
+        docUrl: https://www.kucoin.com/docs-new/3470084w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: XBTUSDTM
+        message:
+          properties:
+            - name: topic
+              description: Topic of the message
+              sampleValue: /contractMarket/execution:XBTUSDTM
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: subject
+              description: Subject of the message
+              sampleValue: match
+            - name: sn
+              description: Sequence number
+              sampleValue: 1794100537695
+              type: LONG
+            - name: data
+              description: Data payload
+              properties:
+                - name: symbol
+                  description: Symbol of the contract
+                  sampleValue: XBTUSDTM
+                - name: sequence
+                  description: Sequence number
+                  sampleValue: 1794100537695
+                  type: LONG
+                - name: side
+                  description: Side of the trade (buy or sell)
+                  sampleValue: buy
+                - name: size
+                  description: Size of the trade
+                  sampleValue: 2
+                  type: BIGDECIMAL
+                - name: price
+                  description: Price of the trade
+                  sampleValue: "90503.9"
+                  type: BIGDECIMAL
+                - name: takerOrderId
+                  description: Taker order ID
+                  sampleValue: "247822202957807616"
+                - name: makerOrderId
+                  description: Maker order ID
+                  sampleValue: "247822167163555840"
+                - name: tradeId
+                  description: Trade ID
+                  sampleValue: "1794100537695"
+                - name: ts
+                  description: Timestamp
+                  sampleValue: 1731898619520000000
+                  type: LONG

@@ -1,0 +1,113 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetCrossMarginSymbols
+        httpMethod: GET
+        url: v3/margin/symbols
+        description: >
+          This interface can obtain the risk limit and currency configuration of cross margin/isolated margin.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/market-data/get-symbols-cross-margin
+        requestWeight: 5
+        rateLimits:
+          - spot
+        request:
+          name: KucoinMarginInterestRecordRequest
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              properties:
+                - name: timestamp
+                  description: Timestamp
+                  sampleValue: 1718779915377
+                  type: LONG
+                - name: items
+                  description: >
+                    List of cross margin trading pairs
+                  type: OBJECT_LIST
+                  objectName: KucoinCrossMarginTradingPairsConfiguration
+                  properties:
+                    - name: symbol
+                      description: >
+                        Trading pair code
+                      sampleValue: ATOM-USDT
+                    - name: name
+                      description: >
+                        Trading pair name
+                      sampleValue: ATOM-USDT
+                    - name: enableTrading
+                      description: >
+                        Whether trading is enabled: true for enabled, false for disabled
+                      sampleValue: true
+                      type: BOOLEAN
+                    - name: market
+                      description: >
+                        Trading market
+                      sampleValue: USDS
+                    - name: baseCurrency
+                      description: >
+                        Base currency
+                      sampleValue: ATOM
+                    - name: quoteCurrency
+                      description: >
+                        Quote currency
+                      sampleValue: USDT
+                    - name: baseIncrement
+                      description: >
+                        Minimum price increment for baseCurrency
+                      sampleValue: 0.0001
+                      type: BIGDECIMAL
+                    - name: baseMinSize
+                      description: >
+                        Minimum order size for baseCurrency. If empty, there is no limit.
+                      sampleValue: 0.1
+                      type: BIGDECIMAL
+                    - name: quoteIncrement
+                      description: >
+                        Minimum price increment for quoteCurrency.
+                      sampleValue: 0.0001 
+                      type: BIGDECIMAL
+                    - name: quoteMinSize 
+                      description: >
+                        Minimum order size for quoteCurrency.
+                      sampleValue: 0.1
+                      type: BIGDECIMAL 
+                    - name: baseMaxSize 
+                      description: >
+                        Maximum order size for baseCurrency.
+                      sampleValue: 10000000000
+                      type: BIGDECIMAL
+                    - name: quoteMaxSize 
+                      description: >
+                        Maximum order size for quoteCurrency.
+                      sampleValue: 99999999 
+                      type: BIGDECIMAL
+                    - name: priceIncrement 
+                      description: >
+                        Price increment for limit orders. Orders must be placed in multiples of this increment.
+                      sampleValue: 0.0001 
+                      type: BIGDECIMAL
+                    - name: feeCurrency 
+                      description:
+                        Currency used for calculating trading fees.
+                      sampleValue: USDT 
+                    - name: priceLimitRate
+                      description: >
+                        Price protection threshold.
+                      sampleValue: 0.1
+                      type: BIGDECIMAL
+                    - name: minFunds
+                      description: >
+                        Minimum trading amount.
+                      sampleValue: 0.1
+                      type: BIGDECIMAL

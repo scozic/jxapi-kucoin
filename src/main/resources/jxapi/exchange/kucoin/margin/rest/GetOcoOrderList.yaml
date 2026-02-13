@@ -1,0 +1,77 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetOcoOrderList
+        httpMethod: GET
+        url: v3/hf/margin/oco-orders
+        description: >
+          This endpoint allows you to request your current OCO (One-Cancels-the-Other) order list.
+        docUrl: https://www.kucoin.com/docs-new/3473259e0
+        requestWeight: 2
+        rateLimits:
+          - spot
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest
+          properties:
+            - name: pageSize
+              description: >
+                Size per page. Minimum 10, maximum 500. Default: 50.
+              type: INT
+              sampleValue: 50
+            - name: currentPage
+              description: >
+                Page number. Minimum 1.
+              type: INT
+              sampleValue: 1
+            - name: symbol
+              description: >
+                Trading pair, e.g., BTC-USDT, ETH-USDT.
+              type: STRING
+            - name: startAt
+              description: >
+                Start time in milliseconds.
+              type: LONG
+            - name: endAt
+              description: >
+                End time in milliseconds.
+              type: LONG
+            - name: orderIds
+              description: >
+                A collection of order IDs, up to 500.
+              type: STRING
+            - name: tradeType
+              description: >
+                The margin type. See ${constants.margin.tradeType} for enum values.
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              description: Response payload
+              type: OBJECT
+              properties:
+                - name: currentPage
+                  description: Current page
+                  type: INT
+                - name: pageSize
+                  description: Page size
+                  type: INT
+                - name: totalNum
+                  description: Total number of items
+                  type: INT
+                - name: totalPage
+                  description: Total number of pages
+                  type: INT
+                - name: items
+                  description: List of OCO orders
+                  type: OBJECT_LIST
+                  objectName: KucoinOcoOrder

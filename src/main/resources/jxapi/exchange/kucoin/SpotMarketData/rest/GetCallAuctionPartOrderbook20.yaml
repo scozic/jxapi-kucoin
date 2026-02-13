@@ -1,0 +1,19 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetCallAuctionPartOrderbook20
+        httpMethod: GET
+        url: v1/market/orderbook/level2_20
+        description: >
+          Request via this endpoint to get a list of open orders for a symbol during a call auction (20 levels).
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-call-auction-part-orderbook
+        requestWeight: 2
+        rateLimits:
+          - public
+        request:
+          name: symbol
+          description: "symbol"
+          sampleValue: BTC-USDT
+        response:
+          objectName: KucoinAggregatedOrderBookResponse

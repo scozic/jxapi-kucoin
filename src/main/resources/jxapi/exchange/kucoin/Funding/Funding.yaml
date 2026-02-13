@@ -1,0 +1,7 @@
+id: Kucoin
+apis:
+  - name: Funding
+    description: Kucoin funding related APIs. Includes overview, deposit, withdrawal, transfer and trade fees APIs.
+    defaultHttpClient: privateSpot
+    httpUrl: "${constants.spotUrl}"
+    defaultWebsocketClient: privateSpotWs

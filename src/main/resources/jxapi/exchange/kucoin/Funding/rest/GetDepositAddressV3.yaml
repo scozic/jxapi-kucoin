@@ -1,0 +1,72 @@
+id: Kucoin
+apis:
+  - name: Funding
+    restEndpoints:
+      - name: GetDepositAddressV3
+        httpMethod: GET
+        url: v3/deposit-addresses
+        description: >
+          Get a deposit address for the currency you intend to deposit. If the returned data is null, you may need to 
+          <a href="https://www.kucoin.com/docs/rest/funding/deposit/create-deposit-address-v3-">Create Deposit Address first</a>.
+          <strong>Notice</strong> This interface has been abandoned. Please use the v3 interface to apply for a deposit address.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/deposit/get-deposit-address-v3
+        requestWeight: 5
+        rateLimits:
+          - management
+        request:
+            properties:
+            - name: currency
+              description: <a href="https://www.kucoin.com/docs/rest/spot-trading/market-data/get-currency-list">Currency</a>.
+              sampleValue: USDT
+              type: STRING
+            - name: amount
+              description: Deposit amount. This parameter is only used when applying for invoices on the Lightning Network. This parameter is invalid if it is not passed through the Lightning Network.
+              type: STRING
+            - name: chain
+              description: The chain Id of currency.
+              sampleValue: ERC20
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: List of market information for each market symbol
+              type: OBJECT_LIST
+              objectName: KucoinGetDepositAddressV3ResponseData
+              properties:
+                - name: address
+                  description: <a href="https://www.kucoin.com/docs/rest/account/basic-info/get-account-list-spot-margin-trade_hf">Deposit address</a>
+                  sampleValue: 0x0a2586d5a901c8e7e68f6b0dc83bfd8bd8600ff5
+                  type: STRING
+                - name: memo
+                  description: Address remark. If there’s no remark, it is empty. When you withdraw from other platforms to the KuCoin, you need to fill in memo(tag). If you do not fill memo (tag), your deposit may not be available, please be cautious.
+                  sampleValue: null
+                  type: STRING
+                - name: chain
+                  description: The chain name of currency, e.g. The available value for USDT are OMNI, ERC20, TRC20, default is ERC20. The available value for BTC are Native, Segwit, TRC20, the parameters are bech32, btc, trx, default is Native.
+                  sampleValue: ERC20
+                  type: STRING
+                - name: chainId
+                  description: The chain id of currency
+                  sampleValue: eth
+                  type: STRING
+                - name: to
+                  description: > 
+                    Deposit account type: main (funding account), trade (spot trading account)
+                  sampleValue: MAIN
+                  type: STRING
+                - name: contractAddress
+                  description: The token contract address.
+                  sampleValue: 0xfa93c12cd345c658bc4644d1d4e1b9615952258c
+                  type: STRING
+            
+        

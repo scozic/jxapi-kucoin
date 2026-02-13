@@ -1,0 +1,8 @@
+id: Kucoin
+apis:
+  - name: Account
+    description: Kucoin account and sub-account related APIs
+# Remark: Base HTTP URL is 'Spot' one because most of API endpoints use it. However, it is overridden for some 'Futures' specific endpoints.
+    httpUrl: ${constants.spotUrl}
+    defaultHttpClient: privateSpot
+    defaultWebsocketClient: privateSpotWs

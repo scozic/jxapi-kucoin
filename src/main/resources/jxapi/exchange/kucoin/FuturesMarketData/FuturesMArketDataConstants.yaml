@@ -1,0 +1,69 @@
+id: Kucoin
+constants:
+  - name: futuresMarketData
+    description: >
+      Kucoin Futures Market Data API constants
+    constants:
+    - name: serviceStatus
+      description: >
+        Service status. open, close, cancelonly
+      constants:
+      - name: open
+        description: Service is open
+        value: open
+      - name: close
+        description: Service is closed
+        value: close  
+      - name: cancelonly
+        description: Service is in cancel only mode
+        value: cancelonly
+    - name: granularity
+      description: >
+        Kline interval. The granularity (granularity parameter of K-line) represents the number of minutes, the available granularity scope is: 
+        1,5,15,30,60,120,240,480,720,1440,10080. Requests beyond the above range will be rejected.
+        Used in futures Klines API. For spot or universal API or futures websocket market data, see ${constants.spot.granularity}.
+      constants:
+      - name: oneMin
+        description: 1 minute
+        type: INT
+        value: 1
+      - name: fiveMin
+        description: 5 minutes
+        type: INT
+        value: 5  
+      - name: fifteenMin
+        description: 15 minutes  
+        type: INT
+        value: 15
+      - name: thirtyMin
+        description: 30 minutes
+        type: INT
+        value: 30
+      - name: oneHour
+        description: 1 hour
+        type: INT
+        value: 60
+      - name: twoHour
+        description: 2 hours
+        type: INT
+        value: 120
+      - name: fourHour
+        description: 4 hours
+        type: INT
+        value: 240
+      - name: eightHour
+        description: 8 hours
+        type: INT
+        value: 480
+      - name: twelveHour
+        description: 12 hours
+        type: INT
+        value: 720
+      - name: oneDay
+        description: 1 day
+        type: INT
+        value: 1440
+      - name: oneWeek
+        description: 1 week
+        type: INT
+        value: 10080

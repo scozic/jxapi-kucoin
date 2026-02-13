@@ -1,0 +1,6 @@
+id: Kucoin
+constants:
+  - name: copyTrading
+    description: >
+      Kucoin Copy Trading API constants
+    constants:

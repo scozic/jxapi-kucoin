@@ -1,0 +1,38 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: CancelAllOrders
+        httpMethod: DELETE
+        url: v3/orders
+        description: >
+          Using this endpoint, all open orders (excluding stop orders) can be canceled in batches.
+          The response is a list of orderIDs of the canceled orders.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/orders/cancel-all-orders
+        requestWeight: 20
+        rateLimits:
+          - futures
+        request:
+          properties:
+            - name: symbol
+              description: "[Optional] Specifies the contract for which to cancel all limit orders. If not specified, all limit orders across all contracts will be canceled."
+              type: STRING
+              sampleValue: "XBTUSDM"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: Response payload
+              properties:
+                - name: cancelledOrderIds
+                  description: "A list of unique IDs of the orders that were successfully canceled"
+                  type: STRING_LIST

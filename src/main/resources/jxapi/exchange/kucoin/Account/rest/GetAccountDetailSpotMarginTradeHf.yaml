@@ -1,0 +1,49 @@
+id: Kucoin
+apis:
+  - name: Account
+    restEndpoints:
+      - name: GetAccountDetailSpotMarginTradeHf
+        httpMethod: GET
+        url: v1/accounts
+        description: Information for a single account. Use this endpoint when you know the accountId.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/account-funding/get-account-detail-spot
+        requestWeight: 5
+        rateLimits:
+          - management
+        request:
+          properties:
+            - name: accountId
+              description: >
+                Account ID, can be obtained from <i>GetAccountList</i> endpoint.
+                If not specified, the default account will be used.
+              sampleValue: 6167572d90cbca0001d6102b
+              type: STRING
+              in: PATH
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs/errors-code/http-errors-code">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs/errors-code/http-errors-code">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              properties:
+                - name: currency
+                  description: Currency
+                  sampleValue: KCS
+                - name: balance
+                  description: Total funds in the account
+                  sampleValue: "1000000060.6299"
+                  type: BIGDECIMAL
+                - name: available
+                  description: Funds available to withdraw or trade
+                  sampleValue: "1000000060.6299"
+                  type: BIGDECIMAL
+                - name: holds
+                  description: Funds on hold (not available for use)
+                  sampleValue: "0"
+                  type: BIGDECIMAL

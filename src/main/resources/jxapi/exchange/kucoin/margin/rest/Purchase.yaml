@@ -1,0 +1,47 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: Purchase
+        httpMethod: POST
+        url: v3/purchase
+        description: >
+          Invest credit in the market and earn interest. Please ensure that the funds are in the main (funding) account.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/credit/purchase
+        requestWeight: 15
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: currency
+              description: >
+                Currency
+              sampleValue: BTC
+            - name: size
+              description: >
+                Subscription amount
+              sampleValue: 0.001
+            - name: interestRate
+              description: >
+                Subscription interest rate
+              sampleValue: 0.005
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Kucoin margin lending subscription response payload.
+              type: OBJECT
+              objectName: KucoinMarginLendingSubscription
+              properties:
+                - name: orderNo
+                  description: >
+                    Subscription order number If there already exists a subscription order with a specific currency and the interest rate, the latest orderNo will be returned.
+                  sampleValue: 5da6dba0f943c0c81f5d5db5
+                  

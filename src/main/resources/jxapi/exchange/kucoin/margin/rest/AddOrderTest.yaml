@@ -1,0 +1,21 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: AddOrderTest
+        httpMethod: POST
+        url: v3/margin/orderv3/hf/margin/order/test
+        description: >
+          Place order in the Cross-margin or Isolated-margin trading system. 
+          You can place two major types of order: Limit and market. 
+          Orders can only be placed if your account has sufficient funds. 
+          Once an order is placed, your funds will be put on hold for the duration of the order. 
+          The amount of funds on hold depends on the order type and parameters specified.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/orders/add-order
+        requestWeight: 2
+        rateLimits:
+          - spot
+        request:
+          objectName: KucoinMarginAddOrderRequest
+        response:
+          objectName: KucoinMarginAddOrderResponse

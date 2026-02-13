@@ -1,0 +1,14 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: CancelAllOrders
+        httpMethod: DELETE
+        url: hf/orders/cancelAll
+        description: Request via this endpoint to cancel all open orders. The response is a list of ids of the canceled orders.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/cancel-all-orders
+        requestWeight: 20
+        rateLimits:
+          - spot    
+        response:
+          objectName: KucoinSpotCancelOrderByOrderIdResponse

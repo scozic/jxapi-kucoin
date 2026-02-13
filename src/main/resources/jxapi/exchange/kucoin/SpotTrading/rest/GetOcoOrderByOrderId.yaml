@@ -1,0 +1,53 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: GetOcoOrderByOrderId
+        httpMethod: GET
+        url: v3/oco/order
+        description: Request via this interface to get a oco order information via the order ID.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/get-oco-order-by-orderld
+        requestWeight: 2
+        rateLimits:
+          - spot
+        request:
+          name: orderId
+          description: <a href="https://docs.kucoin.com/#list-orders">Order ID</a>, unique ID of the order.
+          sampleValue: 681bb4cb1d47db00079ff051
+          in: PATH
+        response:
+          description: > 
+            The response object for Kucoin Spot 'Get Order Details" by orderId or clientOid regular and stop order API endpoints.
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: > 
+                Info of the OCO order: orderId, symbol, clientOid, orderTime, status but not sub-orders<br>
+                To retrieve the sub-orders details use the <a href="https://www.kucoin.com/docs/rest/spot-trading/oco-order/get-order-details-by-orderid">Get OCO Order Details by Order ID</a> API.
+              objectName: KucoinSpotOCOOrderInfo
+              properties:
+                - name: orderId
+                  description: Order ID, unique ID of the order.
+                  sampleValue: 681bb4cb1d47db00079ff051
+                - name: symbol
+                  description: <a href="https://www.kucoin.com/docs/rest/spot-trading/market-data/get-symbols-list">Symbol</a>, such as, ETH-BTC
+                  sampleValue: KCS-USDT
+                - name: clientOid
+                  description: Client order ID
+                  sampleValue: testKCOrderID
+                - name: orderTime
+                  description: Order placement time, milliseconds
+                  sampleValue: 1702034902724
+                  type: LONG
+                - name: status
+                  description: >
+                    Order status: NEW: New, DONE: Completed, TRIGGERED: Triggered, CANCELLED: Cancelled
+                  sampleValue: NEW
+        

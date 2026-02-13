@@ -1,0 +1,71 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: Borrow
+        httpMethod: POST
+        url: v3/margin/borrow
+        description: >
+          This API endpoint is used to initiate an application for cross or isolated margin borrowing.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/debit/borrow
+        requestWeight: 15
+        rateLimits:
+          - spot        
+        request:
+          objectName: KucoinMarginBorrowRepayRequest
+          description: >
+            Request parameters for margin borrowing or repayment.
+          properties:
+            - name: isIsolated
+              description: >
+                true-isolated, false-cross; default is false
+              type: BOOLEAN
+            - name: symbol
+              description: >
+                Trading pair, mandatory for isolated margin account
+              type: STRING
+              # sampleValue: KCS-USDT
+            - name: currency
+              description: >
+                Borrowed currency
+              type: STRING
+              sampleValue: BTC
+            - name: size
+              description: >
+                Borrowed amount
+              sampleValue: 0.0001
+              type: BIGDECIMAL
+            - name: timeInForce
+              description: >
+                timeInForce: IOC, FOK. See ${constants.margin.timeInForce} for enum values.
+              sampleValue: ${constants.margin.timeInForce.fok}  
+              type: STRING
+            - name: isHf
+              description: >
+                true: high frequency borrowing, false: low frequency borrowing; default false
+              type: BOOLEAN
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          objectName: KucoinMarginBorrowRepayResponse
+          description: >
+            The response object for Kucoin Margin 'Margin Borrowing' or 'Repayment' API endpoints.
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Payload for margin borrowing or repayment API endpoints responses.
+              type: OBJECT
+              properties:
+                - name: orderNo
+                  description: Borrow order number
+                  sampleValue: 5da6dba0f943c0c81f5d5db5
+                  type: STRING
+                - name: actualSize
+                  description: Actual borrowed amount
+                  sampleValue: 0.0001
+                  type: BIGDECIMAL    

@@ -1,0 +1,54 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetPartOrderBook20
+        httpMethod: GET
+        url: v1/market/orderbook/level2_20
+        description:
+          Request via this endpoint to get a list of open orders for a symbol.<br>
+          Level-2 order book includes all bids and asks (aggregated by price), this level returns only one size for each active price (as if there was only a single order for that price).<br>
+          Query via this endpoint and the system will return only 20 pieces of the order book to you (ask and bid data).<br>
+          You are recommended to request via this endpoint as the system reponse would be faster and cosume less traffic.<br>
+          To maintain up-to-date Order Book, please use Websocket incremental feed after retrieving the Level 2 snapshot.<br>
+        docUrl: https://www.kucoin.com/docs/rest/spot-trading/market-data/get-part-order-book-aggregated-
+        requestWeight: 2
+        rateLimits:
+          - public
+        request:
+          name: symbol
+          description: <a href="https://docs.kucoin.com/#get-symbols-list">symbol</a>
+          sampleValue: BTC-USDT  
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          objectName: KucoinAggregatedOrderBookResponse
+          properties:
+            - name: code
+              description: System error code see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+            - name: data
+              description: Aggregated order book information for a market symbol
+              type: OBJECT
+              objectName: KucoinSpotOrderBook
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.KucoinOrderBook
+              properties:
+                - name: sequence
+                  description: Sequence number
+                  sampleValue: "3262786978"
+                  type: LONG
+                - name: time
+                  description: Timestamp
+                  type: LONG
+                  sampleValue: 1550653727731
+                - name: bids
+                  description: >
+                    Bids (2 values: price, size)
+                  type: BIGDECIMAL_LIST_LIST
+                - name: asks
+                  description: >
+                    Asks (2 values: price, size)
+                  type: BIGDECIMAL_LIST_LIST

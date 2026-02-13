@@ -1,0 +1,23 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetFullOrderBook
+        httpMethod: GET
+        url: v3/market/orderbook/level2
+        description:
+          Request via this endpoint to get a list of open orders for a symbol.<br>
+          Level-2 order book includes all bids and asks (aggregated by price), this level returns only one size for each active price (as if there was only a single order for that price).<br>
+          Query via this endpoint and the system will return only 100 pieces of the order book to you (ask and bid data).<br>
+          You are recommended to request via this endpoint as the system reponse would be faster and cosume less traffic.<br>
+          To maintain up-to-date Order Book, please use Websocket incremental feed after retrieving the Level 2 snapshot.<br>
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-full-orderbook
+        requestWeight: 4
+        rateLimits:
+          - public
+        request:
+          name: symbol
+          description: <a href="https://docs.kucoin.com/#get-symbols-list">symbol</a>
+          sampleValue: BTC-USDT  
+        response:
+          objectName: KucoinAggregatedOrderBookResponse

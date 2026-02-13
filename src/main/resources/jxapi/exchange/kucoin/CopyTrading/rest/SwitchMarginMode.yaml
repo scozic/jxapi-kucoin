@@ -1,0 +1,42 @@
+id: Kucoin
+apis:
+  - name: CopyTrading
+    restEndpoints:
+      - name: SwitchMarginMode
+        httpMethod: POST
+        url: v1/copy-trade/futures/position/changeMarginMode
+        description: >
+          Modify the margin mode of the current symbol.
+        docUrl: https://www.kucoin.com/docs-new/3475552e0
+        requestWeight: 2
+        rateLimits:
+          - copyTrading
+        request:
+          properties:
+            - name: symbol
+              description: "Symbol of the contract"
+              type: STRING
+              sampleValue: "XBTUSDTM"
+            - name: marginMode
+              description: "Modified margin model. Allowed values: ISOLATED, CROSS."
+              type: STRING
+              sampleValue: "CROSS"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+              type: STRING
+            - name: data
+              description: "Response payload"
+              properties:
+                - name: symbol
+                  description: "Symbol of the contract"
+                  type: STRING
+                  sampleValue: "XBTUSDTM"
+                - name: marginMode
+                  description: "Modified margin model"
+                  type: STRING
+                  sampleValue: "CROSS"

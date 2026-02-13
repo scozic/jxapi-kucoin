@@ -1,0 +1,73 @@
+id: Kucoin
+apis:
+  - name: Account
+    restEndpoints:
+      - name: GetAccountSummaryInfo
+        httpMethod: GET
+        url: v2/user-info
+        description: This endpoint can be used to obtain account summary information.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/account-funding/get-account-summary-info
+        requestWeight: 20
+        rateLimits:
+          - management        
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              properties:
+                - name: level
+                  description: User level
+                  sampleValue: 0
+                  type: INT
+                - name: subQuantity
+                  description: Number of sub-accounts
+                  sampleValue: 1
+                  type: INT
+                - name: maxDefaultSubQuantity
+                  description: Max number of default open sub-accounts (according to level)
+                  sampleValue: 5
+                  type: INT
+                - name: maxSubQuantity
+                  description: Max number of sub-accounts = maxDefaultSubQuantity + maxSpotSubQuantity
+                  sampleValue: 5
+                  type: INT
+                - name: spotSubQuantity
+                  description: Number of sub-accounts with spot trading permissions enabled
+                  sampleValue: 5
+                  type: INT
+                - name: marginSubQuantity
+                  description: Number of sub-accounts with margin trading permissions enabled
+                  sampleValue: 5
+                  type: INT
+                - name: futuresSubQuantity
+                  description: Number of sub-accounts with futures trading permissions enabled
+                  sampleValue: 5
+                  type: INT
+                - name: maxSpotSubQuantity
+                  description: Max number of sub-accounts with additional Spot trading permissions
+                  sampleValue: 0
+                  type: INT
+                - name: maxMarginSubQuantity
+                  description: Max number of sub-accounts with additional margin trading permissions
+                  sampleValue: 0
+                  type: INT
+                - name: maxFuturesSubQuantity
+                  description: Max number of sub-accounts with additional futures trading permissions
+                  sampleValue: 0
+                  type: INT
+                - name: optionSubQuantity
+                  description: Number of sub-accounts with option trading permissions enabled
+                  sampleValue: 0
+                  type: INT
+                - name: maxOptionSubQuantity
+                  description: Max number of sub-accounts with additional option trading permissions
+                  sampleValue: 0
+                  type: INT  

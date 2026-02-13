@@ -1,0 +1,23 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: CancelStopOrderByOrderId
+        httpMethod: DELETE
+        url: v1/stop-order
+        description: >
+          Request via this endpoint to cancel a single stop order previously placed.
+          You will receive cancelledOrderIds field once the system has received the cancellation request. 
+          The cancellation request will be processed by the matching engine in sequence. To know if the request is processed (successfully or not), 
+          you may check the order status or the update message from the pushes.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/cancel-stop-order-by-orderld
+        requestWeight: 5
+        rateLimits:
+          - spot        
+        request:
+          name: orderId
+          description: Unique order ID created by users to identify their orders.
+          sampleValue: 681ba768851ccd00072175ed
+          in: PATH
+        response:
+          objectName: KucoinSpotCancelOrderByOrderIdResponse

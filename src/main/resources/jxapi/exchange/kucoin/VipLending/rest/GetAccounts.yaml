@@ -1,0 +1,38 @@
+id: Kucoin
+apis:
+  - name: VipLending
+    restEndpoints:
+      - name: GetAccounts
+        description: >
+          Returns a list of accounts participating in OTC lending.
+        docUrl: https://www.kucoin.com/docs-new/rest/vip-lending/get-accounts
+        requestWeight: 4
+        rateLimits:
+          - spot
+        httpMethod: GET
+        url: v1/otc-loan/accounts
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinVipLendingAccount
+              properties:
+                - name: uid
+                  type: STRING
+                - name: marginCcy
+                  type: STRING
+                - name: marginQty
+                  type: STRING
+                - name: marginFactor
+                  type: STRING
+                - name: accountType
+                  description: "See ${constants.funding.accountType} for enumeration."
+                  type: STRING
+                - name: isParent
+                  type: BOOLEAN

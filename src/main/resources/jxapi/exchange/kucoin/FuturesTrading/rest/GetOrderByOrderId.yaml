@@ -1,0 +1,35 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: GetOrderByOrderId
+        httpMethod: GET
+        url: v1/orders
+        description: >
+          Get a single order by order id (including a stop order), querying it by its exchange assigned <strong>orderId</strong>.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/orders/get-order-by-orderld
+        requestWeight: 5
+        rateLimits:
+          - futures
+        request:
+          description: Order ID (exchange assigned).
+          name: orderId
+          sampleValue: 5cdfc138b21023a909e5ad55
+          type: STRING
+          in: PATH
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: Response payload
+              objectName: KucoinFuturesOrderData
+              type: OBJECT

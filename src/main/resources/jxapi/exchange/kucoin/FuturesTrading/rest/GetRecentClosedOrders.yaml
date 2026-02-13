@@ -1,0 +1,32 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: GetRecentClosedOrders
+        httpMethod: GET
+        url: v1/recentDoneOrders
+        description: >
+          Get a list of recent 1000 orders in the last 24 hours.<br/>If you need to get your recent traded order history with low latency, you may query this
+          endpoint.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/orders/get-recent-closed-orders
+        requestWeight: 5
+        rateLimits:
+          - futures
+        request:
+          name: symbol
+          description: "[Optional] Symbol of the contract"
+          sampleValue: null
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Order list
+              objectName: KucoinFuturesOrderData
+              type: OBJECT_LIST

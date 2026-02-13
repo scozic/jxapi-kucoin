@@ -1,0 +1,125 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetBorrowHistory
+        httpMethod: GET
+        url: v3/margin/borrow
+        description: >
+          This API endpoint is used to get the borrowing orders for cross and isolated margin accounts
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/debit/get-borrow-history
+        requestWeight: 15
+        rateLimits:
+          - spot
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest  
+          objectName: KucoinMarginBorrowingRepaymentHistoryRequest
+          properties:
+            - name: currency
+              description: >
+                Currency
+              sampleValue: BTC
+            - name: isIsolated
+              description: >
+                true-isolated, false-cross; default is false
+              type: BOOLEAN
+            - name: symbol
+              description: >
+                Trading pair, mandatory for isolated margin account
+              type: STRING
+            - name: orderNo
+              description: >
+                Order number
+              type: STRING
+            - name: startTime
+              description: >
+                The start and end times are not restricted. If the start time is empty or less than 1680278400000, the default value is set to 1680278400000 (April 1, 2023, 00:00:00)
+              type: LONG
+            - name: endTime
+              description: End time
+              type: LONG
+            - name: currentPage
+              description: >
+                Current query page, with a starting value of 1. Default:1
+              sampleValue: 1
+              type: INT
+            - name: pageSize
+              description: >
+                Number of results per page. Default is 50, minimum is 10, maximum is 500
+              sampleValue: 50
+              type: INT
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse        
+          objectName: KucoinMarginBorrowingRepaymentHistoryResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              description: Margin borrowing history list page
+              type: OBJECT
+              properties:
+                - name: currentPage
+                  description: Current page number
+                  sampleValue: 1
+                  type: INT
+                - name: pageSize
+                  description: Number of items per page
+                  sampleValue: 50
+                  type: INT
+                - name: totalNum
+                  description: Total number of items
+                  sampleValue: 1
+                  type: INT
+                - name: totalPage
+                  description: Total number of pages
+                  sampleValue: 1
+                  type: INT
+                - name: items
+                  description: >
+                    List of margin borrowing history items.
+                  type: OBJECT_LIST
+                  objectName: KucoinMarginBorrowingHistory
+                  properties:
+                    - name: orderNo
+                      description: >
+                        Borrow order ID
+                      sampleValue: 5da6dba0f943c0c81f5d5db5
+                      type: STRING
+                    - name: symbol
+                      description: >
+                        Isolated margin trading pair; empty for cross margin
+                      sampleValue: BTC-USDT
+                      type: STRING
+                    - name: currency
+                      description: Currency
+                      sampleValue: USDT
+                      type: STRING
+                    - name: size
+                      description: >
+                        Initiated borrowing amount
+                      sampleValue: 10.0
+                      type: BIGDECIMAL
+                    - name: actualSize
+                      description: >
+                        Actual borrowed amount
+                      sampleValue: 10.0
+                      type: BIGDECIMAL    
+                    - name: status
+                      description: >
+                        PENDING: Processing, SUCCESS: Successful, FAILED: Failed. See ${constants.margin.borrowOrderStatus} for enum values.
+                      sampleValue: DONE
+                      type: STRING
+                    - name: createdTime
+                      description: >
+                        Time of borrowing (milliseconds)
+                      sampleValue: 1555056425000
+                      type: LONG

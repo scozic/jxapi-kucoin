@@ -1,0 +1,37 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetCurrency
+        httpMethod: GET
+        url: v3/currencies
+        description: >
+          Request via this endpoint to get the currency details of a specified currency
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-currency
+        requestWeight: 3
+        rateLimits:
+          - public
+        request:
+          properties:
+            - name: currency
+              description: <a href="https://docs.kucoin.com/#get-symbols-list">currency</a>
+              sampleValue: BTC
+              type: STRING
+              in: PATH
+            - name: chain
+              description: Support for querying the chain of currency, e.g. The available value for USDT are OMNI, ERC20, TRC20. This only apply for multi-chain currency, and there is no need for single chain currency.
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Currency detail
+              type: OBJECT
+              objectName: KucoinCurrency

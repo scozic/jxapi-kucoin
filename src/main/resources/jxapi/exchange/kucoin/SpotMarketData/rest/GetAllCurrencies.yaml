@@ -1,0 +1,125 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetAllCurrencies
+        httpMethod: GET
+        url: v3/currencies
+        description: >
+          Request via this endpoint to get the currency list.
+          <br><strong>TIP</strong>: Not all currencies currently can be used for trading.
+          <p><strong>CURRENCY CODES</strong>:
+          Currency codes will conform to the ISO 4217 standard where possible. Currencies which have or had no representation in ISO 4217 may use a custom code.
+          <table>
+            <caption>Common Currency Codes</caption>
+            <tr>
+              <th>Code</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>BTC</td>
+              <td>Bitcoin</td>
+            </tr>
+            <tr>
+              <td>ETH</td>
+              <td>Ethereum</td>
+            </tr>
+            <tr>
+              <td>KCS</td>
+              <td>Kucoin Shares</td>
+            </tr>
+          </table>  
+          For a coin, the "currency" is a fixed value and works as the only recognized identity of the coin. As the "name", "fullnane" and "precision" of a coin are modifiable values, when the "name" of a coin is changed, you should use "currency" to get the coin.
+          For example: The "currency" of XRB is "XRB", if the "name" of XRB is changed into "Nano", you should use "XRB" (the currency of XRB) to search the coin.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-all-currencies
+        requestWeight: 3
+        rateLimits:
+          - public
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Currency detail
+              type: OBJECT_LIST
+              objectName: KucoinCurrency
+              properties:
+                - name: currency
+                  description: A unique currency code that will never change
+                  sampleValue: BTC
+                  type: STRING
+                - name: name
+                  description: Currency name, will change after renaming
+                  sampleValue: BTC
+                  type: STRING
+                - name: fullName
+                  description: Full name of a currency, will change after renaming
+                  sampleValue: Bitcoin
+                  type: STRING
+                - name: precision
+                  description: Currency precision
+                  sampleValue: 8
+                  type: INT
+                - name: confirms
+                  description: Number of block confirmations
+                  sampleValue: null
+                - name: contractAddress
+                  description: Contract address
+                  sampleValue: null
+                - name: isMarginEnabled
+                  description: Support margin or not
+                - name: isDebitEnabled
+                  description: Support debit or not
+                - name: chains
+                  description: Chain list
+                  type: OBJECT_LIST
+                  objectName: KucoinCurrencyChain
+                  properties:
+                    - name: chainName
+                      description: Chain name of currency
+                      sampleValue: BTC
+                      type: STRING
+                    - name: withdrawalMinFee
+                      description: Minimum fees charged for withdrawal
+                      sampleValue: "0.001"
+                      type: BIGDECIMAL
+                    - name: withdrawalMinSize
+                      description: Minimum withdrawal amount
+                      sampleValue: "0.0012"
+                      type: BIGDECIMAL
+                    - name: withdrawFeeRate
+                      description: Withdraw fee rate (some currencies have this param, the default is empty)
+                      sampleValue: "0"
+                      type: BIGDECIMAL
+                    - name: depositMinSize
+                      description: Minimum deposit amount
+                      sampleValue: "0.0002"
+                      type: BIGDECIMAL
+                    - name: isWithdrawEnabled
+                      description: Support withdrawal or not
+                    - name: isDepositEnabled
+                      description: Support deposit or not
+                    - name: confirms
+                      description: Number of block confirmations
+                    - name: preConfirms
+                      description: The number of blocks (confirmations) for advance on-chain verification
+                    - name: withdrawMaxFee
+                      description: Withdraw max fee(some currencies have this param, the default is empty)
+                    - name: withdrawPrecision
+                      description: Withdrawal precision bit, indicating the maximum supported length after the decimal point of the withdrawal amount
+                    - name: needTag
+                      description: Whether memo/tag is needed
+                    - name: maxWithdraw
+                      description: Maximum amount of single withdrawal
+                    - name: maxDeposit
+                      description: Maximum amount of single deposit (only applicable to Lightning Network)
+                    - name: chainId
+                      description: Chain of currency
+                      sampleValue: btc
+                      type: STRING  

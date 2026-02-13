@@ -1,0 +1,91 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    restEndpoints:
+      - name: GetSpotIndexPrice
+        url: v1/index/query
+        description: Get index list.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/market-data/get-spot-index-price
+        httpMethod: GET
+        requestWeight: 2
+        rateLimits:
+          - public
+        request:
+          properties:
+            - name: symbol
+              description: <a href="https://docs.kucoin.com/#get-symbols-list">Symbol</a>
+              sampleValue: .KXBT
+            - name: startAt
+              description: Start time in milliseconds, default is 7 days ago
+            - name: endAt
+              description: End time in milliseconds, default is current time
+            - name: reverse
+              description: This parameter functions to judge whether the lookup is reverse. True means 'yes'.
+              type: BOOLEAN
+            - name: offset
+              description: Start offset. The unique attribute of the last returned result of the last request. The data of the first page will be returned by default.
+              sampleValue: 0
+              type: LONG
+            - name: forward
+              description: This parameter functions to judge whether the lookup is forward or not. True means 'yes' and False means 'no'. This parameter is set as true by default
+              sampleValue: false
+              type: BOOLEAN
+            - name: maxCount
+              description: Maximum record count, default is 10, maximum is 100
+              sampleValue: 50
+              type: INT
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              properties:
+                - name: dataList
+                  description: List of interest rates
+                  type: OBJECT_LIST
+                  objectName: KucoinIndex
+                  properties:
+                    - name: symbol
+                      description: Symbol of Bitcoin spot
+                      sampleValue: .KXBT
+                      type: STRING
+                    - name: granularity
+                      description: Granularity in milliseconds
+                      sampleValue: 1000
+                      type: LONG
+                    - name: timePoint
+                      description: Time point in milliseconds
+                      sampleValue: 1557998570000
+                      type: LONG
+                    - name: value
+                      description: Index Value
+                      sampleValue: 8016.24
+                      type: BIGDECIMAL
+                    - name: decomposionList
+                      description: Component List
+                      type: OBJECT_LIST
+                      objectName: KucoinIndexDecomposion
+                      properties:        
+                        - name: exchange
+                          description: Exchange
+                          sampleValue: gemini
+                          type: STRING
+                        - name: price
+                          description: Last traded price
+                          sampleValue: "8016.24"
+                          type: BIGDECIMAL
+                        - name: weight
+                          description: Weight
+                          sampleValue: 0.08042611
+                          type: BIGDECIMAL    
+                - name: hasMore
+                  description: Whether there are more pages
+                  type: BOOLEAN          
+              

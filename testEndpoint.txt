@@ -1,0 +1,58 @@
+https://www.kucoin.com/docs-new/3470096w0
+
+Cross Margin Leverage
+wss://ws-api-futures.kucoin.com
+Topic: /contract/crossLeverage
+Description
+Subscribe this topic to get the realtime push of leverage change of Futures that are in cross margin mode
+Push frequency: real-time
+Subscribe Message
+
+{
+  "id": 1545910660739,
+  "type": "subscribe",
+  "topic": "/contract/crossLeverage",
+  "response": true,
+  "privateChannel": "true"
+}
+
+Response
+Data Schema
+crossLeverage
+topic
+string 
+required
+type
+string 
+required
+subject
+string 
+required
+userId
+string 
+required
+channelType
+string 
+required
+data
+object 
+required
+Additional properties
+object 
+optional
+
+
+Example
+
+{
+    "topic": "/contract/crossLeverage",
+    "type": "message",
+    "subject": "user.config",
+    "userId": "633559791e1cbc0001f319bc",
+    "channelType": "private",
+    "data": {
+        "XBTUSDTM": {
+            "leverage": "51"
+        }
+    }
+}

@@ -1,0 +1,52 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    websocketEndpoints:
+      - name: CallAuctionData
+        topic: /callauction/callauctionData:${request}
+        description: > 
+          Get call auction data, This endpoint will return the following information for the specified symbol during the call auction phase: estimated transaction price, estimated transaction quantity, bid price range, and ask price range.
+        docUrl: https://www.kucoin.com/docs-new/3470138w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        request:
+          name: symbol
+          description: Market symbol
+          sampleValue: BTC-USDT
+        message:
+          properties:
+            - name: topic
+              description: Topic
+              sampleValue: /callauction/callauctionData:BTC-USDT
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: subject
+              description: Subject
+              sampleValue: callauction.callauctionData
+            - name: data
+              properties:
+                - name: symbol
+                  description: Symbol
+                - name: estimatedPrice
+                  description: Estimated price
+                  type: BIGDECIMAL
+                - name: estimatedSize
+                  description: Estimated size
+                  type: BIGDECIMAL
+                - name: sellOrderRangeLowPrice
+                  description: Sell order minimum price
+                  type: BIGDECIMAL
+                - name: sellOrderRangeHighPrice
+                  description: Sell order maximum price
+                  type: BIGDECIMAL
+                - name: buyOrderRangeLowPrice
+                  description: Buy order minimum price
+                  type: BIGDECIMAL
+                - name: buyOrderRangeHighPrice
+                  description: Buy order maximum price
+                  type: BIGDECIMAL
+                - name: time
+                  description: Timestamp (ms)
+                  type: LONG

@@ -1,0 +1,126 @@
+id: Kucoin
+apis:
+  - name: Earn
+    restEndpoints:
+      - name: GetEthStakingProducts
+        description: >
+          Retrieves available ETH staking products. Returns an empty list if no products are available.
+        docUrl: https://www.kucoin.com/docs-new/rest/earn/get-eth-staking-products
+        requestWeight: 4
+        rateLimits:
+          - spot
+        httpMethod: GET
+        url: v1/earn/eth-staking/products
+        request:
+          properties:
+            - name: currency
+              description: Filter products by currency.
+              type: STRING
+              sampleValue: "ETH"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "success"
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinEthStakingProduct
+              properties:
+                - name: id
+                  description: Product ID
+                  type: STRING
+                  sampleValue: "ETH2"
+                - name: currency
+                  description: "Currency of the product (e.g., ETH)"
+                  type: STRING
+                  sampleValue: "ETH"
+                - name: category
+                  description: "Product category. See ${constants.earn.productCategory} for enumeration."
+                  type: STRING
+                  sampleValue: ${constants.earn.productCategory.eth2}
+                - name: type
+                  description: "Product subtype. See ${constants.earn.savingProductType} for enumeration."
+                  type: STRING
+                  sampleValue: ${constants.earn.savingProductType.demand}
+                - name: precision
+                  description: Maximum precision supported
+                  type: INT
+                  sampleValue: 8
+                - name: productUpperLimit
+                  description: Products total subscription amount
+                  type: STRING
+                  sampleValue: "8557.3597075"
+                - name: userUpperLimit
+                  description: Max. user subscription amount
+                  type: STRING
+                  sampleValue: "8557.3597075"
+                - name: userLowerLimit
+                  description: Min. user subscribe amount
+                  type: STRING
+                  sampleValue: "0.01"
+                - name: redeemPeriod
+                  description: Redemption waiting period in days
+                  type: INT
+                  sampleValue: 5
+                - name: lockStartTime
+                  description: Product earliest interest start time (milliseconds)
+                  type: LONG
+                  sampleValue: 1729255485000
+                - name: lockEndTime
+                  description: Product maturity time (milliseconds, optional)
+                  type: LONG
+                  sampleValue: null
+                - name: applyStartTime
+                  description: Subscription start time (milliseconds)
+                  type: LONG
+                  sampleValue: 1729255485000
+                - name: applyEndTime
+                  description: Subscription end time (milliseconds, optional)
+                  type: LONG
+                  sampleValue: null
+                - name: returnRate
+                  description: "Annualized Rate of Return (e.g., 0.028 for 2.8%)"
+                  type: STRING
+                  sampleValue: "0.028"
+                - name: incomeCurrency
+                  description: "Income currency (e.g., ETH2)"
+                  type: STRING
+                  sampleValue: "ETH2"
+                - name: earlyRedeemSupported
+                  description: "Whether early redemption is supported. See ${constants.earn.earlyRedeemSupported} for enumeration."
+                  type: INT
+                  sampleValue: ${constants.earn.earlyRedeemSupported.no}
+                - name: productRemainAmount
+                  description: Remaining product subscription amount
+                  type: STRING
+                  sampleValue: "8557.3597075"
+                - name: status
+                  description: "Product status. See ${constants.earn.savingProductStatus} for enumeration."
+                  type: STRING
+                  sampleValue: ${constants.earn.savingProductStatus.ongoing}
+                - name: redeemType
+                  description: "Redemption channel. See ${constants.earn.savingProductRedeemType} for enumeration."
+                  type: STRING
+                  sampleValue: ${constants.earn.savingProductRedeemType.manual}
+                - name: incomeReleaseType
+                  description: "Income release type. See ${constants.earn.savingProductIncomeReleaseType} for enumeration."
+                  type: STRING
+                  sampleValue: ${constants.earn.savingProductIncomeReleaseType.daily}
+                - name: interestDate
+                  description: Most recent interest date in milliseconds
+                  type: LONG
+                  sampleValue: 1729267200000
+                - name: duration
+                  description: Product duration in days
+                  type: INT
+                  sampleValue: 0
+                - name: newUserOnly
+                  description: "Whether the product is exclusive to new users. See ${constants.earn.newUserOnly} for enumeration."
+                  type: INT
+                  sampleValue: ${constants.earn.newUserOnly.no}

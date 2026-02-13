@@ -1,0 +1,17 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: Repay
+        httpMethod: POST
+        url: v3/margin/repay
+        description: >
+          This API endpoint is used to initiate an application for the repayment of cross or isolated margin borrowing.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/debit/repay
+        requestWeight: 10
+        rateLimits:
+          - spot        
+        request:
+          objectName: KucoinMarginBorrowRepayRequest
+        response:
+          objectName: KucoinMarginBorrowRepayResponse   

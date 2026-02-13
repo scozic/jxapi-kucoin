@@ -1,0 +1,126 @@
+id: Kucoin
+apis:
+  - name: Earn
+    restEndpoints:
+      - name: GetSavingProducts
+        description: >
+          This endpoint allows you to retrieve a list of available savings products. If no products are available, an empty list is returned.
+        docUrl: https://www.kucoin.com/docs-new/rest/earn/get-savings-products
+        requestWeight: 4
+        rateLimits:
+          - spot
+        httpMethod: GET
+        url: v1/earn/saving/products
+        request:
+          properties:
+            - name: currency
+              description: The currency of the savings product.
+              type: STRING
+              sampleValue: "BTC"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "success"
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinSavingProduct
+              properties:
+                - name: id
+                  description: Product ID
+                  type: STRING
+                  sampleValue: "2172"
+                - name: currency
+                  description: "Currency of the product (e.g., BTC, ETH, USDT)"
+                  type: STRING
+                  sampleValue: "BTC"
+                - name: category
+                  description: "Product category. See ${constants.earn.productCategory} for enumeration."
+                  type: STRING
+                  sampleValue: ${constants.earn.productCategory.demand}
+                - name: type
+                  description: "Product subtype. Allowed values: TIME (fixed), DEMAND (demand)"
+                  type: STRING
+                  sampleValue: "DEMAND"
+                - name: precision
+                  description: Maximum precision supported
+                  type: INT
+                  sampleValue: 8
+                - name: productUpperLimit
+                  description: Products total subscription amount
+                  type: STRING
+                  sampleValue: "480"
+                - name: productRemainAmount
+                  description: Remaining product subscription amount
+                  type: STRING
+                  sampleValue: "132.36153083"
+                - name: userUpperLimit
+                  description: Max. user subscription amount
+                  type: STRING
+                  sampleValue: "20"
+                - name: userLowerLimit
+                  description: Min. user subscribe amount
+                  type: STRING
+                  sampleValue: "0.01"
+                - name: redeemPeriod
+                  description: Redemption waiting period (days)
+                  type: INT
+                  sampleValue: 0
+                - name: lockStartTime
+                  description: Product earliest interest start time, in milliseconds
+                  type: LONG
+                  sampleValue: 1644807600000
+                - name: lockEndTime
+                  description: Product maturity time, in milliseconds
+                  type: LONG
+                  sampleValue: null
+                - name: applyStartTime
+                  description: Subscription start time, in milliseconds
+                  type: LONG
+                  sampleValue: 1644807600000
+                - name: applyEndTime
+                  description: Subscription end time, in milliseconds
+                  type: LONG
+                  sampleValue: null
+                - name: returnRate
+                  description: "Annualized Rate of Return (e.g., 0.035 is 3.5%)"
+                  type: STRING
+                  sampleValue: "0.00047208"
+                - name: incomeCurrency
+                  description: "Income currency (e.g., BTC, ETH, USDT)"
+                  type: STRING
+                  sampleValue: "BTC"
+                - name: earlyRedeemSupported
+                  description: "Whether the fixed product supports early redemption. Allowed values: 0 (no), 1 (yes)"
+                  type: INT
+                  sampleValue: 0
+                - name: status
+                  description: "Product status. Allowed values: ONGOING (Subscription in progress), PENDING (Preheating Subscription), FULL (Subscribed), INTERESTING (Interest in progress)"
+                  type: STRING
+                  sampleValue: "ONGOING"
+                - name: redeemType
+                  description: "Redemption channel. Allowed values: MANUAL (manual redemption), TRANS_DEMAND (transfer to corresponding demand product upon maturity), AUTO (redeem to funding account upon maturity)"
+                  type: STRING
+                  sampleValue: "MANUAL"
+                - name: incomeReleaseType
+                  description: "Income release type. Allowed values: DAILY (daily release), AFTER (release after product ends)"
+                  type: STRING
+                  sampleValue: "DAILY"
+                - name: interestDate
+                  description: Most recent interest date (milliseconds)
+                  type: LONG
+                  sampleValue: 1729267200000
+                - name: duration
+                  description: Product duration (days)
+                  type: INT
+                  sampleValue: 0
+                - name: newUserOnly
+                  description: "Whether the product is exclusive to new users. Allowed values: 0 (no), 1 (yes)"
+                  type: INT
+                  sampleValue: 0

@@ -1,0 +1,33 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetServiceStatus
+        httpMethod: GET
+        url: v1/status
+        description: Get the service status
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-service-status
+        requestWeight: 3
+        rateLimits:
+          - public           
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Ticker information for a market symbol
+              properties:
+                - name: status
+                  description: > 
+                    Status of service: open：normal transaction, close：Stop Trading/Maintenance, cancelonly：can only cancel the order but not place order
+                  sampleValue: open
+                - name: msg
+                  description: > 
+                    Remark for operation
+                  sampleValue: upgrade match engine

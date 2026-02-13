@@ -1,0 +1,34 @@
+id: Kucoin
+apis:
+  - name: SpotMarketData
+    restEndpoints:
+      - name: GetFiatPrice
+        httpMethod: GET
+        url: v1/prices
+        description: >
+          Request via this endpoint to get the fiat price of the currencies for the available trading pairs.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/market-data/get-fiat-price
+        requestWeight: 3
+        rateLimits:
+          - public
+        request:
+          properties:
+            - name: base
+              description: Ticker symbol of a base currency,eg.USD,EUR. Default is USD
+              sampleValue: USD
+            - name: currencies
+              description: > 
+                Comma-separated cryptocurrencies to be converted into fiat, e.g.: BTC,ETH, etc. Default to return the fiat price of all currencies.
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              type: STRING_MAP

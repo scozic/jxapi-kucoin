@@ -1,0 +1,102 @@
+id: Kucoin
+apis:
+  - name: Earn
+    restEndpoints:
+      - name: GetAccountHolding
+        description: >
+          This endpoint allows you to retrieve information about your currently held assets.
+        docUrl: https://www.kucoin.com/docs-new/rest/earn/get-account-holding
+        requestWeight: 4
+        rateLimits:
+          - spot
+        httpMethod: GET
+        url: v1/earn/hold-assets
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest
+          properties:
+            - name: currency
+              description: Filter by currency.
+              type: STRING
+              sampleValue: "KCS"
+            - name: productId
+              description: Filter by Product ID.
+              type: STRING
+            - name: productCategory
+              description: "Filter by product category. See ${constants.earn.productCategory} for enumeration."
+              type: STRING
+              sampleValue: ${constants.earn.productCategory.staking}
+            - name: currentPage
+              description: The current request page.
+              type: INT
+              sampleValue: 1
+            - name: pageSize
+              description: Number of results per request (10-500).
+              type: INT
+              sampleValue: 15
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "success"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              objectName: KucoinAccountHoldingPage
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              properties:
+                - name: totalNum
+                  type: INT
+                - name: totalPage
+                  type: INT
+                - name: currentPage
+                  type: INT
+                - name: pageSize
+                  type: INT
+                - name: items
+                  type: OBJECT_LIST
+                  objectName: KucoinAccountHolding
+                  properties:
+                    - name: orderId
+                      type: STRING
+                    - name: productId
+                      type: STRING
+                    - name: productCategory
+                      description: "See ${constants.earn.productCategory} for enumeration."
+                      type: STRING
+                    - name: productType
+                      description: "See ${constants.earn.savingProductType} for enumeration."
+                      type: STRING
+                    - name: currency
+                      type: STRING
+                    - name: incomeCurrency
+                      type: STRING
+                    - name: returnRate
+                      type: STRING
+                    - name: holdAmount
+                      type: STRING
+                    - name: redeemedAmount
+                      type: STRING
+                    - name: redeemingAmount
+                      type: STRING
+                    - name: lockStartTime
+                      type: LONG
+                    - name: lockEndTime
+                      type: LONG
+                    - name: purchaseTime
+                      type: LONG
+                    - name: redeemPeriod
+                      type: INT
+                    - name: status
+                      description: "See ${constants.earn.savingProductStatus} for enumeration."
+                      type: STRING
+                    - name: earlyRedeemSupported
+                      description: "See ${constants.earn.earlyRedeemSupported} for enumeration."
+                      type: INT

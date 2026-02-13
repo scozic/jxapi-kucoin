@@ -1,0 +1,38 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    restEndpoints:
+      - name: ModifyCrossMarginLeverage
+        httpMethod: POST
+        url: v2/changeCrossUserLeverage
+        description: >
+          Modify the current symbol's cross-margin leverage multiple.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/positions/modify-cross-margin-leverage
+        requestWeight: 2
+        rateLimits:
+          - futures
+        request:
+          properties:
+            - name: symbol
+              description: "Symbol of the contract"
+              type: STRING
+              sampleValue: "XBTUSDM"
+            - name: leverage
+              description: "Leverage multiple"
+              type: STRING
+              sampleValue: "3"
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: "Indicates whether the operation was successful"
+              type: BOOLEAN

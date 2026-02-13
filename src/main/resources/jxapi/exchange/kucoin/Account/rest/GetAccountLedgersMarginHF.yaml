@@ -1,0 +1,99 @@
+id: Kucoin
+apis:
+  - name: Account
+    restEndpoints:
+      - name: GetAccountLedgerMarginHf
+        httpMethod: GET
+        url: v3/hf/margin/account/ledgers
+        description: >
+          Get Account Ledgers - trade_hf
+          This API endpoint returns all transfer (in and out) records in high-frequency trading account and supports multi-coin queries. The query results are sorted in descending order by createdAt and id.
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/account-funding/get-account-ledgers-marginhf
+        requestWeight: 2
+        rateLimits:
+          - spot
+        paginated: true    
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequestV2
+          properties:
+            - name: currency
+              description: Currency ( you can choose more than one currency). You can specify 10 currencies at most for one time. If not specified, all currencies will be inquired by default.
+              sampleValue: BTC
+            - name: direction
+              description: >
+                direction: in, out
+              sampleValue: in
+            - name: bizType
+              description: >
+                Type: See ${constants.account.marginHfAccountLedgerBizType} for enumeration.
+              sampleValue: ${constants.account.marginHfAccountLedgerBizType.marginExchange}
+            - name: lastId
+              description: >
+                The id of the last set of data from the previous batch of data. By default, the latest information is given.
+            - name: limit
+              description: >
+                The default is 100, and the maximum is 200.
+              sampleValue: 100
+            - name: startAt
+              description: Start time (milisecond)
+              type: LONG
+            - name: endAt
+              description: End time (milisecond)
+              sampleValue: now()
+              type: LONG
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseV2
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              type: OBJECT_LIST
+              objectName: KucoinAccountLedger
+              properties:
+                - name: id
+                  description: A unique identifier for the ledger entry.
+                  sampleValue: "611a1e7c6a053300067a88d9"
+                  type: STRING
+                - name: currency
+                  description: The currency involved in the transaction.
+                  sampleValue: "BTC"
+                  type: STRING
+                - name: amount
+                  description: The amount of the transaction.
+                  sampleValue: "0.0001"
+                  type: BIGDECIMAL
+                - name: fee
+                  description: Any fees associated with the transaction.
+                  sampleValue: "0.0000001"
+                  type: BIGDECIMAL
+                - name: balance
+                  description: The account balance after the transaction.
+                  sampleValue: "1.0001"
+                  type: BIGDECIMAL
+                - name: accountType
+                  description: The type of account, such as \"MARGIN_V2\".
+                  sampleValue: "MARGIN_V2"
+                  type: STRING
+                - name: bizType
+                  description: The business type of the transaction.
+                  sampleValue: "MARGIN_EXCHANGE"
+                  type: STRING
+                - name: direction
+                  description: Indicates whether the transaction was \"in\" (transfer in) or \"out\" (transfer out).
+                  sampleValue: "in"
+                  type: STRING
+                - name: createdAt
+                  description: A timestamp in milliseconds indicating when the entry was created.
+                  sampleValue: 1629123456789
+                  type: LONG
+                - name: context
+                  description: A string that may contain additional information.
+                  sampleValue: "{\"symbol\":\"BTC-USDT\",\"orderId\":\"611a1e7c6a053300067a88d8\",\"tradeId\":\"611a1e7c6a053300067a88d7\"}"
+                  type: STRING

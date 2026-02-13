@@ -1,0 +1,81 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: GetOcoOrderDetailByOrderId
+        httpMethod: GET
+        url: v3/oco/order/details
+        description: Request via this interface to get a oco order detail via the order ID.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/get-oco-order-detail-by-orderld
+        requestWeight: 2
+        rateLimits:
+          - spot
+        request:
+          name: orderId
+          description: Order Id unique identifier
+          sampleValue: 681bb4cb1d47db00079ff051
+          in: PATH
+        response:
+          objectName: KucoinSpotGetOCOOrderDetailResponse
+          description: > 
+            The response object for Kucoin Spot 'Get Order Details" by orderId or clientOid regular and stop order API endpoints.
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              objectName: KucoinSpotOCOOrderData
+              properties:
+                - name: orderId
+                  description: Order ID, unique ID of the order.
+                  sampleValue: 681bb4cb1d47db00079ff051
+                - name: symbol
+                  description: Symbol, such as, ETH-BTC
+                  sampleValue: ETH-BTC
+                - name: clientOid
+                  description: Client order ID
+                  sampleValue: testKCOrderID
+                - name: orderTime
+                  description: Order placement time, milliseconds
+                  sampleValue: 1702034902724
+                - name: status
+                  description: >
+                    Order status. NEW: New, DONE: Completed, TRIGGERED: Triggered, CANCELLED: Cancelled
+                  sampleValue: NEW
+                - name: orders
+                  description: Sub-order information
+                  type: OBJECT_LIST
+                  objectName: KucoinSpotOCOSubOrderData
+                  properties:
+                    - name: id
+                      description: Order ID, unique ID of the order.
+                      sampleValue: 681bb4cb1d47db00079ff051
+                    - name: symbol
+                      description: Symbol, such as, ETH-BTC
+                      sampleValue: ETH-BTC
+                    - name: side
+                      description: Order side. buy or sell.
+                      sampleValue: buy
+                    - name: price
+                      description: Order price.
+                      sampleValue: "0.00000000000000000000"
+                      type: BIGDECIMAL
+                    - name: stopPrice
+                      description: Stop price.
+                      sampleValue: "0.00000000000000000000"
+                      type: BIGDECIMAL
+                    - name: size
+                      description: Order size.
+                      sampleValue: "0.00000000000000000000"
+                      type: BIGDECIMAL
+                    - name: status
+                      description: >
+                        Order status. NEW: New, DONE: Completed, TRIGGERED: Triggered, CANCELLED: Cancelled
+                      sampleValue: NEW  
+        

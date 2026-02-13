@@ -1,0 +1,29 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: CancelStopOrderByClientOid
+        httpMethod: DELETE
+        url: v1/stop-order/cancelOrderByClientOid
+        description: >
+          Request via this interface to cancel an order via the clientOid.
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/cancel-stop-order-by-clientoid
+        requestWeight: 5
+        rateLimits:
+          - spot        
+        request:
+          objectName: KucoinSpotCancelOrderByClientOidRequest
+          description: >
+            Request via this interface to cancel a Spot order via the clientOid. 
+            Used in 'Cancel Order by Client Order ID' STOP order endpoint.
+          properties:
+            - name: clientOid
+              description: >
+                Client order ID, unique ID of the order created by client.
+              sampleValue: testKCOrderID
+              in: PATH
+            - name: symbol
+              description: >
+                Trading pair, e.g. BTC-USDT. 
+        response:
+          objectName: KucoinSpotCancelOrderByClientOidResponse

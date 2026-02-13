@@ -1,0 +1,72 @@
+id: Kucoin
+apis:
+  - name: CopyTrading
+    restEndpoints:
+      - name: AddTPSLOrder
+        httpMethod: POST
+        url: v1/copy-trade/futures/st-orders
+        description: >
+          Add a Take Profit and Stop Loss order.
+        docUrl: https://www.kucoin.com/docs-new/rest/copy-trading/add-take-profit-and-stop-loss-order
+        requestWeight: 2
+        rateLimits:
+          - copyTrading
+        request:
+          objectName: KucoinCopyTradingAddTPSLOrderRequest
+          properties:
+            - name: clientOid
+              description: >
+                Unique order id created by users to identify their orders, the maximum length cannot exceed 40, e.g. UUID. Only allows numbers, characters, underline(_),
+                and separator(-).
+              sampleValue: myClientOrderID
+              type: STRING
+            - name: side
+              description: ${constants.orderSide.buy} or ${constants.orderSide.sell}.
+              sampleValue: ${constants.orderSide.buy}
+              type: STRING
+            - name: symbol
+              description: A valid contract code. e.g. XBTUSDM
+              sampleValue: XBTUSDM
+              type: STRING
+            - name: type
+              description: "[Optional] Either ${constants.futuresTrading.orderType.limit} or ${constants.futuresTrading.orderType.market}. Default is ${constants.futuresTrading.orderType.limit}."
+              sampleValue: ${constants.futuresTrading.orderType.limit}
+              type: STRING
+            - name: leverage
+              description: Leverage of the order
+              sampleValue: "10.1"
+              type: BIGDECIMAL
+            - name: size
+              description: Order size (amount of contract to buy or sell). Must be a positive number.
+              sampleValue: 100
+              type: INT
+            - name: price
+              description: <strong>limit</strong> order parameter. Limit price
+              sampleValue: 1.12
+              type: BIGDECIMAL
+            - name: triggerStopUpPrice
+              description: Take profit price
+              type: BIGDECIMAL
+            - name: triggerStopDownPrice
+              description: Stop loss price
+              type: BIGDECIMAL
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          objectName: KucoinCopyTradingAddTPSLOrderResponse  
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: List of market information for each market symbol
+              properties:
+                - name: orderId
+                  description: ID of the order on the market
+                  sampleValue: 5bd6e9286d99522a52e458de
+                  type: STRING

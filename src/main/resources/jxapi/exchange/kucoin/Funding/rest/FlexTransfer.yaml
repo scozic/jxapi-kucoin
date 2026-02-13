@@ -1,0 +1,87 @@
+id: Kucoin
+apis:
+  - name: Funding
+    restEndpoints:
+      - name: FlexTransfer
+        httpMethod: POST
+        url: v3/accounts/universal-transfer
+        description: >
+          Use this endpoint to perform Flex Transfer.<br>
+          <ul>
+            <li> 1 - The API Key needs to have universal transfer permission when calling.
+            <li> 2 - Support internal transfer, do not support transfers between sub-accounts.
+            <li> 3 - Support transfer between master and sub accounts (only applicable to master account APIKey).
+            <li> 4 - MARGIN_V2 only supports internal transfers between MARGIN and does not support transfers between master and sub accounts.
+            <li> 5 - ISOLATED_V2 only supports internal transfers between ISOLATED and does not support transfers between master and sub accounts.
+          </ul>
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/transfer/flex-transfer
+        requestWeight: 4
+        rateLimits:
+          - management
+        request:
+          properties:
+            - name: clientOid
+              description: Client order ID, a unique identifier for the transfer request. If not provided, KuCoin will generate one automatically.
+              sampleValue: 1234567890
+              type: STRING
+            - name: currency
+              description: <a href="https://www.kucoin.com/docs/rest/spot-trading/market-data/get-currency-list">Currency</a>.
+              sampleValue: USDT
+              type: STRING
+            - name: amount
+              description: The amount to be transferred.
+              sampleValue: "100.0"
+              type: BIGDECIMAL
+            - name: fromUserId
+              description: The user ID of the sender. If not provided, the transfer will be made from the main account of the current user.
+              sampleValue: 5caefba7d9575a0688f83c45
+              type: STRING
+            - name: fromAccountType
+              description: > 
+                The account type of the sender. Possible values are MAIN, TRADE, CONTRACT, MARGIN, ISOLATED, MARGIN_V2, ISOLATED_V2, OPTION.
+                See ${constants.funding.accountType} for enumeration.
+              sampleValue: TRADE
+              type: STRING
+            - name: fromAccountTag
+              description: The trading pair for isolated accounts. Required when the account type is ISOLATED or ISOLATED_V2, e.g., BTC-USDT.
+              sampleValue: BTC-USDT
+              type: STRING
+            - name: type
+              description: > 
+                The type of transfer. Possible values are:
+                INTERNAL (transfer within the same account), 
+                PARENT_TO_SUB (transfer from master account to sub-account), 
+                SUB_TO_PARENT (transfer from sub-account to master account).
+                See ${constants.funding.flexTransferType} for enumeration.
+              sampleValue: INTERNAL
+              type: STRING
+            - name: toUserId
+              description: The user ID of the recipient. Required when transferring from master account to sub-account. Optional for internal transfers.
+              sampleValue: 5caefba7d9575a0688f83c45
+              type: STRING
+            - name: toAccountType
+              description: The account type of the recipient. Possible values are MAIN, TRADE, CONTRACT, MARGIN, ISOLATED, MARGIN_V2, ISOLATED_V2, OPTION.
+              sampleValue: TRADE
+              type: STRING
+            - name: toAccountTag
+              description: The trading pair for isolated accounts. Required when the account type is ISOLATED or ISOLATED_V2, e.g., BTC-USDT.
+              sampleValue: BTC-USDT
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              properties:
+                - name: orderId
+                  description: The ID of the transfer order.
+                  sampleValue: 5caefba7d9575a0688f83c45
+                  type: STRING

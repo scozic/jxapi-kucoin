@@ -1,0 +1,34 @@
+id: Kucoin
+apis:
+  - name: FuturesMarketData
+    restEndpoints:
+      - name: GetServiceStatus
+        url: v1/status
+        description: Get the service status.
+        docUrl: https://www.kucoin.com/docs-new/rest/futures-trading/market-data/get-service-status
+        httpMethod: GET
+        requestWeight: 4
+        rateLimits:
+          - public
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              objectName: KucoinServiceStatus
+              description: Service status information
+              properties:
+                - name: status
+                  description: Service status. open, close, cancelonly
+                  sampleValue: open
+                  type: STRING
+                - name: msg
+                  description: Remark for operation
+                  sampleValue: upgrade match engine
+                  type: STRING

@@ -1,0 +1,44 @@
+id: Kucoin
+apis:
+  - name: CopyTrading
+    restEndpoints:
+      - name: CancelOrderByOrderId
+        httpMethod: DELETE
+        url: v1/copy-trade/futures/orders
+        description: >
+          Cancel an order.
+        docUrl: https://www.kucoin.com/docs-new/rest/copy-trading/cancel-order-by-orderid
+        requestWeight: 1
+        rateLimits:
+          - copyTrading
+        request:
+          properties:
+            - name: orderId
+              description: The order ID is the server-assigned order ID, not the specified clientOid.
+              sampleValue: 5bd6e9286d99522a52e458de
+              type: STRING
+              in: PATH
+            - name: symbol
+              description: Specify symbol
+              sampleValue: XRPUSDTM
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+              type: STRING
+            - name: data
+              description: List of market information for each market symbol
+              type: OBJECT
+              properties:
+                - name: cancelledOrderIds
+                  description: ID of the order on the market
+                  sampleValue: 5bd6e9286d99522a52e458de
+                  type: STRING_LIST

@@ -1,0 +1,33 @@
+id: Kucoin
+apis:
+  - name: FuturesTrading
+    websocketEndpoints:
+      - name: MarginMode
+        description: >
+          Subscribe this topic to get the realtime push of margin mode change event of all symbol.<br/>See <a href="https://www.kucoin.com/docs-new/3470092w0">API</a>
+        docUrl: https://www.kucoin.com/docs-new/3470092w0
+        topic: /contract/marginMode
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        message:
+          properties:
+            - name: topic
+              description: Topic of the message
+              sampleValue: /contract/marginMode
+            - name: type
+              description: Message type
+              sampleValue: message
+            - name: data
+              description: > 
+                Map of symbol to margin mode. The SYMBOL is the key with value "CROSS" or "ISOLATED". Example `{"XBTUSDTM": "CROSS"}`.
+              type: STRING_MAP
+            - name: subject
+              description: Subject of the message
+              sampleValue: user.config
+            - name: userId
+              description: User ID
+              sampleValue: 633559791e1cbc0001f319bc
+            - name: channelType
+              description: Channel type
+              sampleValue: private

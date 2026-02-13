@@ -1,0 +1,34 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: CancelMarginOcoOrderByClientOid
+        httpMethod: DELETE
+        url: v3/hf/margin/oco-order/cancel-by-clientOid
+        description: >
+          Request via this interface to cancel a stop order via the clientOid.
+        docUrl: https://www.kucoin.com/docs-new/3473254e0
+        requestWeight: 3
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: clientOid
+              description: >
+                The unique client order ID.
+              type: STRING
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              properties:
+                - name: cancelledOrderIds
+                  description: List of two order IDs related to the canceled OCO order
+                  type: STRING_LIST
+                  sampleValue: ["vs93gpqc6r0mkk57003gok3h", "vs93gpqc6r0mkk57003gok3i"]

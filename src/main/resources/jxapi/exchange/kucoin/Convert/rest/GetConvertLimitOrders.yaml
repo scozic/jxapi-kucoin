@@ -1,0 +1,110 @@
+id: Kucoin
+apis:
+  - name: Convert
+    restEndpoints:
+      - name: GetConvertLimitOrders
+        httpMethod: GET
+        url: /api/v1/convert/limit/orders
+        description: "Query Active and Historical Convert Limit Orders"
+        docUrl: https://www.kucoin.com/docs-new/rest/convert/get-convert-limit-orders
+        requestWeight: 5
+        rateLimits:
+          - spot
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest
+          properties:
+            - name: status
+              description: "Order status. See ${constants.convert.orderStatus} for possible values enumeration."
+              type: STRING
+            - name: fromCurrency
+              description: "The currency to be sold"
+              type: STRING
+            - name: toCurrency
+              description: "The currency to be bought"
+              type: STRING
+            - name: startAt
+              description: "Start time in milliseconds"
+              type: LONG
+            - name: endAt
+              description: "End time in milliseconds"
+              type: LONG
+            - name: currentPage
+              description: "Page number"
+              type: INT
+            - name: pageSize
+              description: "Number of items per page"
+              type: INT
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: "System error code, see <a href=\"https.www.kucoin.com/docs-new/error-code/http\">API</a>"
+              sampleValue: "200000"
+            - name: msg
+              description: "System error code description, provided in error response when code is not '0', see <a href=\"https://www.kucoin.com/docs-new/error-code/http\">API</a>"
+            - name: data
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              properties:
+                - name: currentPage
+                  description: "Current page number"
+                  type: INT
+                - name: pageSize
+                  description: "Number of items per page"
+                  type: INT
+                - name: totalNum
+                  description: "Total number of items"
+                  type: INT
+                - name: totalPage
+                  description: "Total number of pages"
+                  type: INT
+                - name: items
+                  type: OBJECT_LIST
+                  objectName: KucoinConvertLimitOrder
+                  description: "List of convert limit orders"
+                  properties:
+                    - name: orderId
+                      description: "Order ID"
+                      type: STRING
+                    - name: clientOrderId
+                      description: "A unique order identifier defined by the user"
+                      type: STRING
+                    - name: status
+                      description: "Order status. See ${constants.convert.orderStatus} for possible values enumeration."
+                      type: STRING
+                    - name: fromCurrency
+                      description: "The source currency for the trading pair"
+                      type: STRING
+                    - name: toCurrency
+                      description: "The target currency for the trading pair"
+                      type: STRING
+                    - name: fromCurrencySize
+                      description: "The amount of the source currency in the order"
+                      type: BIGDECIMAL
+                    - name: toCurrencySize
+                      description: "The amount of the target currency in the order"
+                      type: BIGDECIMAL
+                    - name: accountType
+                      description: "The account used for the transaction. See ${constants.convert.accountType} for possible values enumeration."
+                      type: STRING
+                    - name: price
+                      description: "The price of the order"
+                      type: BIGDECIMAL
+                    - name: orderTime
+                      description: "The time the order was placed, in Unix milliseconds."
+                      type: LONG
+                    - name: expiryTime
+                      description: "The expiration time of the order, in Unix milliseconds."
+                      type: LONG
+                    - name: cancelTime
+                      description: "The time the order was cancelled, in Unix milliseconds."
+                      type: LONG
+                    - name: filledTime
+                      description: "The time the order was filled, in Unix milliseconds."
+                      type: LONG
+                    - name: cancelType
+                      description: "The type of cancellation"
+                      type: INT

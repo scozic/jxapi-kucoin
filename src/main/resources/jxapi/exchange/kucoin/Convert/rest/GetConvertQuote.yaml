@@ -1,0 +1,58 @@
+id: Kucoin
+apis:
+  - name: Convert
+    restEndpoints:
+      - name: GetConvertQuote
+        httpMethod: GET
+        url: v1/convert/quote
+        description: "Request a quote to convert stablecoins and other base currencies."
+        docUrl: https://www.kucoin.com/docs-new/rest/convert/get-convert-quote
+        requestWeight: 3
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: fromCurrency
+              description: "Coin to be sold"
+              sampleValue: "USDT"
+            - name: toCurrency
+              description: "Coin to be bought"
+              sampleValue: "BTC"
+            - name: fromCurrencySize
+              description: "Either fromCurrencySize or toCurrencySize must be provided, but not both simultaneously."
+              type: BIGDECIMAL
+            - name: toCurrencySize
+              description: "Either fromCurrencySize or toCurrencySize must be provided, but not both simultaneously."
+              type: BIGDECIMAL
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: "System error code, see <a href=\"https.www.kucoin.com/docs-new/error-code/http\">API</a>"
+              sampleValue: "200000"
+            - name: msg
+              description: "System error code description, provided in error response when code is not '0', see <a href=\"https://www.kucoin.com/docs-new/error-code/http\">API</a>"
+            - name: data
+              objectName: KucoinConvertQuote
+              description: "Details of a convert quote"
+              properties:
+                - name: quoteId
+                  description: "Quote ID"
+                  sampleValue: "63197a8c1163270001dc4933"
+                - name: price
+                  description: "Quote price"
+                  type: BIGDECIMAL
+                  sampleValue: "0.0000321"
+                - name: fromCurrencySize
+                  description: "The amount of the currency being swapped out"
+                  type: BIGDECIMAL
+                  sampleValue: "100"
+                - name: toCurrencySize
+                  description: "The amount of the currency being swapped in"
+                  type: BIGDECIMAL
+                  sampleValue: "0.00321"
+                - name: validUntill
+                  description: "Quote validity period in milliseconds since epoch"
+                  type: LONG
+                  sampleValue: 1748935428439

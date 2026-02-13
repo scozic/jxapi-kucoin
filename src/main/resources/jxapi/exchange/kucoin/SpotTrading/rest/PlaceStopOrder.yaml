@@ -1,0 +1,21 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: PlaceStopOrder
+        httpMethod: POST
+        url: v1/stop-order
+        description: >
+          Place a stop order. The order will be triggered when the market price reaches the stop price, 
+          see <a href="https://www.kucoin.com/docs/rest/spot-trading/stop-order/introduction">Stop Order</a>.<br/>
+          Limitation<br/>
+          The maximum number of untriggered stop orders for a single trading pair in one account is 20.<br/>
+        docUrl: https://www.kucoin.com/docs/rest/spot-trading/stop-order/place-order
+        requestWeight: 2
+        rateLimits:
+          - spot        
+        request:
+          objectName: KucoinSpotPlaceOrderRequest
+        response:
+          objectName: KucoinSpotPlaceOrderResponse 
+        

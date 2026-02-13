@@ -1,0 +1,110 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: PlaceOrder
+        httpMethod: POST
+        url: v1/orders
+        description: >
+          You can place two types of orders: limit and market. Orders can only be placed if your account has sufficient funds. Once an order is placed, your
+          account funds will be put on hold for the duration of the order. How much and which funds are put on hold depends on the order type and parameters specified.
+          See the Holds details below. **Placing an order will enable price protection. When the price of the limit order is outside the threshold range, the
+          price protection mechanism will be triggered, causing the order to fail.** Please note that the system will freeze the fees from the orders that
+          entered the order book in advance. Read List Fills to learn more. Before placing an order, please read [Get Symbol List](https://docs.kucoin.com/#get-symbols-list)
+          to understand the requirements for the quantity parameters for each trading pair.
+        docUrl: https://www.kucoin.com/docs/rest/spot-trading/orders/place-order
+        requestWeight: 2
+        rateLimits:
+          - spot        
+        request:
+          objectName: KucoinSpotPlaceOrderRequest
+          properties:
+            - name: clientOid
+              description: Unique order ID created by users to identify their orders, e.g., UUID, with a maximum length of 128 bits.
+              sampleValue: testKCOrderID
+            - name: side
+              description: <strong>buy</strong> or <strong>sell</strong>
+              sampleValue: buy
+            - name: symbol
+              description: A valid trading symbol code, e.g., ETH-BTC
+              sampleValue: KCS-USDT
+            - name: type
+              description: "[Optional] **limit** or **market** (default is **limit**)"
+              sampleValue: limit
+            - name: remark
+              description: "[Optional] Remark for the order, length cannot exceed 100 UTF-8 characters"
+              sampleValue: Default remark
+            - name: stop
+              description: Stop type, include entry and loss
+            - name: stopPrice
+              description: Stop price
+              sampleValue: null
+              type: BIGDECIMAL
+            - name: stp
+              description: "[Optional] Self-trade prevention: **CN**, **CO**, **CB**, or **DC**"
+              sampleValue: CN
+            - name: tradeType
+              description: >
+                [Optional] The type of trading: **TRADE** (Spot Trade), **MARGIN_TRADE** (Margin Trade). Default is **TRADE**.
+                **Note:** To improve system performance and accelerate order placing and processing, KuCoin has added a new interface for margin order placement.
+                The current interface will no longer accept margin orders after May 1st, 2021 (UTC).
+              sampleValue: TRADE
+            - name: price
+              description: LIMIT order parameter*<br/>Price per base currency
+              sampleValue: "9.5"
+              type: BIGDECIMAL
+            - name: size
+              description: >
+                <ul>
+                  <li>For LIMIT orders: price per base currency</li>
+                  <li>For MARKET orders: [Optional unless **funds** parameter is provided] Desired amount in base currency</li>
+                </ul>
+              sampleValue: "0.25"
+              type: BIGDECIMAL
+            - name: timeInForce
+              description: >
+                *LIMIT order parameter*<br/>[Optional] **GTC**, **GTT**, **IOC**, or **FOK** (default is **GTC**). Read [Time In Force](https://docs.kucoin.com/#time-in-force).
+              sampleValue: GTC
+            - name: cancelAfter
+              description: >
+                *LIMIT order parameter*<br/>[Optional] Cancel after **n** seconds, requires timeInForce to be **GTT**.
+              type: LONG
+            - name: postOnly
+              description: >
+                *LIMIT order parameter*<br/>[Optional] Post-only flag, invalid when timeInForce is **IOC** or **FOK**.
+              sampleValue: false
+              type: BOOLEAN
+            - name: hidden
+              description: >
+                *LIMIT order parameter*<br/>[Optional] Order will not be displayed in the order book.
+              sampleValue: false
+              type: BOOLEAN
+            - name: iceberg
+              description: >
+                *LIMIT order parameter*<br/>[Optional] Only a portion of the order is displayed in the order book.
+              sampleValue: false
+              type: BOOLEAN
+            - name: visibleSize
+              description: >
+                *LIMIT order parameter*<br/>[Optional] The maximum visible size of an iceberg order.
+            - name: funds
+              description: >
+                *MARKET order parameter*<br/>[Optional] The desired amount of quote currency to use.
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          objectName: KucoinSpotPlaceOrderResponse  
+          properties:
+            - name: code
+              description: System error code, see [API](https://www.kucoin.com/docs-new/error-code/http)
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see [API](https://www.kucoin.com/docs-new/error-code/http)
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              properties:
+                - name: orderId
+                  description: The ID of the order
+                  sampleValue: testKCOrderID
+        

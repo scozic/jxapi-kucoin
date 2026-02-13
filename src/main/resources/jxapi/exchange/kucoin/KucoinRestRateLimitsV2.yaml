@@ -1,0 +1,20 @@
+id: Kucoin
+rateLimits:
+  - id: spot
+    timeFrame: 30000
+    maxTotalWeight: 4000
+  - id: futures
+    timeFrame: 30000
+    maxTotalWeight: 2000
+  - id: management
+    timeFrame: 30000
+    maxTotalWeight: 2000
+  - id: public
+    timeFrame: 30000
+    maxTotalWeight: 2000
+  - id: earn
+    timeFrame: 30000
+    maxTotalWeight: 2000
+  - id: copyTrading
+    timeFrame: 30000  
+    maxTotalWeight: 2000

@@ -1,0 +1,35 @@
+id: Kucoin
+constants:
+  - name: Convert
+    description: >
+      Kucoin Convert API constants
+    constants:
+    - name: orderStatus
+      description: "Order status"
+      constants:
+      - name: open
+        value: OPEN
+      - name: success
+        value: SUCCESS
+      - name: fail
+        value: FAIL
+      - name: cancelled
+        value: CANCELLED
+    - name: accountType
+      description: "Account type"
+      constants:
+      - name: both
+        value: BOTH
+      - name: funding
+        value: FUNDING
+      - name: trading
+        value: TRADING
+    - name: tradeDirection
+      description: "Supported trading direction for the currency"
+      constants:
+      - name: all
+        value: ALL
+      - name: from
+        value: FROM
+      - name: to
+        value: TO    

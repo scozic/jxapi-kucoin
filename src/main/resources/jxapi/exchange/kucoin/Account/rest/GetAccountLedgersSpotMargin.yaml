@@ -1,0 +1,125 @@
+id: Kucoin
+apis:
+  - name: Account
+    restEndpoints:
+      - name: GetAccountLedgersSpotMargin
+        httpMethod: GET
+        url: v1/accounts/ledgers
+        description: Get Account Ledgers - Spot/Margin
+        docUrl: https://www.kucoin.com/docs-new/rest/account-info/account-funding/get-account-ledgers-spot-margin
+        requestWeight: 2
+        rateLimits:
+          - management
+        paginated: true
+        request:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedRequest
+          properties:
+            - name: currency
+              description: Currency ( you can choose more than one currency). You can specify 10 currencies at most for one time. If not specified, all currencies will be inquired by default.
+              sampleValue: BTC
+            - name: direction
+              description: > 
+                direction: in, out
+              sampleValue: in
+            - name: bizType
+              description: >
+                Type: See ${constants.account.spotMarginAccountLedgerBizType} for enumeration.
+              sampleValue: ${constants.account.spotMarginAccountLedgerBizType.transfer}
+            - name: startAt
+              description: Start time (milisecond)
+              sampleValue: 1601395200000
+              type: LONG
+            - name: endAt
+              description: End time (milisecond)
+              sampleValue: 1601395200000
+              type: LONG
+            - name: currentPage
+              description: >
+                Current page; default is 1
+              sampleValue: 1
+              type: INT
+            - name: pageSize
+              description: >
+                Page size; default is 50, max is 100
+              type: INT 
+              sampleValue: 50
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              type: OBJECT
+              objectName: KucoinAccountLedgerPage
+              implementedInterfaces:
+                - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseData
+              properties:
+                - name: currentPage
+                  description: Current page number
+                  sampleValue: 1
+                  type: INT
+                - name: pageSize
+                  description: Number of items per page
+                  sampleValue: 50
+                  type: INT
+                - name: totalNum
+                  description: Total number of items
+                  sampleValue: 2
+                  type: INT
+                - name: totalPage
+                  description: Total number of pages
+                  sampleValue: 1
+                  type: INT
+                - name: items
+                  description: List of account ledgers (transactions)
+                  type: OBJECT_LIST
+                  objectName: KucoinAccountLedger
+                  implementedInterfaces:
+                    - org.jxapi.exchanges.kucoin.common.pagination.KucoinPaginatedResponseV2Item
+                  properties:
+                    - name: id
+                      description: >
+                        Unique key for the transaction record.
+                        <br>Unique key for the transaction record.
+                      sampleValue: 611a1e7c6a053300067a88d9
+                    - name: currency
+                      description: Currency
+                      sampleValue: USDT
+                    - name: amount
+                      description: Change amount of the funds
+                      sampleValue: "10.00059547"
+                      type: BIGDECIMAL
+                    - name: fee
+                      description: Deposit or withdrawal fee
+                      sampleValue: "0"
+                      type: BIGDECIMAL
+                    - name: balance
+                      description: Total assets of a currency
+                      sampleValue: "0"
+                      type: BIGDECIMAL
+                    - name: accountType
+                      description: Account Type. See ${constants.account.accountType} for enumeration.
+                      sampleValue: MAIN
+                    - name: bizType
+                      description: Business type. See ${constants.account.bizType} for enumeration.
+                      sampleValue: Loans Repaid
+                    - name: direction
+                      description: Side, in or out. See ${constants.account.direction} for enumeration.
+                      sampleValue: in
+                    - name: createdAt
+                      description: Creation time
+                      sampleValue: 1629101692950
+                      type: LONG
+                    - name: context
+                      description: Business core parameters
+                      sampleValue: "{\"borrowerUserId\":\"601ad03e50dc810006d242ea\",\"loanRepayDetailNo\":\"611a1e7cc913d000066cf7ec\"}"
+                      type: STRING
+
+  

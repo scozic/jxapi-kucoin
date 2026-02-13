@@ -1,0 +1,67 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    websocketEndpoints:
+      - name: StopOrder
+        topic: /spotMarket/advancedOrders
+        description: >
+          You will receive this message when a stop order is triggered. The message contains the details of the stop order event.
+        docUrl: https://www.kucoin.com/docs-new/3470139w0
+        topicMatcher:
+          fieldName: topic
+          fieldValue: ${topic}
+        message:
+          properties:
+            - name: type
+              sampleValue: message
+            - name: topic
+              sampleValue: /spotMarket/advancedOrders
+            - name: subject
+              sampleValue: stopOrder
+            - name: data
+              properties:
+                - name: createdAt
+                  description: Timestamp when the stop order was created
+                  sampleValue: "1589789942337"
+                  type: LONG
+                - name: orderId
+                  description: Unique ID of the stop order
+                  sampleValue: 5ec244f6a8a75e0009958237
+                - name: orderPrice
+                  description: Price of the stop order
+                  sampleValue: "0.00062"
+                  type: BIGDECIMAL
+                - name: orderType
+                  description: Type of the stop order
+                  sampleValue: stop
+                - name: side
+                  description: Transaction direction, either buy or sell
+                  sampleValue: sell
+                - name: size
+                  description: Size of the stop order
+                  sampleValue: "1"
+                  type: BIGDECIMAL
+                - name: stop
+                  description: Stop type, such as entry or loss
+                  sampleValue: entry
+                - name: stopPrice
+                  description: Stop price of the order
+                  sampleValue: "0.00062"
+                  type: BIGDECIMAL
+                - name: symbol
+                  description: Trading pair symbol
+                  sampleValue: KCS-BTC
+                - name: tradeType
+                  description: Type of trading, such as TRADE
+                  sampleValue: TRADE
+                - name: triggerSuccess
+                  description: Indicates whether the stop order was successfully triggered
+                  sampleValue: true
+                  type: BOOLEAN
+                - name: ts
+                  description: Timestamp of the event
+                  sampleValue: "1589790121382281286"
+                  type: LONG
+                - name: type
+                  description: Event type, such as triggered
+                  sampleValue: triggered

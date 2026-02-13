@@ -1,0 +1,48 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: PlaceOCOOrder
+        httpMethod: POST
+        url: v3/oco/order
+        description: >
+          Place a 'One-Cancels-Other' (OCO) order.<br>
+          See <a href="https://www.kucoin.com/blog/everything-you-need-to-know-about-oco-orders-kucoin-tutorial">Everything you Need to Know About OCO Orders: KuCoin Tutorial</a> for more details.
+        docUrl: https://www.kucoin.com/docs/rest/spot-trading/oco-order/place-order
+        requestWeight: 2
+        rateLimits:
+          - spot        
+        request:
+          objectName: KucoinSpotPlaceOCOOrderRequest
+          properties:
+            - name: symbol
+              description: <a href="https://www.kucoin.com/docs/rest/spot-trading/market-data/get-symbols-list">Symbol</a>, such as, ETH-BTC
+              sampleValue: KCS-USDT
+            - name: side
+              description: <strong>buy</strong> or <strong>sell</strong>
+              sampleValue: buy
+            - name: price
+              description: Specify price for currency
+              sampleValue: "9.5"
+              type: BIGDECIMAL
+            - name: size
+              description: Specify quantity for currency
+              sampleValue: "0.1"
+              type: BIGDECIMAL
+            - name: stopPrice
+              description: Trigger prrice
+              sampleValue: "9.0"
+              type: BIGDECIMAL
+            - name: limitPrice
+              description: The limit order price after take-profit and stop-loss are triggered.
+              sampleValue: "8.5"
+              type: BIGDECIMAL
+            - name: clientOid
+              description: Unique order ID created by users to identify their orders, e.g., UUID, with a maximum length of 128 bits.
+              sampleValue: testKCOrderID
+            - name: remark
+              description: "[Optional] Remark for the order, length cannot exceed 100 UTF-8 characters"
+              sampleValue: Default remark  
+        response:
+          objectName: KucoinSpotPlaceOrderResponse  
+        

@@ -1,0 +1,70 @@
+id: Kucoin
+apis:
+  - name: Margin
+    restEndpoints:
+      - name: GetOpenOrders
+        httpMethod: GET
+        url: v3/hf/margin/orders/active
+        description: >
+          This interface retrieves all active margin trading order lists.
+        docUrl: https://www.kucoin.com/docs-new/rest/margin-trading/orders/get-open-orders
+        requestWeight: 4
+        rateLimits:
+          - spot
+        request:
+          properties:
+            - name: symbol
+              description: >
+                The trading pair, e.g., BTC-USDT.
+              type: STRING
+              sampleValue: "BTC-USDT"
+            - name: tradeType
+              description: >
+                The order type, either MARGIN_TRADE (cross margin) or MARGIN_ISOLATED_TRADE (isolated margin). See ${constants.margin.tradeType} for enum values.
+              type: STRING
+              sampleValue: ${constants.margin.tradeType.marginTrade}
+        response:
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "200000"
+            - name: data
+              description: A list of order objects.
+              type: OBJECT_LIST
+              objectName: KucoinOpenMarginOrder
+              properties:
+                - name: id
+                  description: Order ID
+                  type: STRING
+                - name: clientOid
+                  description: Client Order ID
+                  type: STRING
+                - name: symbol
+                  description: Trading pair
+                  type: STRING
+                - name: type
+                  description: Order type, limit or market
+                  type: STRING
+                - name: side
+                  description: Order side, buy or sell
+                  type: STRING
+                - name: price
+                  description: Order price
+                  type: BIGDECIMAL
+                - name: size
+                  description: Order size
+                  type: BIGDECIMAL
+                - name: dealSize
+                  description: Executed size
+                  type: BIGDECIMAL
+                - name: remainSize
+                  description: Remaining size
+                  type: BIGDECIMAL
+                - name: createdAt
+                  description: Creation time
+                  type: LONG
+                - name: lastUpdatedAt
+                  description: Last update time
+                  type: LONG

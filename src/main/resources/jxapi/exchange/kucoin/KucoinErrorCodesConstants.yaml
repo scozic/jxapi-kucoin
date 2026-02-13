@@ -1,0 +1,753 @@
+id: Kucoin
+constants:
+  - name: errorCode
+    description: > 
+      Kucoin error codes, used in API responses.<br>
+      The error codes are divided into the following categories:
+      <ul>
+      <li><a href="https://www.kucoin.com/docs-new/error-code/http">HTTP Error Codes</a>, see ${constants.errorCode.http}</li>
+      <li><a href="https://www.kucoin.com/docs/errors-code/spot-errors-code">Spot Trading Error Codes</a>, see ${constants.errorCode.spot}</li>
+      <li><a href="https://www.kucoin.com/docs/errors-code/margin-errors-code">Margin Trading Error Codes</a>, see ${constants.errorCode.margin}, 
+      and nested ${constants.errorCode.margin.hf} </li>
+      <li><a href="https://www.kucoin.com/docs/errors-code/futures-errors-code">Futures Trading Error Codes</a>, see ${constants.errorCode.futures}</li>
+      </ul>
+    constants:
+    - name: http
+      description : HTTP error codes, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+      constants:
+        - name: badRequest          
+          type: INT
+          value: 400
+          description: Bad Request -- Invalid request format.
+        - name: unauthorized          
+          type: INT          
+          value: 401
+          description: Unauthorized -- Invalid API Key.
+        - name: forbidden          
+          type: INT
+          value: 403
+          description: Forbidden or Too Many Requests -- The request is forbidden or Access limit breached.
+        - name: notFound          
+          type: INT
+          value: 404
+          description: Not Found -- The specified resource could not be found.
+        - name: methodNotAllowed          
+          type: INT
+          value: 405
+          description: Method Not Allowed -- You tried to access the resource with an invalid method.
+        - name: unsupportedMediaType          
+          type: INT
+          value: 415
+          description: > 
+            Unsupported Media Type -- You need to use: application/json.
+        - name: internalServerError          
+          type: INT
+          value: 500
+          description: Internal Server Error -- We had a problem with our server. Try again later.
+        - name: serviceUnavailable          
+          type: INT
+          value: 503
+          description: Service Unavailable -- We're temporarily offline for maintenance. Please try again later.
+    - name: spot
+      description: > 
+        Spot trading error codes, see <a href="https://www.kucoin.com/docs/errors-code/spot-errors-code">API</a><br>
+        If the returned HTTP status code is not 200, the error code will be included in the returned results.<br>
+        If the interface call is successful, the system will return the code and data fields.<br>
+        If not, the system will return the code and msg fields. You can check the error code for details.
+      constants:
+        - name: orderCreationSuspended          
+          type: INT
+          value: 200001
+          description: Order creation for this pair suspended
+        - name: orderCancelSuspended          
+          type: INT
+          value: 200002
+          description: Order cancel for this pair suspended
+        - name: orderLimitBreached          
+          type: INT
+          value: 200003
+          description: Number of orders breached the limit
+        - name: kycVerificationRequired          
+          type: INT
+          value: 200009
+          description: Please complete the KYC verification before you trade XX
+        - name: balanceInsufficient          
+          type: INT
+          value: 200004
+          description: Balance insufficient
+        - name: withdrawDisabled          
+          type: INT
+          value: 260210
+          description: withdraw.disabled -- Currency/Chain withdraw is closed, or user is frozen to withdraw
+        - name: missingApiKeyHeaders          
+          type: INT
+          value: 400001
+          description: Any of KC-API-KEY, KC-API-SIGN, KC-API-TIMESTAMP, KC-API-PASSPHRASE is missing in your request header
+        - name: invalidApiTimestamp          
+          type: INT
+          value: 400002
+          description: KC-API-TIMESTAMP Invalid
+        - name: apiKeyNotExists          
+          type: INT
+          value: 400003
+          description: KC-API-KEY not exists
+        - name: apiPassphraseError          
+          type: INT
+          value: 400004
+          description: KC-API-PASSPHRASE error
+        - name: signatureError          
+          type: INT
+          value: 400005
+          description: Signature error
+        - name: ipNotInWhitelist          
+          type: INT
+          value: 400006
+          description: The requested ip address is not in the api whitelist
+        - name: accessDenied          
+          type: INT
+          value: 400007
+          description: Access Denied
+        - name: urlNotFound          
+          type: INT
+          value: 404000
+          description: Url Not Found
+        - name: parameterError          
+          type: INT
+          value: 400100
+          description: Parameter Error
+        - name: insufficientBalance          
+          type: INT
+          value: 400100
+          description: account.available.amount -- Insufficient balance
+        - name: forbiddenToPlaceOrder          
+          type: INT
+          value: 400200
+          description: Forbidden to place an order
+        - name: countryNotSupportedForTokenTrading          
+          type: INT
+          value: 400500
+          description: Your located country/region is currently not supported for the trading of this token
+        - name: symbolNotAvailable          
+          type: INT
+          value: 400600
+          description: validation.createOrder.symbolNotAvailable -- The trading pair has not yet started trading
+        - name: transactionRestricted          
+          type: INT
+          value: 400700
+          description: validation.createOrder.transactionRestricted -- The transaction is restricted, there's a risk problem in your account
+        - name: leverageOrderFailed          
+          type: INT
+          value: 400800
+          description: Leverage order failed
+        - name: userFrozen          
+          type: INT
+          value: 411100
+          description: User account is frozen
+        - name: unsupportedMediaType          
+          type: INT
+          value: 415000
+          description: > 
+            Unsupported Media Type -- You need to use: application/json.
+        - name: internalServerError          
+          type: INT
+          value: 500000
+          description: Internal Server Error -- We had a problem with our server. Try again later.
+        - name: symbolCantBeTraded          
+          type: INT
+          value: 600203
+          description: validation.createOrder.symbolCantBeTraded -- The trading pair is not available for spot trading
+        - name: symbolNotExists          
+          type: INT
+          value: 900001
+          description: validation.createOrder.symbolNotExists -- The trading pair does not exist
+        - name: systemBusy          
+          type: INT
+          value: 230005
+          description: System Busy -- The system is currently busy, please try again later.
+    - name: margin
+      description: > 
+        Margin trading error codes, see <a href="https://www.kucoin.com/docs/errors-code/margin-errors-code">API</a><br>
+        This table is the error code common to margin low frequency and margin high frequency.
+      constants:
+        - name: currencyNotSupportSubscription          
+          type: INT
+          value: 130101
+          description: > 
+            Either:<ul>
+            <li>The currency does not support subscription.</li>
+            <li>Interest rate increment error.</li>
+            <li>Interest rate exceeds limit.</li>
+            <li>The subscription amount exceeds the limit for a single subscription.</li>
+            <li>Subscription amount increment error.</li>
+            <li>Redemption amount increment error</li>
+            <li>Interest rate exceeds limit.</li>
+            </ul>
+        - name: maximumSubscriptionAmountExceeded          
+          type: INT
+          value: 130102
+          description: Maximum subscription amount has been exceeded.
+        - name: subscriptionOrderNotExist          
+          type: INT
+          value: 130103
+          description: Subscription order does not exist.
+        - name: maximumNumberOfSubscriptionOrdersExceeded          
+          type: INT
+          value: 130104
+          description: Maximum number of subscription orders has been exceeded.
+        - name: insufficientBalance          
+          type: INT
+          value: 130105
+          description: Insufficient balance.
+        - name: currencyNotSupportRedemption          
+          type: INT
+          value: 130106
+          description: Currency does not support redemption.
+        - name: redemptionAmountExceedsSubscriptionAmount          
+          type: INT
+          value: 130107
+          description: Redemption amount exceeds subscription amount.
+        - name: redemptionOrderNotExist          
+          type: INT
+          value: 130108
+          description: Redemption order does not exist.
+        - name: marginTradeNotOpened          
+          type: INT
+          value: 130201
+          description: Margin trade is not opened.
+        - name: accountRestricted          
+          type: INT
+          value: 130201
+          description: Account is restricted.
+        - name: lendingFunctionDisabled          
+          type: INT
+          value: 130201
+          description: Lending function is disabled.
+        - name: systemRenewingLoan          
+          type: INT
+          value: 130202
+          description: >
+            Either:<ul>
+            <li>The system is renewing the loan automatically. Please try again later</li>
+            <li>The system is processing liquidation. Please try again later</li>
+            <li>Please pay off all debts before proceeding</li>
+            <li>A borrowing is in progress. Please try again later</li>
+            <li>A timeout has occurred. The system is currently processing</li>
+            <li>The system is renewing the loan automatically. Please try again later</li>
+            <li>The system is confirming position liquidation. Please try again later</li>
+            <li>The system is processing. Please try again later</li>
+            <li>There are outstanding borrowing orders that need to be settled. Please try again later</li>
+            </ul>
+        - name: insufficientAccountBalance          
+          type: INT
+          value: 130203
+          description: >
+            Either:<ul>
+            <li>Insufficient account balance</li>
+            <li>The maximum borrowing amount has been exceeded. Your remaining available borrowing: {1}{0}</li>
+            </ul>
+        - name: platformLeverageLimitReached          
+          type: INT
+          value: 130204
+          description: >
+            Either:<ul>
+            <li>The platform leverage limit has been reached.</li>
+            <li>Please adjust your leverage settings and try again.</li>
+            </ul>
+        - name: insufficientAccountBalance          
+          type: INT
+          value: 130301
+          description: Insufficient account balance
+        - name: permissionRestricted          
+          type: INT
+          value: 130302
+          description: Your relevant permission rights have been restricted, you can contact customer service for processing
+        - name: isolatedPositionNotSupported          
+          type: INT
+          value: 130303
+          description: The current trading pair does not support isolated positions
+        - name: tradingFunctionNotEnabled          
+          type: INT
+          value: 130304
+          description: The trading function of the current trading pair is not enabled
+        - name: crossPositionNotSupported          
+          type: INT
+          value: 130305
+          description: The current trading pair does not support cross positions  
+        - name: marginTradingNotOpened          
+          type: INT
+          value: 130306
+          description: Margin trading is not opened for the current trading pair
+        - name: reopenLeverageAgreement          
+          type: INT
+          value: 130307
+          description: Please reopen the leverage agreement before proceeding
+        - name: positionRenewalFreeze          
+          type: INT
+          value: 130308
+          description: Position renewal is currently frozen
+        - name: positionForcedLiquidationFreeze          
+          type: INT
+          value: 130309
+          description: Position forced liquidation is currently frozen
+        - name: abnormalLeverageAccountStatus          
+          type: INT
+          value: 130310
+          description: The account is in an abnormal leverage status
+        - name: buyLimitTriggered          
+          type: INT
+          value: 130311
+          description: Failed to place an order, triggering buy limit
+        - name: globalPositionLimitSuspendBuying          
+          type: INT
+          value: 130312
+          description: Global position limit triggered, buying is suspended
+        - name: globalPositionLimitSuspendSelling          
+          type: INT
+          value: 130313
+          description: Global position limit triggered, selling is suspended
+        - name: globalPositionLimitRemainingQuantity          
+          type: INT
+          value: 130314
+          description: Global position limit triggered, remaining quantity is insufficient
+        - name: featureSuspendedDueToCountryRestrictions          
+          type: INT
+          value: 130315
+          description: Feature is suspended due to country restrictions
+        - name: hf
+          description: >
+            Margin high frequency specific error codes, see <a href="https://www.kucoin.com/docs/errors-code/margin-errors-code">API</a>
+          constants:
+            - name: abnormalMarginTrading          
+              type: INT
+              value: 126000
+              description: Abnormal margin trading (Margin HF only)
+            - name: highFrequencyNotSupported          
+              type: INT          
+              value: 126001
+              description: Users currently do not support high frequency
+            - name: riskProblemInAccount
+              description: There is a risk problem in your account and transactions are temporarily not allowed!          
+              type: INT
+              value: 126002
+            - name: commissionAmountLessThanMinimum
+              description: The commission amount is less than the minimum transaction amount for a single commission          
+              type: INT
+              value: 126003
+            - name: tradingPairNotExistOrProhibited
+              description: Trading pair does not exist or is prohibited          
+              type: INT
+              value: 126004
+            - name: kycRequiredForTradingPair
+              description: This trading pair requires advanced KYC certification before trading          
+              type: INT
+              value: 126005
+            - name: tradingPairNotAvailable
+              description: Trading pair is not available          
+              type: INT
+              value: 126006
+            - name: tradingPairSuspended
+              description: Trading pair suspended          
+              type: INT
+              value: 126007
+            - name: tradingPairSuspendedFromCreatingOrders
+              description: Trading pair is suspended from creating orders          
+              type: INT
+              value: 126009
+            - name: tradingPairSuspendedOrderCancellation
+              description: Trading pair suspended order cancellation          
+              type: INT
+              value: 126010
+            - name: tooManyOrders
+              description: There are too many orders in the order          
+              type: INT
+              value: 126011
+            - name: insufficientAccountBalance
+              description: Insufficient account balance          
+              type: INT
+              value: 126013
+            - name: placingOrdersProhibitedForTradingPair
+              description: It is prohibited to place orders on this trading pair          
+              type: INT
+              value: 126015
+            - name: assetNotSupportUserRegion
+              description: This digital asset does not support user participation in your region, thank you for your understanding!          
+              type: INT
+              value: 126021
+            - name: priceProtectionTriggered
+              description: The final transaction price of your order will trigger the price protection strategy. To protect the price from deviating too much, please place an order again.          
+              type: INT
+              value: 126022
+            - name: onlyLimitOrdersSupported
+              description: Only limit orders are supported          
+              type: INT
+              value: 126027
+            - name: onlyLimitOrdersSupportedBeforeSpecifiedTime
+              description: Only limit orders are supported before the specified time          
+              type: INT
+              value: 126028
+            - name: maximumOrderPrice
+              description: > 
+                The maximum order price is: xxx          
+              type: INT
+              value: 126029
+            - name: minimumOrderPrice
+              description: > 
+                The minimum order price is: xxx          
+              type: INT
+              value: 126030
+            - name: duplicateOrder
+              description: Duplicate order          
+              type: INT
+              value: 126033
+            - name: takeProfitAndStopLossOrderCreationFailed
+              description: Failed to create take profit and stop loss order          
+              type: INT
+              value: 126034
+            - name: marginOrderCreationFailed
+              description: Failed to create margin order          
+              type: INT
+              value: 126036
+            - name: countryRestrictions
+              description: Due to country and region restrictions, this function has been suspended!          
+              type: INT
+              value: 126037
+            - name: thirdPartyServiceCallFailed
+              description: Third-party service call failed (internal exception)          
+              type: INT
+              value: 126038
+            - name: thirdPartyServiceCallFailedReason
+              description: > 
+                Third-party service call failed, reason: xxx          
+              type: INT
+              value: 126039
+            - name: clientTimestampParameterError
+              description: clientTimestamp parameter error          
+              type: INT
+              value: 126041
+            - name: exceededMaximumPositionLimit
+              description: Exceeded maximum position limit          
+              type: INT
+              value: 126042
+            - name: orderNotExist
+              description: Order does not exist          
+              type: INT
+              value: 126043
+            - name: clientOidDuplicate
+              description: clientOid duplicate          
+              type: INT
+              value: 126044
+            - name: assetNotSupportIpRegion
+              description: This digital asset does not support your IP region, thank you for your understanding!          
+              type: INT
+              value: 126046
+            - name: completeIdentityVerification
+              description: Please complete identity verification          
+              type: INT
+              value: 126047
+            - name: completeMasterAccountAuthentication
+              description: Please complete authentication for the master account          
+              type: INT
+              value: 126048
+            - name: marginOrderQueryBusinessAbnormality
+              description: Margin order query business abnormality          
+              type: INT
+              value: 135005
+            - name: marginOrderQueryServiceAbnormality
+              description: Margin order query service abnormality          
+              type: INT
+              value: 135018
+            - name: parameterErrorOrServiceException
+              description: Parameter error/service exception          
+              type: INT
+              value: 400400
+            - name: userNotLoggedIn
+              description: User is not logged in          
+              type: INT
+              value: 400401
+            - name: networkTimeout
+              description: Network timeout, please try again later          
+              type: INT
+              value: 408000
+            - name: serviceException
+              description: Service exception          
+              type: INT
+              value: 500000      
+    - name: futures
+      description : Futures trading error codes, see <a href="https://www.kucoin.com/docs/errors-code/futures-errors-code">API</a>
+      constants:
+      - name: cloudflareFrequencyLimit          
+        type: INT          
+        value: 1015
+        description: cloudflare frequency limit according to IP, block 30s
+      - name: unavailableToPlaceOrders          
+        type: INT
+        value: 40010              
+        description: Unavailable to place orders. Your identity information/IP/phone number shows you're at a country/region that is restricted from this service.
+      - name: invalidParameters          
+        type: INT
+        value: 100001
+        description: There are invalid parameters
+      - name: systemConfigError          
+        type: INT
+        value: 100002
+        description: System configuration error
+      - name: contractParameterInvalid          
+        type: INT
+        value: 100003
+        description: Contract parameter invalid
+      - name: orderNotCancelable          
+        type: INT
+        value: 100004
+        description: Order is in not cancelable state
+      - name: contractRiskLimitNotExist          
+        type: INT
+        value: 100005
+        description: Contract risk limit does not exist
+      - name: level2QueryScopeExceeded          
+        type: INT
+        value: 200001
+        description: Level 2 query scope exceeded xxx
+      - name: tooManyRequests          
+        type: INT
+        value: 200002
+        description: >
+          Either:
+          <ul>
+          <li>Too many requests in a short period of time, please retry later--kucoin business layer request frequency limit, block 10s</li>
+          <li>The query scope for Level 2 cannot exceed xxx</li>
+          </ul>
+      - name: level3QueryScopeExceeded          
+        type: INT
+        value: 200003
+        description: Level 3 query scope exceeded xxx
+      - name: insufficientBalance          
+        type: INT
+        value: 200005
+        description: Insufficient balance.(Insufficient balance when modifying risk limit)
+      - name: requestParameterIllegal          
+        type: INT
+        value: 300000
+        description: Request parameter is illegal
+      - name: activeOrderQuantityLimitExceeded          
+        type: INT
+        value: 300001
+        description: > 
+          Active order quantity limit exceeded (limit: xxx, current: xxx)
+      - name: orderPlacementCancellationSuspended          
+        type: INT
+        value: 300002
+        description: > 
+          Order placement/cancellation is currently suspended (limit: xxx, current: xxx)
+      - name: balanceNotEnough          
+        type: INT
+        value: 300003
+        description: Insufficient balance. Please first deposit at least 2 USDT before you start the battle
+      - name: stopOrderQuantityLimitExceeded          
+        type: INT
+        value: 300004
+        description: > 
+          Stop order quantity limit exceeded (limit: xxx, current: xxx)
+      - name: riskLimitExceeded          
+        type: INT
+        value: 300005
+        description: > 
+          Risk limit exceeded (limit: xxx, current: xxx)
+      - name: closePriceMustBeGreaterThanBankruptcyPrice          
+        type: INT
+        value: 300006
+        description: >
+          Close price must be greater than bankruptcy price Current bankruptcy price: xxx.
+      - name: priceWorseThanLiquidationPrice          
+        type: INT
+        value: 300007
+        description: Price is worse than liquidation price
+      - name: noContraOrderInMarket          
+        type: INT
+        value: 300008
+        description: Unavailable to place the order, there's no contra order in the market.
+      - name: currentPositionSizeZero          
+        type: INT
+        value: 300009
+        description: > 
+          Current position size: 0, unable to close the position.
+      - name: failedToClosePosition          
+        type: INT
+        value: 300010
+        description: Failed to close position
+      - name: orderPriceTooHigh          
+        type: INT
+        value: 300011
+        description: Order price is too high
+      - name: orderPriceTooLow          
+        type: INT
+        value: 300012
+        description: Order price is too low
+      - name: noContraOrderInOrderBook          
+        type: INT
+        value: 300013
+        description: Unavailable to place the order, there's no contra order in the order book.
+      - name: positionBeingLiquidated          
+        type: INT
+        value: 300014
+        description: Position is being liquidated, unable to place/cancel the order. Please try again later.
+      - name: contractUnderSettlement          
+        type: INT
+        value: 300015
+        description: >
+          The order placing/cancellation is currently not available. The Contract/Funding is under the settlement process. When the process is completed, the function will be restored automatically. Please wait patiently and try again later.
+      - name: leverageTooHigh          
+        type: INT
+        value: 300016
+        description: The leverage cannot be greater than xxx.
+      - name: positionForFuturesBrawl          
+        type: INT
+        value: 300017
+        description: The position is not available for futures brawl. Please try again later.
+      - name: clientOidParameterRepeated          
+        type: INT
+        value: 300018
+        description: The clientOid parameter is repeated. Please use a unique clientOid.
+      - name: missingApiHeaders          
+        type: INT
+        value: 400001
+        description: Any of KC-API-KEY, KC-API-SIGN, KC-API-TIMESTAMP, KC-API-PASSPHRASE is missing in your request header.
+      - name: invalidApiTimestamp          
+        type: INT
+        value: 400002
+        description: KC-API-TIMESTAMP Invalid -- Time differs from server time by more than 5 seconds
+      - name: apiKeyNotExists          
+        type: INT
+        value: 400003
+        description: KC-API-KEY not exists
+      - name: apiPassphraseError          
+        type: INT
+        value: 400004
+        description: KC-API-PASSPHRASE is invalid
+      - name: signatureError          
+        type: INT
+        value: 400005
+        description: Signature error -- Please check your signature
+      - name: ipNotInWhitelist          
+        type: INT
+        value: 400006
+        description: Your IP address is not whitelisted
+      - name: accessDenied          
+        type: INT
+        value: 400007
+        description: Access denied -- Your API key does not have sufficient permissions to access the URI
+      - name: parameterError          
+        type: INT
+        value: 400100
+        description: >
+          Either:
+          <ul>
+          <li>Parameter error -- Please check your request parameters.</li>
+          <li>account.available.amount -- Insufficient balance</li>
+          </ul>
+      - name: urlNotFound          
+        type: INT
+        value: 404000
+        description: The requested URL was not found on the server.
+      - name: userIsFrozen          
+        type: INT
+        value: 411100
+        description: User is frozen -- Please contact support.
+      - name: unsupportedMediaType          
+        type: INT
+        value: 415000
+        description: Unsupported media type -- The Content-Type of the request header needs to be set to application/json
+      - name: tooManyRequests          
+        type: INT
+        value: 429000
+        description: Too many requests -- You have exceeded limit of this interface of KuCoin server, please try again later.
+      - name: internalServerError          
+        type: INT
+        value: 500000
+        description: Internal server error -- Please try again later.
+    - name: earn
+      description : Earn API error codes, see <a href="https://www.kucoin.com/docs/errors-code/earn-errors-code">API</a>
+      constants:
+      - name: positionDoesNotExist          
+        type: INT
+        value: 151404
+        description: Position does not exist
+      - name: productDoesNotExist          
+        type: INT
+        value: 151001
+        description: Product does not exist
+      - name: subscriptionNotStarted          
+        type: INT
+        value: 151002
+        description: Subscription not started
+      - name: subscriptionEnded          
+        type: INT
+        value: 151003        
+        description: Subscription ended
+      - name: subscriptionAmountLessThanMinimum          
+        type: INT
+        value: 151004
+        description: Subscription amount is less than the user's minimum subscription quota
+      - name: subscriptionAmountExceedsMaximum          
+        type: INT
+        value: 151005
+        description: Subscription amount exceeds the user's maximum subscription quota
+      - name: productFullySubscribed          
+        type: INT
+        value: 151006
+        description: Product is fully subscribed
+      - name: onlyNewUsersCanParticipate          
+        type: INT
+        value: 151007
+        description: Only new users can participate in the subscription
+      - name: userDoesNotMeetConditions          
+        type: INT
+        value: 151008
+        description: User does not meet the conditions to purchase this product
+      - name: insufficientBalance          
+        type: INT
+        value: 151009
+        description: Insufficient balance
+      - name: quantityPrecisionIncorrect          
+        type: INT
+        value: 151010
+        description: Quantity precision is incorrect
+      - name: activityTooPopular          
+        type: INT
+        value: 151011
+        description: Sorry, the current activity is too popular, please try again later
+      - name: cannotRedeemBeforeExpiry          
+        type: INT
+        value: 151016
+        description: Cannot redeem before the product expires
+      - name: redemptionAmountExceedsRedeemable          
+        type: INT
+        value: 151018
+        description: Redemption amount exceeds the redeemable amount
+      - name: remainingHoldingTooSmall          
+        type: INT
+        value: 151019
+        description: Remaining holding quantity is too small to generate income, please redeem all
+      - name: redeemableLessThanPenalty          
+        type: INT
+        value: 151020
+        description: Redeemable quantity is less than the quantity required for penalty interest
+      - name: ethStakingNotSupported          
+        type: INT
+        value: 151021
+        description: > 
+          ETH Staking: This currency is not supported at the moment
+      - name: ethStakingLessThanMinimum          
+        type: INT
+        value: 151022
+        description: > 
+          ETH Staking: Less than the minimum subscription quantity
+      - name: ethStakingSoldOut          
+        type: INT
+        value: 151023
+        description: > 
+          ETH Staking: The product is temporarily sold out, please wait for quota replenishment
+      - name: confirmPunishRedeemRequired          
+        type: INT
+        value: 151024
+        description: > 
+          When redeeming early, the parameter confirmPunishRedeem must be passed in

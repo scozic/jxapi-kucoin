@@ -1,0 +1,42 @@
+id: Kucoin
+apis:
+  - name: SpotTrading
+    restEndpoints:
+      - name: CancelOrderByOrderId
+        httpMethod: DELETE
+        url: v1/orders
+        description: >
+          Request via this endpoint to cancel a single order previously placed.
+          <p>
+          <strong>TIP</strong>:<i> This interface is only for cancellation requests. 
+          The cancellation result needs to be obtained by querying the order status or 
+          subscribing to websocket. It is recommended that you DO NOT cancel the order 
+          until receiving the Open message, otherwise the order cannot be cancelled successfully.</i>
+        docUrl: https://www.kucoin.com/docs-new/rest/spot-trading/orders/cancel-order-by-orderld
+        requestWeight: 5
+        rateLimits:
+          - spot        
+        request:
+          name: orderId
+          description: Unique order ID created by users to identify their orders.
+          sampleValue: 681ba768851ccd00072175ed
+          in: PATH
+        response:
+          objectName: KucoinSpotCancelOrderByOrderIdResponse
+          implementedInterfaces:
+            - org.jxapi.exchanges.kucoin.common.KucoinResponse
+          properties:
+            - name: code
+              description: System error code, see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: msg
+              description: System error code description, provided in error response when code is not '0', see <a href="https://www.kucoin.com/docs-new/error-code/http">API</a>
+              sampleValue: "0"
+            - name: data
+              description: Response payload
+              objectName: KucoinSpotCancelOrderResponseData
+              properties:
+                - name: cancelledOrderIds
+                  description: Unique ID of the cancelled order
+                  sampleValue: 5bd6e9286d99522a52e458de
+                  type: STRING_LIST
