@@ -3,11 +3,11 @@ package org.jxapi.exchanges.kucoin.net;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
-
+import org.jxapi.netutils.rest.DefaultHttpRequestInterceptor;
 import org.jxapi.netutils.rest.HttpRequest;
 import org.jxapi.netutils.rest.HttpRequestInterceptor;
 
-public class KucoinPrivateHttpRequestInterceptor implements HttpRequestInterceptor {
+public class KucoinPrivateHttpRequestInterceptor extends DefaultHttpRequestInterceptor {
 	
 	private final String apiKey;
 	private final String apiPassphrase;
@@ -21,6 +21,7 @@ public class KucoinPrivateHttpRequestInterceptor implements HttpRequestIntercept
 	
 	@Override
 	public void intercept(HttpRequest request) {
+	  super.intercept(request);
 		request.setHeader(apiPassphrase, apiKey);
 		
 		if (apiKey == null) {
@@ -46,8 +47,6 @@ public class KucoinPrivateHttpRequestInterceptor implements HttpRequestIntercept
 		request.setHeader("KC-API-SIGN", signature);
 		request.setHeader("KC-API-PASSPHRASE", digest(apiPassphrase));
 		request.setHeader("KC-API-KEY-VERSION", "2");
-		// request.setHeader("User-Agent", "KuCoin-Java-SDK:2");
-		request.setHeader("Content-Type", "application/json");
 		
 	}
 	

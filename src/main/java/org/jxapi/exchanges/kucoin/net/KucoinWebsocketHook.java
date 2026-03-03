@@ -3,6 +3,7 @@ package org.jxapi.exchanges.kucoin.net;
 import org.apache.commons.lang3.RandomUtils;
 import org.jxapi.netutils.websocket.WebsocketException;
 import org.jxapi.netutils.websocket.WebsocketHook;
+import org.jxapi.netutils.websocket.WebsocketSubscribeRequest;
 import org.jxapi.netutils.websocket.WebsocketClient;
 import org.jxapi.netutils.websocket.multiplexing.WSMTMFUtil;
 import org.slf4j.Logger;
@@ -18,7 +19,7 @@ public class KucoinWebsocketHook implements WebsocketHook {
 	private static final String UNSUBSCRIBE_REQUEST_TEMPLATE = "{\"id\": %d, \"type\": \"unsubscribe\", \"topic\": \"%s\", \"privateChannel\": false, \"response\": false}";
 	
 	private static final int genRandIntSeed() {
-		return Math.abs(RandomUtils.nextInt()) % 10000;
+		return Math.abs(RandomUtils.secure().randomInt()) % 10000;
 	}
 	
 	private int requestIdCounter = genRandIntSeed();
@@ -63,13 +64,13 @@ public class KucoinWebsocketHook implements WebsocketHook {
 	}
 
 	@Override
-	public String getSubscribeRequestMessage(String topic) {
-		return String.format(SUBSCRIBE_REQUEST_TEMPLATE, generateRequestId(), topic, privateChannel) ;
+	public String getSubscribeRequestMessage(WebsocketSubscribeRequest subscribeRequest) {
+		return String.format(SUBSCRIBE_REQUEST_TEMPLATE, generateRequestId(), subscribeRequest.getTopic(), privateChannel) ;
 	}
 
 	@Override
-	public String getUnSubscribeRequestMessage(String topic) {
-		return String.format(UNSUBSCRIBE_REQUEST_TEMPLATE, generateRequestId(), topic);
+	public String getUnSubscribeRequestMessage(WebsocketSubscribeRequest subscribeRequest) {
+		return String.format(UNSUBSCRIBE_REQUEST_TEMPLATE, generateRequestId(), subscribeRequest.getTopic());
 	}
 	
 	private int generateRequestId() {

@@ -1537,7 +1537,7 @@
 
 # Demo configuration property for request.current field.<p>
 # 'current' url path parameter. Set to 'current' by default and shall not be modified.
-# demo.FuturesMarketData.rest.GetCurrentFundingRate.request.current=
+# demo.FuturesMarketData.rest.GetCurrentFundingRate.request.current=current
 
 # ### Configuration properties for REST GetFullOrderBook endpoint of FuturesMarketData API group
 # Demo configuration property for GetFullOrderBook.symbol field.<p>
@@ -1609,7 +1609,7 @@
 
 # Demo configuration property for request.current field.<p>
 # 'current' url path parameter. Set to 'current' by default and shall not be modified.
-# demo.FuturesMarketData.rest.GetMarkPrice.request.current=
+# demo.FuturesMarketData.rest.GetMarkPrice.request.current=current
 
 # ### Configuration properties for REST GetPartOrderBook100 endpoint of FuturesMarketData API group
 # Demo configuration property for GetPartOrderBook100.symbol field.<p>
@@ -3195,7 +3195,7 @@
 
 # Demo configuration property for request.current field.<p>
 # 'current' url path parameter. Set to 'current' by default and shall not be modified.
-# demo.Margin.rest.GetMarkPriceDetail.request.current=
+# demo.Margin.rest.GetMarkPriceDetail.request.current=current
 
 # ### Configuration properties for REST GetOcoOrderByClientOid endpoint of Margin API group
 # Demo configuration property for GetOcoOrderByClientOid.request field as raw JSON string value.
